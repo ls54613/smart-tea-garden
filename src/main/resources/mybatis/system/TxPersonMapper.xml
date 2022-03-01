@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TxPersonMapper">
+
+    <resultMap type="TxPerson" id="TxPersonResult">
+        <result property="staffid"    column="staffId"    />
+        <result property="idcardNum"    column="idcard_num"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="imgBase64"    column="img_base64"    />
+        <result property="name"    column="name"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="icno"    column="icno"    />
+        <result property="departmentId"    column="department_id"    />
+        <result property="domainId"    column="domain_id"    />
+        <result property="pType"    column="p_type"    />
+        <result property="sex"    column="sex"    />
+        <result property="licenseImage"    column="license_image"    />
+        <result property="address"    column="address"    />
+        <result property="identityType"    column="identity_type"    />
+    </resultMap>
+
+    <sql id="selectTxPersonVo">
+        select staffId, idcard_num, mobile, img_base64, `name`, start_time, end_time, icno, department_id, domain_id, p_type, sex, license_image,address from tx_person
+    </sql>
+
+    <select id="selectTxPersonList" parameterType="com.wanou.project.system.domain.TxPerson" resultMap="TxPersonResult">
+        select staffId, idcard_num, mobile, img_base64, license_image, address, identity_type, `name`, start_time, end_time, icno, department_id, domain_id, p_type, sex, d.dept_name, d.leader from tx_person txp
+        left join sys_dept d on txp.department_id = d.dept_id
+        <where>
+            <if test="idcardNum != null  and idcardNum != ''"> and idcard_num = #{idcardNum}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="imgBase64 != null  and imgBase64 != ''"> and img_base64 = #{imgBase64}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="startTime != null and endTime != null"> and start_time >= #{startTime,jdbcType=DATE} and start_time &lt;= #{endTime,jdbcType=DATE} and end_time >= #{startTime,jdbcType=DATE} and end_time &lt;= #{endTime,jdbcType=DATE}</if>
+            <if test="startTime != null and endTime = null"> and start_time = #{startTime}</if>
+            <if test="startTime = null and endTime != null "> and end_time = #{endTime}</if>
+            <if test="icno != null  and icno != ''"> and icno = #{icno}</if>
+            <if test="departmentId != null "> and department_id = #{departmentId}</if>
+            <if test="domainId != null  and domainId != ''"> and domain_id = #{domainId}</if>
+            <if test="pType != null "> and p_type = #{pType}</if>
+            <if test="identityType != null "> and identity_type = #{identityType}</if>
+            <if test="departmentId != null and departmentId != 0">
+                and txp.department_id = #{departmentId} OR txp.department_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{departmentId}, ancestors))
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+    </select>
+
+    <select id="selectTxPersonByName" parameterType="string" resultMap="TxPersonResult">
+        <include refid="selectTxPersonVo"></include>
+        where name = #{username}
+    </select>
+
+    <select id="selectTxPersonByIdCardNum" parameterType="string" resultMap="TxPersonResult">
+        <include refid="selectTxPersonVo"></include>
+        where idcard_num = #{idcardNum}
+    </select>
+
+    <select id="selectTxPersonByStaffid" parameterType="Long" resultMap="TxPersonResult">
+        <include refid="selectTxPersonVo"/>
+        where staffId = #{staffid}
+    </select>
+
+    <insert id="insertTxPerson" parameterType="TxPerson" useGeneratedKeys="true" keyProperty="staffid">
+        insert into tx_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="idcardNum != null">idcard_num,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="imgBase64 != null">img_base64,</if>
+            <if test="name != null">`name`,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="icno != null">icno,</if>
+            <if test="departmentId != null">department_id,</if>
+            <if test="domainId != null">domain_id,</if>
+            <if test="pType != null">p_type,</if>
+            <if test="sex != null">sex,</if>
+            <if test="licenseImage != null">license_image,</if>
+            <if test="address != null">address,</if>
+            <if test="identityType != null">identity_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="idcardNum != null">#{idcardNum},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="imgBase64 != null">#{imgBase64},</if>
+            <if test="name != null">#{name},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="icno != null">#{icno},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+            <if test="domainId != null">#{domainId},</if>
+            <if test="pType != null">#{pType},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="licenseImage != null">#{licenseImage},</if>
+            <if test="address != null">#{address},</if>
+            <if test="identityType != null">#{identityType},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTxPerson" parameterType="TxPerson">
+        update tx_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="idcardNum != null">idcard_num = #{idcardNum},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="imgBase64 != null">img_base64 = #{imgBase64},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="icno != null">icno = #{icno},</if>
+            <if test="departmentId != null">department_id = #{departmentId},</if>
+            <if test="domainId != null">domain_id = #{domainId},</if>
+            <if test="pType != null">p_type = #{pType},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="licenseImage != null">license_image = #{licenseImage},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="identityType != null">identity_type = #{identityType},</if>
+        </trim>
+        where staffId = #{staffid}
+
+    </update>
+
+    <delete id="deleteTxPersonByStaffid" parameterType="Long">
+        delete from tx_person where staffId = #{staffid}
+    </delete>
+
+    <delete id="deleteTxPersonByStaffids" parameterType="String">
+        delete from tx_person where staffId in
+        <foreach item="staffid" collection="array" open="(" separator="," close=")">
+            #{staffid}
+        </foreach>
+    </delete>
+
+
+
+    <select id="selectTxPersonByMobile" resultMap="TxPersonResult">
+        <include refid="selectTxPersonVo"></include>
+        where mobile = #{mobile}
+    </select>
+
+    <select id="selectPersonByIdCard" resultType="com.wanou.project.system.domain.TxPerson" resultMap="TxPersonResult">
+        SELECT staffId FROM tx_person WHERE idcard_num=#{idCard} LIMIT 1
+    </select>
+
+    <insert id="insertTxPersonLog">
+        insert into tx_person_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="staffid != null">staffId,</if>
+            <if test="idcardNum != null">idcard_num,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="imgBase64 != null">img_base64,</if>
+            <if test="name != null">`name`,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="icno != null">icno,</if>
+            <if test="departmentId != null">department_id,</if>
+            <if test="domainId != null">domain_id,</if>
+            <if test="pType != null">p_type,</if>
+            <if test="sex != null">sex,</if>
+            <if test="licenseImage != null">license_image,</if>
+            <if test="address != null">address,</if>
+            <if test="identityType != null">identity_type,</if>
+            del_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="staffid != null">#{staffid},</if>
+            <if test="idcardNum != null">#{idcardNum},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="imgBase64 != null">#{imgBase64},</if>
+            <if test="name != null">#{name},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="icno != null">#{icno},</if>
+            <if test="departmentId != null">#{departmentId},</if>
+            <if test="domainId != null">#{domainId},</if>
+            <if test="pType != null">#{pType},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="licenseImage != null">#{licenseImage},</if>
+            <if test="address != null">#{address},</if>
+            <if test="identityType != null">#{identityType},</if>
+            NOW()
+        </trim>
+    </insert>
+</mapper>

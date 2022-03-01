@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.MiniUserMapper">
+
+    <resultMap type="MiniUser" id="MiniUserResult">
+        <result property="id"    column="id"    />
+        <result property="openId"    column="open_id"    />
+        <result property="mName"    column="m_name"    />
+        <result property="phone"    column="phone"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="position"    column="position"    />
+        <result property="portrait"    column="portrait"    />
+        <result property="regTime"    column="reg_time"    />
+        <result property="status"    column="status"    />
+        <result property="personId"    column="person_id"    />
+        <result property="isAuditor"    column="is_auditor"    />
+    </resultMap>
+
+    <sql id="selectMiniUserVo">
+        select id, open_id, m_name, phone, id_card, company_name, `position`, portrait, reg_time, status,person_id,is_auditor from mini_user
+    </sql>
+
+    <select id="listMiniUserInfo" parameterType="long" resultMap="MiniUserResult">
+        <include refid="selectMiniUserVo"/>
+    </select>
+
+
+    <update id="updateMiniUser" parameterType="MiniUser">
+        update mini_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mName != null">m_name = #{mName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="position != null">`position` = #{position},</if>
+            <if test="portrait != null">portrait = #{portrait},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="personId != null">person_id = #{personId},</if>
+            <if test="isAuditor != null">is_auditor = #{isAuditor},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+        <delete id="deleteMiniUserById" parameterType="Long">
+            delete from mini_user where id = #{id}
+        </delete>
+
+
+
+
+
+
+
+
+
+<!--    <select id="selectMiniUserById" parameterType="Long" resultMap="MiniUserResult">-->
+<!--        <include refid="selectMiniUserVo"/>-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+
+
+
+
+
+
+
+<!--    <delete id="deleteMiniUserByIds" parameterType="String">-->
+<!--        delete from mini_user where id in-->
+<!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
+
+    <select id="selectUserByOpenId" resultMap="MiniUserResult">
+        <include refid="selectMiniUserVo"></include>
+        where open_id = #{openId}
+    </select>
+
+    <select id="selectUserByUserId" resultMap="MiniUserResult">
+        <include refid="selectMiniUserVo"></include>
+        where id = #{userId}
+    </select>
+
+    <insert id="insertUser" parameterType="MiniUser" useGeneratedKeys="true" keyProperty="id">
+        insert into mini_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openId != null">open_id,</if>
+            <if test="mName != null">m_name,</if>
+            <if test="phone != null">phone,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="position != null">position,</if>
+            <if test="portrait != null">portrait,</if>
+            <if test="regTime != null">reg_time,</if>
+            <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openId != null">#{openId},</if>
+            <if test="mName != null">#{mName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="position != null">#{position},</if>
+            <if test="portrait != null">#{portrait},</if>
+            <if test="regTime != null">#{regTime},</if>
+            <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+</mapper>

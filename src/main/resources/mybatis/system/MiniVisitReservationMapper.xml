@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.MiniVisitReservationMapper">
+
+    <resultMap type="MiniVisitReservation" id="MiniVisitReservationResult">
+        <result property="id" column="id"/>
+        <result property="intervieweeId" column="interviewee_id"/>
+        <result property="visitDeptId" column="visit_dept_id"/>
+        <result property="visitDateStart" column="visit_date_start"/>
+        <result property="visitDateEnd" column="visit_date_end"/>
+        <result property="domainId" column="domain_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="status" column="status"/>
+        <result property="isDel" column="is_del"/>
+        <result property="auditorId" column="auditor_id"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="mName" column="m_name"/>
+        <result property="name" column="name"/>
+        <result property="deptName" column="dept_name"/>
+    </resultMap>
+
+    <sql id="selectMiniVisitReservationVo">
+        select a.id,
+               a.interviewee_id,
+               a.visit_dept_id,
+               a.visit_date_start,
+               a.visit_date_end,
+               a.domain_id,
+               a.remark,
+               a.create_time,
+               a.create_user_id,
+               a.status,
+               a.is_del,
+               a.auditor_id,
+               a.audit_time,
+               d.m_name,
+               c.name,
+               b.dept_name
+        from mini_visit_reservation a,
+             sys_dept b,
+             tx_person c,
+             mini_user d
+        where a.interviewee_id=c.staffId and a.create_user_id=d.id and a.visit_dept_id=b.dept_id
+    </sql>
+    <select id="selectMiniVisitReservationListByVisitDeptId" parameterType="long" resultMap="MiniVisitReservationResult">
+        <include refid="selectMiniVisitReservationVo"/>
+        and a.visit_dept_id in (select dept_id from sys_dept where dept_id = #{visitDeptId}  or FIND_IN_SET( #{visitDeptId},ancestors))
+    </select>
+
+
+    <update id="updateMiniVisitReservation" parameterType="MiniVisitReservation">
+        update mini_visit_reservation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="intervieweeId != null">interviewee_id = #{intervieweeId},</if>
+            <if test="visitDateStart != null">visit_date_start = #{visitDateStart},</if>
+            <if test="visitDateEnd != null">visit_date_end = #{visitDateEnd},</if>
+            <if test="domainId != null">domain_id = #{domainId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUserId != null">create_user_id = #{createUserId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="isDel != null">is_del = #{isDel},</if>
+            <if test="visitDeptId != null">visit_dept_id = #{visitDeptId},</if>
+            <if test="auditorId != null">auditor_id = #{auditorId},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!--    <select id="selectMiniVisitReservationById" parameterType="Long" resultMap="MiniVisitReservationResult">-->
+    <!--        <include refid="selectMiniVisitReservationVo"/>-->
+    <!--        where id = #{id}-->
+    <!--    </select>-->
+
+    <!--    <insert id="insertMiniVisitReservation" parameterType="MiniVisitReservation" useGeneratedKeys="true" keyProperty="id">-->
+    <!--        insert into mini_visit_reservation-->
+    <!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+    <!--            <if test="intervieweeId != null">interviewee_id,</if>-->
+    <!--            <if test="deptId != null">dept_id,</if>-->
+    <!--            <if test="visitDateStart != null">visit_date_start,</if>-->
+    <!--            <if test="visitDateEnd != null">visit_date_end,</if>-->
+    <!--            <if test="remark != null">remark,</if>-->
+    <!--            <if test="createTime != null">create_time,</if>-->
+    <!--            <if test="createUserId != null">create_user_id,</if>-->
+    <!--            <if test="status != null">status,</if>-->
+    <!--            <if test="isDel != null">is_del,</if>-->
+    <!--        </trim>-->
+    <!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+    <!--            <if test="intervieweeId != null">#{intervieweeId},</if>-->
+    <!--            <if test="deptId != null">#{deptId},</if>-->
+    <!--            <if test="visitDateStart != null">#{visitDateStart},</if>-->
+    <!--            <if test="visitDateEnd != null">#{visitDateEnd},</if>-->
+    <!--            <if test="remark != null">#{remark},</if>-->
+    <!--            <if test="createTime != null">#{createTime},</if>-->
+    <!--            <if test="createUserId != null">#{createUserId},</if>-->
+    <!--            <if test="status != null">#{status},</if>-->
+    <!--            <if test="isDel != null">#{isDel},</if>-->
+    <!--        </trim>-->
+    <!--    </insert>-->
+
+
+
+    <!--    <delete id="deleteMiniVisitReservationById" parameterType="Long">-->
+    <!--        delete from mini_visit_reservation where id = #{id}-->
+    <!--    </delete>-->
+
+    <!--    <delete id="deleteMiniVisitReservationByIds" parameterType="String">-->
+    <!--        delete from mini_visit_reservation where id in-->
+    <!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+    <!--            #{id}-->
+    <!--        </foreach>-->
+    <!--    </delete>-->
+
+
+
+    <select id="selectMiniVisitReservationByUserId" resultMap="MiniVisitReservationResult">
+        SELECT
+			t1.id,t1.interviewee_id,t1.visit_dept_id,
+	        t1.visit_date_start,
+	        t1.visit_date_end,
+	        t1.domain_id,
+	        t1.remark,
+	        t1.create_time,
+	        t1.create_user_id,
+	        t1.`status`,
+	        t1.is_del,
+	        t1.auditor_id,
+	        t1.audit_time,
+		    t2.m_name,
+		    t4.`name`,
+		    t3.dept_name
+		    FROM
+		    	mini_visit_reservation t1,mini_user t2,sys_dept t3,tx_person t4
+		    WHERE
+		    	t1.create_user_id=#{userId} AND t2.id=t1.create_user_id AND t3.dept_id=t1.visit_dept_id AND t4.staffId=t1.interviewee_id
+
+    </select>
+
+    <select id="selectWaitAuditByMiniUserId" resultType="com.wanou.project.system.domain.MiniVisitReservation" resultMap="MiniVisitReservationResult">
+        SELECT
+	        t1.id,t1.interviewee_id,t1.visit_dept_id,t1.visit_date_start,t1.visit_date_end,t1.domain_id,t1.remark,t1.`status`,t1.is_del,t1.create_user_id,t2.m_name,t4.dept_name
+        FROM
+        	mini_visit_reservation t1,mini_user t2,tx_person t3,sys_dept t4
+        WHERE
+        	t1.interviewee_id=t2.person_id AND t1.`status`=1 AND t2.id=#{userId} AND t3.staffId=t2.person_id AND t4.dept_id=t3.department_id
+    </select>
+
+
+    <insert id="insertMiniVisitReservation" parameterType="MiniVisitReservation" useGeneratedKeys="true" keyProperty="id">
+            insert into mini_visit_reservation
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="intervieweeId != null">interviewee_id,</if>
+                <if test="visitDateStart != null">visit_date_start,</if>
+                <if test="visitDateEnd != null">visit_date_end,</if>
+                <if test="domainId != null">domain_id,</if>
+                <if test="remark != null">remark,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="createUserId != null">create_user_id,</if>
+                <if test="status != null">status,</if>
+                <if test="isDel != null">is_del,</if>
+                <if test="visitDeptId != null">visit_dept_id,</if>
+                <if test="auditorId != null">auditor_id,</if>
+                <if test="auditTime != null">audit_time,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="intervieweeId != null">#{intervieweeId},</if>
+                <if test="visitDateStart != null">#{visitDateStart},</if>
+                <if test="visitDateEnd != null">#{visitDateEnd},</if>
+                <if test="domainId != null">#{domainId},</if>
+                <if test="remark != null">#{remark},</if>
+                <if test="createTime != null">#{createTime},</if>
+                <if test="createUserId != null">#{createUserId},</if>
+                <if test="status != null">#{status},</if>
+                <if test="isDel != null">#{isDel},</if>
+                <if test="visitDeptId != null">#{visitDeptId},</if>
+                <if test="auditorId != null">#{auditorId},</if>
+                <if test="auditTime != null">#{auditTime},</if>
+            </trim>
+        </insert>
+
+
+</mapper>

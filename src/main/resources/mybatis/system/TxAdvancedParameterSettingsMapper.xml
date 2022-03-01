@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TxAdvancedParameterSettingsMapper">
+
+    <resultMap id="TxAdvancedParameterSettingsResult" type="TxAdvancedParameterSettings">
+        <result property="whiteValue" column="white_value"/>
+        <result property="mapValue" column="map_value"/>
+        <result property="recogSpaceTime" column="recog_space_time"/>
+        <result property="lightLevelPercent" column="light_level_percent"/>
+        <result property="detectRange" column="detect_range"/>
+        <result property="livenessEnable" column="liveness_enable"/>
+        <result property="infraredImaging" column="Infrared_imaging"/>
+        <result property="livenessValue" column="liveness_value"/>
+        <result property="recogModedb" column="recog_modedb"/>
+        <result property="recogModeic" column="recog_modeic"/>
+        <result property="detectVoiceEnable" column="detect_voice_enable"/>
+        <result property="recogRelay" column="recog_relay"/>
+        <result property="rebootTime" column="reboot_time"/>
+        <result property="temperatureMode" column="temperature_mode"/>
+        <result property="tempNormalMax" column="temp_normal_max"/>
+        <result property="tempThermography" column="temp_thermography"/>
+        <result property="outsideDetectMode" column="outside_detect_mode"/>
+        <result property="wgOutType" column="wg_out_type"/>
+        <result property="banner" column="banner"/>
+        <result property="bannerEnable" column="banner_enable"/>
+        <result property="bannerSpacetime" column="banner_spacetime"/>
+        <result property="videoSwitch" column="video_switch"/>
+        <result property="json" column="json"/>
+        <result property="deviceId" column="device_Id"/>
+
+
+
+        <result property="VBM" column="VBM"/>
+        <result property="VBMInfo" column="VBMInfo"/>
+        <result property="SDM" column="SDM"/>
+        <result property="SDMInfo" column="SDMInfo"/>
+        <result property="WiegandTypeRelay" column="WiegandTypeRelay"/>
+        <result property="FaceRecoCheckHealthCode" column="FaceRecoCheckHealthCode"/>
+        <result property="SwipePrompt" column="SwipePrompt"/>
+        <result property="MeasureMode" column="MeasureMode"/>
+        <result property="MeasurePrompt" column="MeasurePrompt"/>
+        <result property="Stranger" column="Stranger"/>
+        <result property="EnableHealthCode" column="EnableHealthCode"/>
+        <result property="EnableVerifyFace" column="EnableVerifyFace"/>
+        <result property="EnableIdRecognise" column="EnableIdRecognise"/>
+        <result property="EnableQrRecognise" column="EnableQrRecognise"/>
+        <result property="EnableIdProcess" column="EnableIdProcess"/>
+        <result property="EnableQrProcess" column="EnableQrProcess"/>
+
+
+    </resultMap>
+
+    <sql id="selectDeviceSet">
+        SELECT VBM,
+               VBMInfo,
+               SDM,
+               SDMInfo,
+               WiegandTypeRelay,
+               FaceRecoCheckHealthCode,
+               SwipePrompt,
+               MeasureMode,
+               MeasurePrompt,
+               Stranger,
+               EnableHealthCode,
+               EnableVerifyFace,
+               EnableIdRecognise,
+               EnableQrRecognise,
+               EnableIdProcess,
+               EnableQrProcess,
+
+
+               map_value,
+               recog_space_time,
+               light_level_percent,
+               light_type,
+               detect_range,
+               liveness_enable,
+               Infrared_imaging,
+               liveness_value,
+               recog_modedb,
+               recog_modeic,
+               detect_voice_enable,
+               recog_relay,
+               reboot_time,
+               temperature_mode,
+               temp_normal_max,
+               temp_thermography,
+               outside_detect_mode,
+               wg_out_type,
+               banner,
+               banner_enable,
+               banner_spacetime,
+               video_switch,
+               json,
+               device_Id
+        FROM tx_devices
+    </sql>
+
+    <select id="queryOne" parameterType="string" resultMap="TxAdvancedParameterSettingsResult">
+        <include refid="selectDeviceSet"/>
+        where mac_addr=#{macAddr}
+    </select>
+
+    <update id="updateDevice" parameterType="TxAdvancedParameterSettings">
+        update tx_devices
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="whiteValue != null">white_value = #{whiteValue},</if>
+            <if test="mapValue != null">map_value = #{mapValue},</if>
+            <if test="recogSpaceTime != null">recog_space_time = #{recogSpaceTime},</if>
+            <if test="lightLevelPercent != null">light_level_percent = #{lightLevelPercent},</if>
+            <if test="detectRange != null">detect_range = #{detectRange},</if>
+            <if test="livenessEnable != null">liveness_enable = #{livenessEnable},</if>
+            <if test="infraredImaging != null">Infrared_imaging = #{infraredImaging},</if>
+            <if test="livenessValue != null">liveness_value = #{livenessValue},</if>
+            <if test="recogModedb != null">recog_modedb = #{recogModedb},</if>
+            <if test="recogModeic != null">recog_modeic = #{recogModeic},</if>
+            <if test="detectVoiceEnable != null">detect_voice_enable = #{detectVoiceEnable},</if>
+            <if test="recogRelay != null">recog_relay = #{recogRelay},</if>
+            <if test="rebootTime != null">reboot_time = #{rebootTime},</if>
+            <if test="temperatureMode != null">temperature_mode = #{temperatureMode},</if>
+            <if test="tempNormalMax != null">temp_normal_max = #{tempNormalMax},</if>
+            <if test="tempThermography != null">temp_thermography = #{tempThermography},</if>
+            <if test="outsideDetectMode != null">outside_detect_mode = #{outsideDetectMode},</if>
+            <if test="wgOutType != null">wg_out_type = #{wgOutType},</if>
+            <if test="banner != null">banner = #{banner},</if>
+            <if test="bannerEnable != null">banner_enable = #{bannerEnable},</if>
+            <if test="bannerSpacetime != null">banner_spacetime = #{bannerSpacetime},</if>
+            <if test="videoSwitch != null">video_switch = #{videoSwitch},</if>
+            <if test="json != null">json = #{json},</if>
+
+            <if test="VBM != null">VBM = #{VBM},</if>
+            <if test="VBMInfo != null">VBMInfo = #{VBMInfo},</if>
+            <if test="SDM != null">SDM = #{SDM},</if>
+            <if test="SDMInfo != null">SDMInfo = #{SDMInfo},</if>
+            <if test="WiegandTypeRelay != null">WiegandTypeRelay = #{WiegandTypeRelay},</if>
+            <if test="FaceRecoCheckHealthCode != null">FaceRecoCheckHealthCode = #{FaceRecoCheckHealthCode},</if>
+            <if test="SwipePrompt != null">SwipePrompt = #{SwipePrompt},</if>
+            <if test="MeasureMode != null">MeasureMode = #{MeasureMode},</if>
+            <if test="MeasurePrompt != null">MeasurePrompt = #{MeasurePrompt},</if>
+            <if test="Stranger != null">Stranger = #{Stranger},</if>
+            <if test="EnableHealthCode != null">EnableHealthCode = #{EnableHealthCode},</if>
+            <if test="EnableVerifyFace != null">EnableVerifyFace = #{EnableVerifyFace},</if>
+            <if test="EnableIdRecognise != null">EnableIdRecognise = #{EnableIdRecognise},</if>
+            <if test="EnableQrRecognise != null">EnableVerifyFace = #{EnableQrRecognise},</if>
+            <if test="EnableIdProcess != null">EnableIdProcess = #{EnableIdProcess},</if>
+            <if test="EnableQrProcess != null">EnableQrProcess = #{EnableQrProcess},</if>
+        </trim>
+        where mac_addr = #{macAddr}
+    </update>
+</mapper>
