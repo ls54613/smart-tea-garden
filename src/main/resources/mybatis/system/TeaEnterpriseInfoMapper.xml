@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaEnterpriseInfoMapper">
+    
+    <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult">
+        <result property="id"    column="id"    />
+        <result property="enterpriseName"    column="enterprise_name"    />
+        <result property="type"    column="type"    />
+        <result property="nature"    column="nature"    />
+        <result property="setUpDate"    column="set_up_date"    />
+        <result property="legalPerson"    column="legal_person"    />
+        <result property="legalPersonIdCard"    column="legal_person_id_card"    />
+        <result property="operationStatus"    column="operation_status"    />
+        <result property="regCapital"    column="reg_capital"    />
+        <result property="address"    column="address"    />
+        <result property="about"    column="about"    />
+        <result property="cultivatedArea"    column="cultivated_area"    />
+        <result property="workPersonNum"    column="work_person_num"    />
+        <result property="yearSales"    column="year_sales"    />
+        <result property="yearOutput"    column="year_output"    />
+    </resultMap>
+
+    <sql id="selectTeaEnterpriseInfoVo">
+        select id, enterprise_name, type, nature, set_up_date, legal_person, legal_person_id_card, operation_status, reg_capital, address, about, cultivated_area, work_person_num, year_sales, year_output from tea_enterprise_info
+    </sql>
+
+    <select id="selectTeaEnterpriseInfoList" parameterType="TeaEnterpriseInfo" resultMap="TeaEnterpriseInfoResult">
+        <include refid="selectTeaEnterpriseInfoVo"/>
+        <where>  
+            <if test="enterpriseName != null  and enterpriseName != ''"> and enterprise_name like concat('%', #{enterpriseName}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="nature != null  and nature != ''"> and nature = #{nature}</if>
+            <if test="setUpDate != null "> and set_up_date = #{setUpDate}</if>
+            <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
+            <if test="legalPersonIdCard != null  and legalPersonIdCard != ''"> and legal_person_id_card = #{legalPersonIdCard}</if>
+            <if test="operationStatus != null "> and operation_status = #{operationStatus}</if>
+            <if test="regCapital != null  and regCapital != ''"> and reg_capital = #{regCapital}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="about != null  and about != ''"> and about = #{about}</if>
+            <if test="cultivatedArea != null "> and cultivated_area = #{cultivatedArea}</if>
+            <if test="workPersonNum != null "> and work_person_num = #{workPersonNum}</if>
+            <if test="yearSales != null "> and year_sales = #{yearSales}</if>
+            <if test="yearOutput != null "> and year_output = #{yearOutput}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaEnterpriseInfoById" parameterType="Long" resultMap="TeaEnterpriseInfoResult">
+        <include refid="selectTeaEnterpriseInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_enterprise_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enterpriseName != null">enterprise_name,</if>
+            <if test="type != null">type,</if>
+            <if test="nature != null">nature,</if>
+            <if test="setUpDate != null">set_up_date,</if>
+            <if test="legalPerson != null">legal_person,</if>
+            <if test="legalPersonIdCard != null">legal_person_id_card,</if>
+            <if test="operationStatus != null">operation_status,</if>
+            <if test="regCapital != null">reg_capital,</if>
+            <if test="address != null">address,</if>
+            <if test="about != null">about,</if>
+            <if test="cultivatedArea != null">cultivated_area,</if>
+            <if test="workPersonNum != null">work_person_num,</if>
+            <if test="yearSales != null">year_sales,</if>
+            <if test="yearOutput != null">year_output,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterpriseName != null">#{enterpriseName},</if>
+            <if test="type != null">#{type},</if>
+            <if test="nature != null">#{nature},</if>
+            <if test="setUpDate != null">#{setUpDate},</if>
+            <if test="legalPerson != null">#{legalPerson},</if>
+            <if test="legalPersonIdCard != null">#{legalPersonIdCard},</if>
+            <if test="operationStatus != null">#{operationStatus},</if>
+            <if test="regCapital != null">#{regCapital},</if>
+            <if test="address != null">#{address},</if>
+            <if test="about != null">#{about},</if>
+            <if test="cultivatedArea != null">#{cultivatedArea},</if>
+            <if test="workPersonNum != null">#{workPersonNum},</if>
+            <if test="yearSales != null">#{yearSales},</if>
+            <if test="yearOutput != null">#{yearOutput},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo">
+        update tea_enterprise_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="enterpriseName != null">enterprise_name = #{enterpriseName},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="nature != null">nature = #{nature},</if>
+            <if test="setUpDate != null">set_up_date = #{setUpDate},</if>
+            <if test="legalPerson != null">legal_person = #{legalPerson},</if>
+            <if test="legalPersonIdCard != null">legal_person_id_card = #{legalPersonIdCard},</if>
+            <if test="operationStatus != null">operation_status = #{operationStatus},</if>
+            <if test="regCapital != null">reg_capital = #{regCapital},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="about != null">about = #{about},</if>
+            <if test="cultivatedArea != null">cultivated_area = #{cultivatedArea},</if>
+            <if test="workPersonNum != null">work_person_num = #{workPersonNum},</if>
+            <if test="yearSales != null">year_sales = #{yearSales},</if>
+            <if test="yearOutput != null">year_output = #{yearOutput},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaEnterpriseInfoById" parameterType="Long">
+        delete from tea_enterprise_info where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaEnterpriseInfoByIds" parameterType="String">
+        delete from tea_enterprise_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
