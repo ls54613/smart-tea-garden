@@ -23,7 +23,7 @@ import com.wanou.framework.web.page.TableDataInfo;
 /**
  * 茶企基本信息Controller
  *
- * @author ruoyi
+ * @author MrYao
  * @date 2022-03-01
  */
 @RestController
@@ -43,6 +43,13 @@ public class TeaEnterpriseInfoController extends BaseController
         startPage();
         List<TeaEnterpriseInfo> list = teaEnterpriseInfoService.selectTeaEnterpriseInfoList(teaEnterpriseInfo);
         return getDataTable(list);
+    }
+
+
+    @GetMapping("/findAll")
+    public AjaxResult listAll(TeaEnterpriseInfo teaEnterpriseInfo){
+        List<TeaEnterpriseInfo> teaEnterpriseInfos = teaEnterpriseInfoService.selectTeaEnterpriseInfoList(teaEnterpriseInfo);
+        return AjaxResult.success(teaEnterpriseInfos);
     }
 
     /**

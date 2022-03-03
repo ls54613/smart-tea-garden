@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaPeasantFamilyMapper">
+    
+    <resultMap type="TeaPeasantFamily" id="TeaPeasantFamilyResult">
+        <result property="id"    column="id"    />
+        <result property="familyName"    column="family_name"    />
+        <result property="familySex"    column="family_sex"    />
+        <result property="relationship"    column="relationship"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="teaPeasantId"    column="tea_peasant_id"    />
+    </resultMap>
+
+    <sql id="selectTeaPeasantFamilyVo">
+        select id, family_name, family_sex, relationship, card_type, id_card, tea_peasant_id from tea_peasant_family
+    </sql>
+
+    <select id="selectTeaPeasantFamilyList" parameterType="TeaPeasantFamily" resultMap="TeaPeasantFamilyResult">
+        <include refid="selectTeaPeasantFamilyVo"/>
+        <where>  
+            <if test="familyName != null  and familyName != ''"> and family_name like concat('%', #{familyName}, '%')</if>
+            <if test="familySex != null "> and family_sex = #{familySex}</if>
+            <if test="relationship != null  and relationship != ''"> and relationship = #{relationship}</if>
+            <if test="cardType != null "> and card_type = #{cardType}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaPeasantFamilyById" parameterType="Long" resultMap="TeaPeasantFamilyResult">
+        <include refid="selectTeaPeasantFamilyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaPeasantFamily" parameterType="TeaPeasantFamily" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_peasant_family
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="familyName != null">family_name,</if>
+            <if test="familySex != null">family_sex,</if>
+            <if test="relationship != null">relationship,</if>
+            <if test="cardType != null">card_type,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="teaPeasantId != null">tea_peasant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="familyName != null">#{familyName},</if>
+            <if test="familySex != null">#{familySex},</if>
+            <if test="relationship != null">#{relationship},</if>
+            <if test="cardType != null">#{cardType},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="teaPeasantId != null">#{teaPeasantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaPeasantFamily" parameterType="TeaPeasantFamily">
+        update tea_peasant_family
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="familyName != null">family_name = #{familyName},</if>
+            <if test="familySex != null">family_sex = #{familySex},</if>
+            <if test="relationship != null">relationship = #{relationship},</if>
+            <if test="cardType != null">card_type = #{cardType},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="teaPeasantId != null">tea_peasant_id = #{teaPeasantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaPeasantFamilyById" parameterType="Long">
+        delete from tea_peasant_family where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaPeasantFamilyByIds" parameterType="String">
+        delete from tea_peasant_family where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

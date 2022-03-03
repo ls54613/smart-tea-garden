@@ -10,7 +10,7 @@ import com.wanou.project.system.service.ITeaEnterpriseInfoService;
 /**
  * 茶企基本信息Service业务层处理
  *
- * @author ruoyi
+ * @author MrYao
  * @date 2022-03-01
  */
 @Service

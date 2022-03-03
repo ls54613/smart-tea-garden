@@ -11,7 +11,7 @@ import com.wanou.framework.web.domain.BaseEntity;
 /**
  * 茶企基本信息对象 tea_enterprise_info
  *
- * @author ruoyi
+ * @author MrYao
  * @date 2022-03-01
  */
 
