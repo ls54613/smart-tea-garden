@@ -73,6 +73,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	(SELECT SUM(cultivated_area) plantArea FROM tea_enterprise_info) t6
     </select>
 
+    <select id="getTeaSalesTypes" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        	t2.dict_label `name`,
+        	COUNT( t1.tea_type ) `value`
+        FROM
+        	`tea_enterprise_tea_type` t1 INNER JOIN sys_dict_data t2 ON t2.dict_value = t1.tea_type AND t2.dict_type = 'sys_tea_type'
+        GROUP BY
+        	t1.tea_type
+    </select>
+
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

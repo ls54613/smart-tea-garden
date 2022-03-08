@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaEnterpriseYieldSalesMapper">
-    
+
     <resultMap type="TeaEnterpriseYieldSales" id="TeaEnterpriseYieldSalesResult">
         <result property="id"    column="id"    />
         <result property="year"    column="year"    />
@@ -17,26 +17,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTeaEnterpriseYieldSalesVo">
-        select id, year, yield_value_number, yield_value_money, sales_volume_number, sales_volume_money, product_profit_statistics, product_cost_statistics, tea_peasant_id from tea_enterprise_yield_sales
+        select id, `year`, yield_value_number, yield_value_money, sales_volume_number, sales_volume_money, product_profit_statistics, product_cost_statistics, tea_peasant_id from tea_enterprise_yield_sales
     </sql>
 
     <select id="selectTeaEnterpriseYieldSalesList" parameterType="TeaEnterpriseYieldSales" resultMap="TeaEnterpriseYieldSalesResult">
         <include refid="selectTeaEnterpriseYieldSalesVo"/>
-        <where>  
-            <if test="year != null  and year != ''"> and year = #{year}</if>
+        <where>
+            <if test="year != null"> and `year` = #{year}</if>
             <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaEnterpriseYieldSalesById" parameterType="Long" resultMap="TeaEnterpriseYieldSalesResult">
         <include refid="selectTeaEnterpriseYieldSalesVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectTeaEnterpriseYieldSalesTotalRange" resultType="java.util.Map">
+        SELECT
+        	SUM(sales_volume_number) salesNumber ,SUM(sales_volume_money) salesMoney
+        FROM
+        	tea_enterprise_yield_sales
+        WHERE
+        	`year` BETWEEN #{start} AND #{end}
+        GROUP BY `year`
+        ORDER BY `year`
+    </select>
+
+    <select id="getSalesYearOnYear" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        	TRUNCATE((((t2.salesNum/t1.salesNum) - 1) * 100),2) salesNumYearOnYear,TRUNCATE((((t2.salesMoney/t1.salesMoney) - 1) * 100),2) salesMoneyYearOnYear
+        FROM
+        	(SELECT SUM(sales_volume_number) salesNum,SUM(sales_volume_money) salesMoney FROM tea_enterprise_yield_sales WHERE `year` = #{beforeLastYear}) t1,
+        	(SELECT SUM(sales_volume_number) salesNum,SUM(sales_volume_money) salesMoney FROM tea_enterprise_yield_sales WHERE `year` = #{lastYear}) t2
+    </select>
+
+
     <insert id="insertTeaEnterpriseYieldSales" parameterType="TeaEnterpriseYieldSales" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_yield_sales
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="year != null">year,</if>
+            <if test="year != null">`year`,</if>
             <if test="yieldValueNumber != null">yield_value_number,</if>
             <if test="yieldValueMoney != null">yield_value_money,</if>
             <if test="salesVolumeNumber != null">sales_volume_number,</if>
@@ -60,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTeaEnterpriseYieldSales" parameterType="TeaEnterpriseYieldSales">
         update tea_enterprise_yield_sales
         <trim prefix="SET" suffixOverrides=",">
-            <if test="year != null">year = #{year},</if>
+            <if test="year != null">`year` = #{year},</if>
             <if test="yieldValueNumber != null">yield_value_number = #{yieldValueNumber},</if>
             <if test="yieldValueMoney != null">yield_value_money = #{yieldValueMoney},</if>
             <if test="salesVolumeNumber != null">sales_volume_number = #{salesVolumeNumber},</if>
@@ -77,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaEnterpriseYieldSalesByIds" parameterType="String">
-        delete from tea_enterprise_yield_sales where id in 
+        delete from tea_enterprise_yield_sales where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

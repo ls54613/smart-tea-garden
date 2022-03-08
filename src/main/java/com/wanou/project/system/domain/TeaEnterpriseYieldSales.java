@@ -1,6 +1,8 @@
 package com.wanou.project.system.domain;
 
 import java.math.BigDecimal;
+
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.wanou.framework.aspectj.lang.annotation.Excel;
@@ -12,6 +14,7 @@ import com.wanou.framework.web.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-03-07
  */
+@Data
 public class TeaEnterpriseYieldSales extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -21,7 +24,7 @@ public class TeaEnterpriseYieldSales extends BaseEntity
 
     /** 年度 */
     @Excel(name = "年度")
-    private String year;
+    private Integer year;
 
     /** 产量及产值数量 */
     @Excel(name = "产量及产值数量")
@@ -50,101 +53,4 @@ public class TeaEnterpriseYieldSales extends BaseEntity
     /** 茶企关联id */
     @Excel(name = "茶企关联id")
     private Long teaPeasantId;
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public Long getId()
-    {
-        return id;
-    }
-    public void setYear(String year)
-    {
-        this.year = year;
-    }
-
-    public String getYear()
-    {
-        return year;
-    }
-    public void setYieldValueNumber(BigDecimal yieldValueNumber)
-    {
-        this.yieldValueNumber = yieldValueNumber;
-    }
-
-    public BigDecimal getYieldValueNumber()
-    {
-        return yieldValueNumber;
-    }
-    public void setYieldValueMoney(BigDecimal yieldValueMoney)
-    {
-        this.yieldValueMoney = yieldValueMoney;
-    }
-
-    public BigDecimal getYieldValueMoney()
-    {
-        return yieldValueMoney;
-    }
-    public void setSalesVolumeNumber(BigDecimal salesVolumeNumber)
-    {
-        this.salesVolumeNumber = salesVolumeNumber;
-    }
-
-    public BigDecimal getSalesVolumeNumber()
-    {
-        return salesVolumeNumber;
-    }
-    public void setSalesVolumeMoney(BigDecimal salesVolumeMoney)
-    {
-        this.salesVolumeMoney = salesVolumeMoney;
-    }
-
-    public BigDecimal getSalesVolumeMoney()
-    {
-        return salesVolumeMoney;
-    }
-    public void setProductProfitStatistics(BigDecimal productProfitStatistics)
-    {
-        this.productProfitStatistics = productProfitStatistics;
-    }
-
-    public BigDecimal getProductProfitStatistics()
-    {
-        return productProfitStatistics;
-    }
-    public void setProductCostStatistics(BigDecimal productCostStatistics)
-    {
-        this.productCostStatistics = productCostStatistics;
-    }
-
-    public BigDecimal getProductCostStatistics()
-    {
-        return productCostStatistics;
-    }
-    public void setTeaPeasantId(Long teaPeasantId)
-    {
-        this.teaPeasantId = teaPeasantId;
-    }
-
-    public Long getTeaPeasantId()
-    {
-        return teaPeasantId;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("year", getYear())
-            .append("yieldValueNumber", getYieldValueNumber())
-            .append("yieldValueMoney", getYieldValueMoney())
-            .append("salesVolumeNumber", getSalesVolumeNumber())
-            .append("salesVolumeMoney", getSalesVolumeMoney())
-            .append("productProfitStatistics", getProductProfitStatistics())
-            .append("productCostStatistics", getProductCostStatistics())
-            .append("teaPeasantId", getTeaPeasantId())
-            .toString();
-    }
 }

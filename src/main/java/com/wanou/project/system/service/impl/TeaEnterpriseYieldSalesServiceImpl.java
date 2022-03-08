@@ -1,6 +1,13 @@
 package com.wanou.project.system.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaEnterpriseYieldSalesMapper;
@@ -89,5 +96,19 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
     public int deleteTeaEnterpriseYieldSalesById(Long id)
     {
         return teaEnterpriseYieldSalesMapper.deleteTeaEnterpriseYieldSalesById(id);
+    }
+
+    @Override
+    public List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(int start, int end) {
+        return teaEnterpriseYieldSalesMapper.selectTeaEnterpriseYieldSalesTotalRange(start,end);
+    }
+
+    @Override
+    public JSONObject getSalesYearOnYear() {
+        //获取去年及前年
+        DateTime nowDate = DateUtil.date();
+        DateTime lastYear = DateUtil.offset(nowDate, DateField.YEAR, -1); //去年
+        DateTime qianYear = DateUtil.offset(nowDate, DateField.YEAR, -2); //前年
+        return teaEnterpriseYieldSalesMapper.getSalesYearOnYear(DateUtil.year(lastYear),DateUtil.year(qianYear));
     }
 }

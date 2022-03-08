@@ -1,6 +1,8 @@
 package com.wanou.project.system.mapper;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import org.springframework.stereotype.Repository;
@@ -67,4 +69,6 @@ public interface TeaEnterpriseInfoMapper
      * @return
      */
     TeaEnterpriseTotal getTotalData();
+
+    List<JSONObject> getTeaSalesTypes();
 }

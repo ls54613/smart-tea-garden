@@ -276,7 +276,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.5</version>
+            <version>5.7.22</version>
         </dependency>
 
         <!-- 图像处理 -->

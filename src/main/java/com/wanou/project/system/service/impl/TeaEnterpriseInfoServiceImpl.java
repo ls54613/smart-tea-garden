@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseTeaType;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper;
@@ -163,5 +164,10 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     @Override
     public TeaEnterpriseTotal getTotal() {
         return teaEnterpriseInfoMapper.getTotalData();
+    }
+
+    @Override
+    public List<JSONObject> getTeaSalesTypes() {
+        return teaEnterpriseInfoMapper.getTeaSalesTypes();
     }
 }

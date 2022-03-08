@@ -1,19 +1,24 @@
 package com.wanou.project.system.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseYieldSales;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 企业历年产量及销售情况Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2022-03-07
  */
-public interface TeaEnterpriseYieldSalesMapper 
+public interface TeaEnterpriseYieldSalesMapper
 {
     /**
      * 查询企业历年产量及销售情况
-     * 
+     *
      * @param id 企业历年产量及销售情况主键
      * @return 企业历年产量及销售情况
      */
@@ -21,7 +26,7 @@ public interface TeaEnterpriseYieldSalesMapper
 
     /**
      * 查询企业历年产量及销售情况列表
-     * 
+     *
      * @param teaEnterpriseYieldSales 企业历年产量及销售情况
      * @return 企业历年产量及销售情况集合
      */
@@ -29,7 +34,7 @@ public interface TeaEnterpriseYieldSalesMapper
 
     /**
      * 新增企业历年产量及销售情况
-     * 
+     *
      * @param teaEnterpriseYieldSales 企业历年产量及销售情况
      * @return 结果
      */
@@ -37,7 +42,7 @@ public interface TeaEnterpriseYieldSalesMapper
 
     /**
      * 修改企业历年产量及销售情况
-     * 
+     *
      * @param teaEnterpriseYieldSales 企业历年产量及销售情况
      * @return 结果
      */
@@ -45,7 +50,7 @@ public interface TeaEnterpriseYieldSalesMapper
 
     /**
      * 删除企业历年产量及销售情况
-     * 
+     *
      * @param id 企业历年产量及销售情况主键
      * @return 结果
      */
@@ -53,9 +58,13 @@ public interface TeaEnterpriseYieldSalesMapper
 
     /**
      * 批量删除企业历年产量及销售情况
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTeaEnterpriseYieldSalesByIds(Long[] ids);
+
+    List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(@Param("start") int start,@Param("end") int end);
+
+    JSONObject getSalesYearOnYear(@Param("lastYear") int lastYear,@Param("beforeLastYear") int beforeLastYear);
 }

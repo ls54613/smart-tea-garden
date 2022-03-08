@@ -3,6 +3,7 @@ package com.wanou.test;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.img.ImgUtil;
@@ -21,6 +22,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.wanou.common.utils.IdUtils;
+import com.wanou.common.utils.sign.Base64;
 import com.wanou.project.system.domain.SysDept;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
@@ -45,7 +47,6 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -95,10 +96,17 @@ public class DemoTest {
         System.out.println(CollUtil.subtract(list1,list2));
     }
 
-    @Async
+    @Test
     public void syncTest() throws InterruptedException {
-        Thread.sleep(1000L);
-        System.out.println("异步执行");
+        DateTime date = DateUtil.date();
+        DateTime start = DateUtil.offset(date, DateField.YEAR, -5);
+        DateTime end = DateUtil.offset(date, DateField.YEAR, -1);
+
+        List<Integer> list = DateUtil.rangeFunc(start, end, DateField.YEAR, (year) -> {
+            System.out.println(year);
+            return DateUtil.year(year);
+        });
+        System.out.println(list);
     }
 
     @Test

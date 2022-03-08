@@ -1,6 +1,8 @@
 package com.wanou.project.system.service;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 
@@ -65,4 +67,6 @@ public interface ITeaEnterpriseInfoService
      * @return
      */
     TeaEnterpriseTotal getTotal();
+
+    List<JSONObject> getTeaSalesTypes();
 }
