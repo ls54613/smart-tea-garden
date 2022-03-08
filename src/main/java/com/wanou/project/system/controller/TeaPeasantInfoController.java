@@ -46,6 +46,15 @@ public class TeaPeasantInfoController extends BaseController
     }
 
     /**
+     * 查询所有茶农
+     * */
+    @GetMapping ("/findAllPeasant")
+    public AjaxResult findAllPeasant(TeaPeasantInfo teaPeasantInfo){
+        List<TeaPeasantInfo> list = teaPeasantInfoService.selectTeaPeasantInfoList(teaPeasantInfo);
+        return AjaxResult.success(list);
+    }
+
+    /**
      * 导出茶农基本信息列表
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantInfo:export')")

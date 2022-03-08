@@ -4,6 +4,7 @@ import com.wanou.common.exception.*;
 import org.aspectj.weaver.loadtime.Aj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -158,5 +159,10 @@ public class GlobalExceptionHandler
     @ExceptionHandler(MiniNoAccessException.class)
     public AjaxResult miniNoAccessException(MiniNoAccessException e){
         return AjaxResult.error(HttpStatus.ERROR,e.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public AjaxResult dbDuplicateKeyException(DuplicateKeyException e){
+        return AjaxResult.error("已存在,禁止重复添加");
     }
 }

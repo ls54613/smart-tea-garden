@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaWarehouseDetailsMapper">
+    
+    <resultMap type="TeaWarehouseDetails" id="TeaWarehouseDetailsResult">
+        <result property="id"    column="id"    />
+        <result property="areaCovered"    column="area_covered"    />
+        <result property="totalInventory"    column="total_inventory"    />
+        <result property="totalOutbound"    column="total_outbound"    />
+        <result property="teaWarehouseId"    column="tea_warehouse_id"    />
+    </resultMap>
+
+    <sql id="selectTeaWarehouseDetailsVo">
+        select id, area_covered, total_inventory, total_outbound, tea_warehouse_id from tea_warehouse_details
+    </sql>
+
+    <select id="selectTeaWarehouseDetailsList" parameterType="TeaWarehouseDetails" resultMap="TeaWarehouseDetailsResult">
+        <include refid="selectTeaWarehouseDetailsVo"/>
+        <where>  
+            <if test="areaCovered != null "> and area_covered = #{areaCovered}</if>
+            <if test="totalInventory != null "> and total_inventory = #{totalInventory}</if>
+            <if test="totalOutbound != null "> and total_outbound = #{totalOutbound}</if>
+            <if test="teaWarehouseId != null "> and tea_warehouse_id = #{teaWarehouseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaWarehouseDetailsById" parameterType="Long" resultMap="TeaWarehouseDetailsResult">
+        <include refid="selectTeaWarehouseDetailsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaWarehouseDetails" parameterType="TeaWarehouseDetails" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_warehouse_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="areaCovered != null">area_covered,</if>
+            <if test="totalInventory != null">total_inventory,</if>
+            <if test="totalOutbound != null">total_outbound,</if>
+            <if test="teaWarehouseId != null">tea_warehouse_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="areaCovered != null">#{areaCovered},</if>
+            <if test="totalInventory != null">#{totalInventory},</if>
+            <if test="totalOutbound != null">#{totalOutbound},</if>
+            <if test="teaWarehouseId != null">#{teaWarehouseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaWarehouseDetails" parameterType="TeaWarehouseDetails">
+        update tea_warehouse_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaCovered != null">area_covered = #{areaCovered},</if>
+            <if test="totalInventory != null">total_inventory = #{totalInventory},</if>
+            <if test="totalOutbound != null">total_outbound = #{totalOutbound},</if>
+            <if test="teaWarehouseId != null">tea_warehouse_id = #{teaWarehouseId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaWarehouseDetailsById" parameterType="Long">
+        delete from tea_warehouse_details where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaWarehouseDetailsByIds" parameterType="String">
+        delete from tea_warehouse_details where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

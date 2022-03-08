@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaPeasantYieldSalesMapper">
+    
+    <resultMap type="TeaPeasantYieldSales" id="TeaPeasantYieldSalesResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="yieldValueNumber"    column="yield_value_number"    />
+        <result property="yieldValueMoney"    column="yield_value_money"    />
+        <result property="salesVolumeNumber"    column="sales_volume_number"    />
+        <result property="salesVolumeMoney"    column="sales_volume_money"    />
+        <result property="teaPeasantId"    column="tea_peasant_id"    />
+    </resultMap>
+
+    <sql id="selectTeaPeasantYieldSalesVo">
+        select id, year, yield_value_number, yield_value_money, sales_volume_number, sales_volume_money, tea_peasant_id from tea_peasant_yield_sales
+    </sql>
+
+    <select id="selectTeaPeasantYieldSalesList" parameterType="TeaPeasantYieldSales" resultMap="TeaPeasantYieldSalesResult">
+        <include refid="selectTeaPeasantYieldSalesVo"/>
+        <where>  
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="yieldValueNumber != null "> and yield_value_number = #{yieldValueNumber}</if>
+            <if test="yieldValueMoney != null "> and yield_value_money = #{yieldValueMoney}</if>
+            <if test="salesVolumeNumber != null "> and sales_volume_number = #{salesVolumeNumber}</if>
+            <if test="salesVolumeMoney != null "> and sales_volume_money = #{salesVolumeMoney}</if>
+            <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaPeasantYieldSalesById" parameterType="Long" resultMap="TeaPeasantYieldSalesResult">
+        <include refid="selectTeaPeasantYieldSalesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaPeasantYieldSales" parameterType="TeaPeasantYieldSales" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_peasant_yield_sales
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="year != null">year,</if>
+            <if test="yieldValueNumber != null">yield_value_number,</if>
+            <if test="yieldValueMoney != null">yield_value_money,</if>
+            <if test="salesVolumeNumber != null">sales_volume_number,</if>
+            <if test="salesVolumeMoney != null">sales_volume_money,</if>
+            <if test="teaPeasantId != null">tea_peasant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="year != null">#{year},</if>
+            <if test="yieldValueNumber != null">#{yieldValueNumber},</if>
+            <if test="yieldValueMoney != null">#{yieldValueMoney},</if>
+            <if test="salesVolumeNumber != null">#{salesVolumeNumber},</if>
+            <if test="salesVolumeMoney != null">#{salesVolumeMoney},</if>
+            <if test="teaPeasantId != null">#{teaPeasantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaPeasantYieldSales" parameterType="TeaPeasantYieldSales">
+        update tea_peasant_yield_sales
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="yieldValueNumber != null">yield_value_number = #{yieldValueNumber},</if>
+            <if test="yieldValueMoney != null">yield_value_money = #{yieldValueMoney},</if>
+            <if test="salesVolumeNumber != null">sales_volume_number = #{salesVolumeNumber},</if>
+            <if test="salesVolumeMoney != null">sales_volume_money = #{salesVolumeMoney},</if>
+            <if test="teaPeasantId != null">tea_peasant_id = #{teaPeasantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaPeasantYieldSalesById" parameterType="Long">
+        delete from tea_peasant_yield_sales where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaPeasantYieldSalesByIds" parameterType="String">
+        delete from tea_peasant_yield_sales where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

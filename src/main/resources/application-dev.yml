@@ -58,9 +58,9 @@ spring:
           config:
             multi-statement-allow: true
 # 日志配置
-#logging:
-#  level:
-#    com.wanou: debug
-#    org.springframework: warn
+logging:
+  level:
+    com.wanou: debug
+    org.springframework: warn
 unzipPath: D:\unzip
 zipSavePath: D:\zipSave

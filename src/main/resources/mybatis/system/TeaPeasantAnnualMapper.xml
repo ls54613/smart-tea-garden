@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaPeasantAnnualMapper">
+
+    <resultMap type="TeaPeasantAnnual" id="TeaPeasantAnnualResult">
+        <result property="id"    column="id"    />
+        <result property="estimatedIncome"    column="estimated_income"    />
+        <result property="incomeType"    column="income_type"    />
+        <result property="whetherIncrease"    column="whether_increase"    />
+        <result property="teaPeasantId"    column="tea_peasant_id"    />
+    </resultMap>
+
+    <sql id="selectTeaPeasantAnnualVo">
+        select id, estimated_income, income_type, whether_increase, tea_peasant_id from tea_peasant_annual
+    </sql>
+
+    <select id="selectTeaPeasantAnnualList" parameterType="TeaPeasantAnnual" resultMap="TeaPeasantAnnualResult">
+        <include refid="selectTeaPeasantAnnualVo"/>
+        <where>
+            <if test="estimatedIncome != null  and estimatedIncome != ''"> and estimated_income = #{estimatedIncome}</if>
+            <if test="incomeType != null  and incomeType != ''"> and income_type = #{incomeType}</if>
+            <if test="whetherIncrease != null "> and whether_increase = #{whetherIncrease}</if>
+            <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaPeasantAnnualById" parameterType="Long" resultMap="TeaPeasantAnnualResult">
+        <include refid="selectTeaPeasantAnnualVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTeaPeasantAnnualByTeaPeasantIdAndYear"
+            resultType="com.wanou.project.system.domain.TeaPeasantAnnual" resultMap="TeaPeasantAnnualResult">
+        select id from tea_peasant_annual where tea_peasant_id=#{teaPeasantId} and `year`=#{year}
+    </select>
+
+    <insert id="insertTeaPeasantAnnual" parameterType="TeaPeasantAnnual" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_peasant_annual
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="estimatedIncome != null">estimated_income,</if>
+            <if test="incomeType != null">income_type,</if>
+            <if test="whetherIncrease != null">whether_increase,</if>
+            <if test="teaPeasantId != null">tea_peasant_id,</if>
+            <if test="year != null and year != ''">`year`,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="estimatedIncome != null">#{estimatedIncome},</if>
+            <if test="incomeType != null">#{incomeType},</if>
+            <if test="whetherIncrease != null">#{whetherIncrease},</if>
+            <if test="teaPeasantId != null">#{teaPeasantId},</if>
+            <if test="year != null and year != ''">#{year},</if>
+         </trim>
+    </insert>
+    <insert id="insertOrUpdate">
+        insert into tea_peasant_annual
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="estimatedIncome != null">estimated_income,</if>
+            <if test="incomeType != null">income_type,</if>
+            <if test="whetherIncrease != null">whether_increase,</if>
+            <if test="teaPeasantId != null">tea_peasant_id,</if>
+            <if test="year != null and year != ''">`year`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="estimatedIncome != null">#{estimatedIncome},</if>
+            <if test="incomeType != null">#{incomeType},</if>
+            <if test="whetherIncrease != null">#{whetherIncrease},</if>
+            <if test="teaPeasantId != null">#{teaPeasantId},</if>
+            <if test="year != null and year != ''">#{year},</if>
+        </trim>
+        on duplicate key update
+        <if test="estimatedIncome != null">estimated_income = #{estimatedIncome},</if>
+        <if test="incomeType != null">income_type = #{incomeType},</if>
+        <if test="whetherIncrease != null">whether_increase = #{whetherIncrease}</if>
+    </insert>
+
+    <update id="updateTeaPeasantAnnual" parameterType="TeaPeasantAnnual">
+        update tea_peasant_annual
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="estimatedIncome != null">estimated_income = #{estimatedIncome},</if>
+            <if test="incomeType != null">income_type = #{incomeType},</if>
+            <if test="whetherIncrease != null">whether_increase = #{whetherIncrease},</if>
+            <if test="teaPeasantId != null">tea_peasant_id = #{teaPeasantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaPeasantAnnualById" parameterType="Long">
+        delete from tea_peasant_annual where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaPeasantAnnualByIds" parameterType="String">
+        delete from tea_peasant_annual where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

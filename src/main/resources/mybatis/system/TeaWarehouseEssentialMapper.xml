@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaWarehouseEssentialMapper">
+    
+    <resultMap type="TeaWarehouseEssential" id="TeaWarehouseEssentialResult">
+        <result property="id"    column="id"    />
+        <result property="enterpriseId"    column="enterprise_id"    />
+        <result property="measure"    column="measure"    />
+        <result property="capacity"    column="capacity"    />
+        <result property="facilitiesNumber"    column="facilities_number"    />
+        <result property="utilization"    column="utilization"    />
+        <result property="personCharge"    column="person_charge"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="outboundVolume"    column="outbound_volume"    />
+    </resultMap>
+
+    <sql id="selectTeaWarehouseEssentialVo">
+        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume from tea_warehouse_essential
+    </sql>
+
+    <select id="selectTeaWarehouseEssentialList" parameterType="TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
+        <include refid="selectTeaWarehouseEssentialVo"/>
+        <where>  
+            <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
+            <if test="measure != null "> and measure = #{measure}</if>
+            <if test="capacity != null "> and capacity = #{capacity}</if>
+            <if test="facilitiesNumber != null "> and facilities_number = #{facilitiesNumber}</if>
+            <if test="utilization != null  and utilization != ''"> and utilization = #{utilization}</if>
+            <if test="personCharge != null  and personCharge != ''"> and person_charge = #{personCharge}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="outboundVolume != null "> and outbound_volume = #{outboundVolume}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaWarehouseEssentialById" parameterType="Long" resultMap="TeaWarehouseEssentialResult">
+        <include refid="selectTeaWarehouseEssentialVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_warehouse_essential
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">enterprise_id,</if>
+            <if test="measure != null">measure,</if>
+            <if test="capacity != null">capacity,</if>
+            <if test="facilitiesNumber != null">facilities_number,</if>
+            <if test="utilization != null">utilization,</if>
+            <if test="personCharge != null">person_charge,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="outboundVolume != null">outbound_volume,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">#{enterpriseId},</if>
+            <if test="measure != null">#{measure},</if>
+            <if test="capacity != null">#{capacity},</if>
+            <if test="facilitiesNumber != null">#{facilitiesNumber},</if>
+            <if test="utilization != null">#{utilization},</if>
+            <if test="personCharge != null">#{personCharge},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="outboundVolume != null">#{outboundVolume},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaWarehouseEssential" parameterType="TeaWarehouseEssential">
+        update tea_warehouse_essential
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+            <if test="measure != null">measure = #{measure},</if>
+            <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="facilitiesNumber != null">facilities_number = #{facilitiesNumber},</if>
+            <if test="utilization != null">utilization = #{utilization},</if>
+            <if test="personCharge != null">person_charge = #{personCharge},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="outboundVolume != null">outbound_volume = #{outboundVolume},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaWarehouseEssentialById" parameterType="Long">
+        delete from tea_warehouse_essential where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaWarehouseEssentialByIds" parameterType="String">
+        delete from tea_warehouse_essential where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

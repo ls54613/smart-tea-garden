@@ -2,6 +2,7 @@ package com.wanou.project.system.mapper;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
+import org.springframework.stereotype.Repository;
 
 /**
  * 茶企基本信息Mapper接口
@@ -9,6 +10,7 @@ import com.wanou.project.system.domain.TeaEnterpriseInfo;
  * @author MrYao
  * @date 2022-03-01
  */
+@Repository
 public interface TeaEnterpriseInfoMapper
 {
     /**
