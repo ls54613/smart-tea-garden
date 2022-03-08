@@ -2,6 +2,7 @@ package com.wanou.project.system.service;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
+import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 
 /**
  * 茶企基本信息Service接口
@@ -58,4 +59,10 @@ public interface ITeaEnterpriseInfoService
      * @return 结果
      */
     public int deleteTeaEnterpriseInfoById(Long id);
+
+    /**
+     * 获取茶企各类统计
+     * @return
+     */
+    TeaEnterpriseTotal getTotal();
 }

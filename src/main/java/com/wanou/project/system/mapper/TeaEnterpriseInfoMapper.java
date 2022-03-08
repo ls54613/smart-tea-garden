@@ -2,6 +2,7 @@ package com.wanou.project.system.mapper;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
+import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -60,4 +61,10 @@ public interface TeaEnterpriseInfoMapper
      * @return 结果
      */
     public int deleteTeaEnterpriseInfoByIds(Long[] ids);
+
+    /**
+     * 获取茶企统计数据
+     * @return
+     */
+    TeaEnterpriseTotal getTotalData();
 }

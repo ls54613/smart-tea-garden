@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import com.wanou.project.system.domain.TeaEnterpriseTeaType;
+import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -153,5 +154,14 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     {
         teaEnterpriseTeaTypeMapper.deleteTeaEnterpriseTeaTypeByTeaEnterpriseId(id);
         return teaEnterpriseInfoMapper.deleteTeaEnterpriseInfoById(id);
+    }
+
+    /**
+     * 获取茶企各类统计
+     * @return
+     */
+    @Override
+    public TeaEnterpriseTotal getTotal() {
+        return teaEnterpriseInfoMapper.getTotalData();
     }
 }

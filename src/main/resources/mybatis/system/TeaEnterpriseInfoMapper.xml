@@ -61,6 +61,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="getTotalData" resultType="com.wanou.project.system.domain.openApi.TeaEnterpriseTotal">
+        SELECT
+        	t1.yield,t2.productionValue,t3.teaEnterPriseCount,t4.teaPeasantCount,t5.teaGardenCount,t6.plantArea
+        FROM
+        	(SELECT (SUM(yield_value_money) / 10000) yield FROM tea_enterprise_yield_sales) t1,
+        	(SELECT (SUM(yield_value_number) / 20000000) productionValue  FROM tea_enterprise_yield_sales) t2,
+        	(SELECT COUNT(id) teaEnterPriseCount FROM tea_enterprise_info) t3,
+        	(SELECT COUNT(id) teaPeasantCount FROM tea_peasant_info) t4,
+        	(SELECT COUNT(tea_garden_id) teaGardenCount FROM tea_garden) t5,
+        	(SELECT SUM(cultivated_area) plantArea FROM tea_enterprise_info) t6
+    </select>
+
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
