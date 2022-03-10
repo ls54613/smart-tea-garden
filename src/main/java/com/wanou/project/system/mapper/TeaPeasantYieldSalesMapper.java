@@ -5,15 +5,15 @@ import com.wanou.project.system.domain.TeaPeasantYieldSales;
 
 /**
  * 茶农个人历年销量及销售额统计Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2022-03-05
  */
-public interface TeaPeasantYieldSalesMapper 
+public interface TeaPeasantYieldSalesMapper
 {
     /**
      * 查询茶农个人历年销量及销售额统计
-     * 
+     *
      * @param id 茶农个人历年销量及销售额统计主键
      * @return 茶农个人历年销量及销售额统计
      */
@@ -21,7 +21,7 @@ public interface TeaPeasantYieldSalesMapper
 
     /**
      * 查询茶农个人历年销量及销售额统计列表
-     * 
+     *
      * @param teaPeasantYieldSales 茶农个人历年销量及销售额统计
      * @return 茶农个人历年销量及销售额统计集合
      */
@@ -29,7 +29,7 @@ public interface TeaPeasantYieldSalesMapper
 
     /**
      * 新增茶农个人历年销量及销售额统计
-     * 
+     *
      * @param teaPeasantYieldSales 茶农个人历年销量及销售额统计
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface TeaPeasantYieldSalesMapper
 
     /**
      * 修改茶农个人历年销量及销售额统计
-     * 
+     *
      * @param teaPeasantYieldSales 茶农个人历年销量及销售额统计
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface TeaPeasantYieldSalesMapper
 
     /**
      * 删除茶农个人历年销量及销售额统计
-     * 
+     *
      * @param id 茶农个人历年销量及销售额统计主键
      * @return 结果
      */
@@ -53,9 +53,13 @@ public interface TeaPeasantYieldSalesMapper
 
     /**
      * 批量删除茶农个人历年销量及销售额统计
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTeaPeasantYieldSalesByIds(Long[] ids);
+
+    public List<TeaPeasantYieldSales> getYieldValueNumber(long teaPeasantId);
+
+     List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId);
 }

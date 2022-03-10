@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaPeasantYieldSalesMapper">
-    
+
     <resultMap type="TeaPeasantYieldSales" id="TeaPeasantYieldSalesResult">
         <result property="id"    column="id"    />
         <result property="year"    column="year"    />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaPeasantYieldSalesList" parameterType="TeaPeasantYieldSales" resultMap="TeaPeasantYieldSalesResult">
         <include refid="selectTeaPeasantYieldSalesVo"/>
-        <where>  
+        <where>
             <if test="year != null  and year != ''"> and year = #{year}</if>
             <if test="yieldValueNumber != null "> and yield_value_number = #{yieldValueNumber}</if>
             <if test="yieldValueMoney != null "> and yield_value_money = #{yieldValueMoney}</if>
@@ -29,12 +29,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaPeasantYieldSalesById" parameterType="Long" resultMap="TeaPeasantYieldSalesResult">
         <include refid="selectTeaPeasantYieldSalesVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getYieldValueNumber" resultType="com.wanou.project.system.domain.TeaPeasantYieldSales" resultMap="TeaPeasantYieldSalesResult">
+        select
+            year,yield_value_number
+        from
+            tea_peasant_yield_sales
+        where
+            tea_peasant_id=#{teaPeasantId}
+    </select>
+
+    <select id="getYieldValueMoney" resultType="com.wanou.project.system.domain.TeaPeasantYieldSales" resultMap="TeaPeasantYieldSalesResult">
+        select
+            year,yield_value_money
+        from
+            tea_peasant_yield_sales
+        where
+            tea_peasant_id=#{teaPeasantId}
+    </select>
+
     <insert id="insertTeaPeasantYieldSales" parameterType="TeaPeasantYieldSales" useGeneratedKeys="true" keyProperty="id">
         insert into tea_peasant_yield_sales
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaPeasantYieldSalesByIds" parameterType="String">
-        delete from tea_peasant_yield_sales where id in 
+        delete from tea_peasant_yield_sales where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

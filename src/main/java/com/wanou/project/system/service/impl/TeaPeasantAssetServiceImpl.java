@@ -90,4 +90,9 @@ public class TeaPeasantAssetServiceImpl implements ITeaPeasantAssetService
     {
         return teaPeasantAssetMapper.deleteTeaPeasantAssetById(id);
     }
+
+    @Override
+    public TeaPeasantAsset getpeasantasset(long teaPeasantId) {
+        return teaPeasantAssetMapper.getpeasantasset(teaPeasantId);
+    }
 }

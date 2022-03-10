@@ -2,6 +2,7 @@ package com.wanou.project.system.mapper;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaPeasantAnnual;
+import com.wanou.project.system.domain.TeaPeasantAsset;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -65,4 +66,8 @@ public interface TeaPeasantAnnualMapper
     TeaPeasantAnnual selectTeaPeasantAnnualByTeaPeasantIdAndYear(@Param("teaPeasantId") Long teaPeasantId,@Param("year") String year);
 
     void insertOrUpdate(TeaPeasantAnnual teaPeasantAnnual);
+
+
+    TeaPeasantAnnual getPeasantAnnual(long teaPeasantId);
+
 }

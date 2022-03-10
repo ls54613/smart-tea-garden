@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="incomeType"    column="income_type"    />
         <result property="whetherIncrease"    column="whether_increase"    />
         <result property="teaPeasantId"    column="tea_peasant_id"    />
+        <result property="year" column="year"/>
     </resultMap>
 
     <sql id="selectTeaPeasantAnnualVo">
@@ -34,6 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             resultType="com.wanou.project.system.domain.TeaPeasantAnnual" resultMap="TeaPeasantAnnualResult">
         select id from tea_peasant_annual where tea_peasant_id=#{teaPeasantId} and `year`=#{year}
     </select>
+
+
+    <select id="getPeasantAnnual" resultType="com.wanou.project.system.domain.TeaPeasantAnnual" resultMap="TeaPeasantAnnualResult">
+        <include refid="selectTeaPeasantAnnualVo"/>
+        where tea_peasant_id=#{teaPeasantId}
+    </select>
+
+
 
     <insert id="insertTeaPeasantAnnual" parameterType="TeaPeasantAnnual" useGeneratedKeys="true" keyProperty="id">
         insert into tea_peasant_annual

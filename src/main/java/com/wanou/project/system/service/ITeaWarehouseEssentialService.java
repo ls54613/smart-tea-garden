@@ -2,18 +2,19 @@ package com.wanou.project.system.service;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaWarehouseEssential;
+import com.wanou.project.system.domain.openApi.TeaValueDistribution;
 
 /**
  * 茶仓基本情况Service接口
- * 
+ *
  * @author ruoyi
  * @date 2022-03-07
  */
-public interface ITeaWarehouseEssentialService 
+public interface ITeaWarehouseEssentialService
 {
     /**
      * 查询茶仓基本情况
-     * 
+     *
      * @param id 茶仓基本情况主键
      * @return 茶仓基本情况
      */
@@ -21,7 +22,7 @@ public interface ITeaWarehouseEssentialService
 
     /**
      * 查询茶仓基本情况列表
-     * 
+     *
      * @param teaWarehouseEssential 茶仓基本情况
      * @return 茶仓基本情况集合
      */
@@ -29,7 +30,7 @@ public interface ITeaWarehouseEssentialService
 
     /**
      * 新增茶仓基本情况
-     * 
+     *
      * @param teaWarehouseEssential 茶仓基本情况
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface ITeaWarehouseEssentialService
 
     /**
      * 修改茶仓基本情况
-     * 
+     *
      * @param teaWarehouseEssential 茶仓基本情况
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface ITeaWarehouseEssentialService
 
     /**
      * 批量删除茶仓基本情况
-     * 
+     *
      * @param ids 需要删除的茶仓基本情况主键集合
      * @return 结果
      */
@@ -53,9 +54,13 @@ public interface ITeaWarehouseEssentialService
 
     /**
      * 删除茶仓基本情况信息
-     * 
+     *
      * @param id 茶仓基本情况主键
      * @return 结果
      */
     public int deleteTeaWarehouseEssentialById(Long id);
+
+    public TeaWarehouseEssential getWarehouseInformation(long id);
+
+    public List<TeaValueDistribution> getValueDistribution();
 }

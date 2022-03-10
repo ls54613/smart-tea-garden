@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaPeasantFamilyMapper">
-    
+
     <resultMap type="TeaPeasantFamily" id="TeaPeasantFamilyResult">
         <result property="id"    column="id"    />
         <result property="familyName"    column="family_name"    />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaPeasantFamilyList" parameterType="TeaPeasantFamily" resultMap="TeaPeasantFamilyResult">
         <include refid="selectTeaPeasantFamilyVo"/>
-        <where>  
+        <where>
             <if test="familyName != null  and familyName != ''"> and family_name like concat('%', #{familyName}, '%')</if>
             <if test="familySex != null "> and family_sex = #{familySex}</if>
             <if test="relationship != null  and relationship != ''"> and relationship = #{relationship}</if>
@@ -29,12 +29,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaPeasantFamilyById" parameterType="Long" resultMap="TeaPeasantFamilyResult">
         <include refid="selectTeaPeasantFamilyVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getMemberOfFamily" parameterType="long" resultMap="TeaPeasantFamilyResult">
+        <include refid="selectTeaPeasantFamilyVo"/>
+        where
+            tea_peasant_id=#{teaPeasantId}
+    </select>
+
     <insert id="insertTeaPeasantFamily" parameterType="TeaPeasantFamily" useGeneratedKeys="true" keyProperty="id">
         insert into tea_peasant_family
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaPeasantFamilyByIds" parameterType="String">
-        delete from tea_peasant_family where id in 
+        delete from tea_peasant_family where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

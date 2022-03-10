@@ -1,6 +1,9 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
+import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaPeasantInfoMapper;
@@ -89,5 +92,21 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     public int deleteTeaPeasantInfoById(Long id)
     {
         return teaPeasantInfoMapper.deleteTeaPeasantInfoById(id);
+    }
+
+    @Override
+    public List<TeaPeasantEducation> getPeasantEducation() {
+        return teaPeasantInfoMapper.getPeasantEducation();
+    }
+
+    @Override
+    public int getTotalNumber() {
+        int totl=teaPeasantInfoMapper.getTotalNumber();
+        return totl;
+    }
+
+    @Override
+    public TeaPersonalInformation getTeaPersonalInformation(int id) {
+        return teaPeasantInfoMapper.getTeaPersonalInformation(id);
     }
 }

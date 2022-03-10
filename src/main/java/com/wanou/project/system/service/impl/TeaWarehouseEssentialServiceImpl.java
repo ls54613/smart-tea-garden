@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.wanou.project.system.domain.openApi.TeaValueDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaWarehouseEssentialMapper;
@@ -89,5 +91,15 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     public int deleteTeaWarehouseEssentialById(Long id)
     {
         return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
+    }
+
+    @Override
+    public TeaWarehouseEssential getWarehouseInformation(long id) {
+        return teaWarehouseEssentialMapper.getWarehouseInformation(id);
+    }
+
+    @Override
+    public List<TeaValueDistribution> getValueDistribution() {
+        return teaWarehouseEssentialMapper.getValueDistribution();
     }
 }

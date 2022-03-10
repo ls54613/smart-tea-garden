@@ -90,4 +90,10 @@ public class TeaPeasantFamilyServiceImpl implements ITeaPeasantFamilyService
     {
         return teaPeasantFamilyMapper.deleteTeaPeasantFamilyById(id);
     }
+
+    @Override
+    public TeaPeasantFamily getMemberOfFamily(long teaPeasantId) {
+
+        return teaPeasantFamilyMapper.getMemberOfFamily(teaPeasantId);
+    }
 }

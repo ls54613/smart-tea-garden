@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaWarehouseEssentialMapper">
-    
+
     <resultMap type="TeaWarehouseEssential" id="TeaWarehouseEssentialResult">
         <result property="id"    column="id"    />
         <result property="enterpriseId"    column="enterprise_id"    />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaWarehouseEssentialList" parameterType="TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
         <include refid="selectTeaWarehouseEssentialVo"/>
-        <where>  
+        <where>
             <if test="enterpriseId != null "> and enterprise_id = #{enterpriseId}</if>
             <if test="measure != null "> and measure = #{measure}</if>
             <if test="capacity != null "> and capacity = #{capacity}</if>
@@ -33,12 +33,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outboundVolume != null "> and outbound_volume = #{outboundVolume}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaWarehouseEssentialById" parameterType="Long" resultMap="TeaWarehouseEssentialResult">
         <include refid="selectTeaWarehouseEssentialVo"/>
         where id = #{id}
     </select>
-        
+
+
+    <select id="getWarehouseInformation" resultType="com.wanou.project.system.domain.TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
+        select
+            warehouse_name,location,enterprise_id,rate,warehouse_type
+        from
+            tea_warehouse_essential
+        where
+            id=#{id}
+    </select>
+
+    <select id="getValueDistribution"
+            resultType="com.wanou.project.system.domain.openApi.TeaValueDistribution">
+        SELECT
+            count(varieties) varietiesNumber,t2.dict_label teaVarieties
+        FROM
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2 ON (t2.dict_type = 'sys_tea_type' AND t1.varieties = t2.dict_value)
+        GROUP BY
+            t1.varieties
+    </select>
+
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_essential
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -83,7 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaWarehouseEssentialByIds" parameterType="String">
-        delete from tea_warehouse_essential where id in 
+        delete from tea_warehouse_essential where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
