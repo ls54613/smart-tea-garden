@@ -90,4 +90,14 @@ public class TeaPeasantYieldSalesServiceImpl implements ITeaPeasantYieldSalesSer
     {
         return teaPeasantYieldSalesMapper.deleteTeaPeasantYieldSalesById(id);
     }
+
+    @Override
+    public List<TeaPeasantYieldSales> getYieldValueNumber(long teaPeasantId) {
+        return teaPeasantYieldSalesMapper.getYieldValueNumber(teaPeasantId);
+    }
+
+    @Override
+    public List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId) {
+        return teaPeasantYieldSalesMapper.getYieldValueMoney(teaPeasantId);
+    }
 }

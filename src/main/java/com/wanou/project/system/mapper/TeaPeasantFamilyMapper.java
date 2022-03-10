@@ -5,15 +5,15 @@ import com.wanou.project.system.domain.TeaPeasantFamily;
 
 /**
  * 茶农家庭成员Mapper接口
- * 
+ *
  * @author MrYao
  * @date 2022-03-03
  */
-public interface TeaPeasantFamilyMapper 
+public interface TeaPeasantFamilyMapper
 {
     /**
      * 查询茶农家庭成员
-     * 
+     *
      * @param id 茶农家庭成员主键
      * @return 茶农家庭成员
      */
@@ -21,7 +21,7 @@ public interface TeaPeasantFamilyMapper
 
     /**
      * 查询茶农家庭成员列表
-     * 
+     *
      * @param teaPeasantFamily 茶农家庭成员
      * @return 茶农家庭成员集合
      */
@@ -29,7 +29,7 @@ public interface TeaPeasantFamilyMapper
 
     /**
      * 新增茶农家庭成员
-     * 
+     *
      * @param teaPeasantFamily 茶农家庭成员
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface TeaPeasantFamilyMapper
 
     /**
      * 修改茶农家庭成员
-     * 
+     *
      * @param teaPeasantFamily 茶农家庭成员
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface TeaPeasantFamilyMapper
 
     /**
      * 删除茶农家庭成员
-     * 
+     *
      * @param id 茶农家庭成员主键
      * @return 结果
      */
@@ -53,9 +53,11 @@ public interface TeaPeasantFamilyMapper
 
     /**
      * 批量删除茶农家庭成员
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTeaPeasantFamilyByIds(Long[] ids);
+
+    public TeaPeasantFamily getMemberOfFamily(long teaPeasantId);
 }

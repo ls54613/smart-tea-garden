@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.wanou.project.system.domain.TeaPeasantAsset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaPeasantAnnualMapper;
@@ -98,4 +100,11 @@ public class TeaPeasantAnnualServiceImpl implements ITeaPeasantAnnualService
     {
         return teaPeasantAnnualMapper.deleteTeaPeasantAnnualById(id);
     }
+
+    @Override
+    public TeaPeasantAnnual getPeasantAnnual(long teaPeasantId) {
+        return teaPeasantAnnualMapper.getPeasantAnnual(teaPeasantId);
+    }
+
+
 }

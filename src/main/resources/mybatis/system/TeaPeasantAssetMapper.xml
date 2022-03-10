@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaPeasantAssetMapper">
-    
+
     <resultMap type="TeaPeasantAsset" id="TeaPeasantAssetResult">
         <result property="id"    column="id"    />
         <result property="assetsType"    column="assets_type"    />
@@ -18,19 +18,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaPeasantAssetList" parameterType="TeaPeasantAsset" resultMap="TeaPeasantAssetResult">
         <include refid="selectTeaPeasantAssetVo"/>
-        <where>  
+        <where>
             <if test="assetsType != null  and assetsType != ''"> and assets_type = #{assetsType}</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
             <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaPeasantAssetById" parameterType="Long" resultMap="TeaPeasantAssetResult">
         <include refid="selectTeaPeasantAssetVo"/>
         where id = #{id}
     </select>
-        
+
+
+    <select id="getpeasantasset" resultType="com.wanou.project.system.domain.TeaPeasantAsset" resultMap="TeaPeasantAssetResult">
+        <include refid="selectTeaPeasantAssetVo"/>
+        where tea_peasant_id=#{teaPeasantId}
+    </select>
+
     <insert id="insertTeaPeasantAsset" parameterType="TeaPeasantAsset" useGeneratedKeys="true" keyProperty="id">
         insert into tea_peasant_asset
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -63,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaPeasantAssetByIds" parameterType="String">
-        delete from tea_peasant_asset where id in 
+        delete from tea_peasant_asset where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

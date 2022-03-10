@@ -5,15 +5,15 @@ import com.wanou.project.system.domain.TeaPeasantAsset;
 
 /**
  * 茶农资产状况Service接口
- * 
+ *
  * @author MrYao
  * @date 2022-03-02
  */
-public interface ITeaPeasantAssetService 
+public interface ITeaPeasantAssetService
 {
     /**
      * 查询茶农资产状况
-     * 
+     *
      * @param id 茶农资产状况主键
      * @return 茶农资产状况
      */
@@ -21,7 +21,7 @@ public interface ITeaPeasantAssetService
 
     /**
      * 查询茶农资产状况列表
-     * 
+     *
      * @param teaPeasantAsset 茶农资产状况
      * @return 茶农资产状况集合
      */
@@ -29,7 +29,7 @@ public interface ITeaPeasantAssetService
 
     /**
      * 新增茶农资产状况
-     * 
+     *
      * @param teaPeasantAsset 茶农资产状况
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface ITeaPeasantAssetService
 
     /**
      * 修改茶农资产状况
-     * 
+     *
      * @param teaPeasantAsset 茶农资产状况
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface ITeaPeasantAssetService
 
     /**
      * 批量删除茶农资产状况
-     * 
+     *
      * @param ids 需要删除的茶农资产状况主键集合
      * @return 结果
      */
@@ -53,9 +53,11 @@ public interface ITeaPeasantAssetService
 
     /**
      * 删除茶农资产状况信息
-     * 
+     *
      * @param id 茶农资产状况主键
      * @return 结果
      */
     public int deleteTeaPeasantAssetById(Long id);
+
+    public TeaPeasantAsset getpeasantasset(long teaPeasantId);
 }
