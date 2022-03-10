@@ -1,19 +1,21 @@
 package com.wanou.project.system.service;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseProcurement;
 
 /**
  * 近半年采购情况Service接口
- * 
+ *
  * @author MrYao
  * @date 2022-03-03
  */
-public interface ITeaEnterpriseProcurementService 
+public interface ITeaEnterpriseProcurementService
 {
     /**
      * 查询近半年采购情况
-     * 
+     *
      * @param id 近半年采购情况主键
      * @return 近半年采购情况
      */
@@ -21,7 +23,7 @@ public interface ITeaEnterpriseProcurementService
 
     /**
      * 查询近半年采购情况列表
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 近半年采购情况集合
      */
@@ -29,7 +31,7 @@ public interface ITeaEnterpriseProcurementService
 
     /**
      * 新增近半年采购情况
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface ITeaEnterpriseProcurementService
 
     /**
      * 修改近半年采购情况
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface ITeaEnterpriseProcurementService
 
     /**
      * 批量删除近半年采购情况
-     * 
+     *
      * @param ids 需要删除的近半年采购情况主键集合
      * @return 结果
      */
@@ -53,9 +55,16 @@ public interface ITeaEnterpriseProcurementService
 
     /**
      * 删除近半年采购情况信息
-     * 
+     *
      * @param id 近半年采购情况主键
      * @return 结果
      */
     public int deleteTeaEnterpriseProcurementById(Long id);
+
+    /**
+     * 根据企业id查询采购信息
+     * @param id
+     * @return
+     */
+    List<JSONObject> selectTeaEnterpriseProcurementByEnterpriseId(Long id);
 }

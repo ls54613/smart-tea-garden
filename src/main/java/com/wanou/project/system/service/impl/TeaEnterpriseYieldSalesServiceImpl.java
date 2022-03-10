@@ -99,8 +99,8 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
     }
 
     @Override
-    public List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(int start, int end) {
-        return teaEnterpriseYieldSalesMapper.selectTeaEnterpriseYieldSalesTotalRange(start,end);
+    public List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(Long enterpriseId,int start, int end) {
+        return teaEnterpriseYieldSalesMapper.selectTeaEnterpriseYieldSalesTotalRange(enterpriseId,start,end);
     }
 
     @Override
@@ -110,5 +110,26 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
         DateTime lastYear = DateUtil.offset(nowDate, DateField.YEAR, -1); //去年
         DateTime qianYear = DateUtil.offset(nowDate, DateField.YEAR, -2); //前年
         return teaEnterpriseYieldSalesMapper.getSalesYearOnYear(DateUtil.year(lastYear),DateUtil.year(qianYear));
+    }
+
+    @Override
+    public List<JSONObject> getSalesByRegion(String region) {
+        DateTime nowDate = DateUtil.date();
+        DateTime startDate = DateUtil.offset(nowDate, DateField.YEAR, -5);
+        DateTime endDate = DateUtil.offset(nowDate, DateField.YEAR, -1);
+        return teaEnterpriseYieldSalesMapper.getSalesByRegion(region,DateUtil.year(startDate),DateUtil.year(endDate));
+    }
+
+    /**
+     * 成本及利润统计
+     * @param enterpriseId 茶企id
+     * @return
+     */
+    @Override
+    public List<JSONObject> costAndProfitStatistics(Long enterpriseId) {
+        DateTime nowDate = DateUtil.date();
+        DateTime startDate = DateUtil.offset(nowDate, DateField.YEAR, -5);
+        DateTime endDate = DateUtil.offset(nowDate, DateField.YEAR, -1);
+        return teaEnterpriseYieldSalesMapper.costAndProfitStatistics(enterpriseId,DateUtil.year(startDate),DateUtil.year(endDate));
     }
 }

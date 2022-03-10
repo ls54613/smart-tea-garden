@@ -5,6 +5,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -70,5 +71,9 @@ public interface TeaEnterpriseInfoMapper
      */
     TeaEnterpriseTotal getTotalData();
 
-    List<JSONObject> getTeaSalesTypes();
+    List<JSONObject> getTeaSalesTypes(@Param("region") String region);
+
+    List<JSONObject> getYieldGroupRegion();
+
+    int selectTeaEnterpriseCount();
 }

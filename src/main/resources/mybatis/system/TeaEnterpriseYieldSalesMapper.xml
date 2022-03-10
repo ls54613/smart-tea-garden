@@ -40,6 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	tea_enterprise_yield_sales
         WHERE
         	`year` BETWEEN #{start} AND #{end}
+        	<if test="enterpriseId != null">
+                AND tea_peasant_id = #{enterpriseId}
+            </if>
         GROUP BY `year`
         ORDER BY `year`
     </select>
@@ -50,6 +53,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM
         	(SELECT SUM(sales_volume_number) salesNum,SUM(sales_volume_money) salesMoney FROM tea_enterprise_yield_sales WHERE `year` = #{beforeLastYear}) t1,
         	(SELECT SUM(sales_volume_number) salesNum,SUM(sales_volume_money) salesMoney FROM tea_enterprise_yield_sales WHERE `year` = #{lastYear}) t2
+    </select>
+
+    <select id="getSalesByRegion" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        SUM(t1.sales_volume_number / 20000000) salesNum,SUM(t1.sales_volume_money / 10000) salesMoney,t1.`year`
+        FROM
+        tea_enterprise_yield_sales t1 INNER JOIN tea_enterprise_info t2 ON t1.tea_peasant_id = t2.id
+        WHERE
+        t2.region = #{region} AND t1.`year` >= #{start} AND t1.`year` &lt;= #{end}
+        GROUP BY
+        t1.`year`
+        ORDER BY
+        t1.`year`
+    </select>
+
+    <select id="costAndProfitStatistics" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        SUM(t1.product_cost_statistics) cost,SUM(t1.product_profit_statistics) profit,t1.`year`
+        FROM
+        tea_enterprise_yield_sales t1 INNER JOIN tea_enterprise_info t2 ON t2.id = t1.tea_peasant_id
+        WHERE
+        t1.`year` >= #{start} AND t1.`year` &lt;= #{end}
+        <if test="enterpriseId != null">
+            AND t1.tea_peasant_id = #{enterpriseId}
+        </if>
+        GROUP BY
+        t1.`year`
+        ORDER BY
+        t1.`year`
     </select>
 
 

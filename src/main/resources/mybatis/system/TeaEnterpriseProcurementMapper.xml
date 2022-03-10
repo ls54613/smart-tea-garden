@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaEnterpriseProcurementMapper">
-    
+
     <resultMap type="TeaEnterpriseProcurement" id="TeaEnterpriseProcurementResult">
         <result property="id"    column="id"    />
         <result property="purchaseDate"    column="purchase_date"    />
@@ -18,19 +18,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaEnterpriseProcurementList" parameterType="TeaEnterpriseProcurement" resultMap="TeaEnterpriseProcurementResult">
         <include refid="selectTeaEnterpriseProcurementVo"/>
-        <where>  
+        <where>
             <if test="purchaseDate != null "> and purchase_date = #{purchaseDate}</if>
             <if test="purchaseGoods != null  and purchaseGoods != ''"> and purchase_goods = #{purchaseGoods}</if>
             <if test="purchaseNumber != null "> and purchase_number = #{purchaseNumber}</if>
             <if test="teaEnterpriseId != null "> and tea_enterprise_id = #{teaEnterpriseId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaEnterpriseProcurementById" parameterType="Long" resultMap="TeaEnterpriseProcurementResult">
         <include refid="selectTeaEnterpriseProcurementVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectTeaEnterpriseProcurementByEnterpriseId" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        	purchase_date purchaseDate,purchase_goods goods,purchase_number number
+        FROM
+        	tea_enterprise_procurement
+        <where>
+            <if test="enterpriseId != null">
+                tea_enterprise_id = #{enterpriseId}
+            </if>
+        </where>
+        ORDER BY
+        	purchase_date DESC
+        LIMIT 10
+
+    </select>
+
     <insert id="insertTeaEnterpriseProcurement" parameterType="TeaEnterpriseProcurement" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_procurement
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -63,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaEnterpriseProcurementByIds" parameterType="String">
-        delete from tea_enterprise_procurement where id in 
+        delete from tea_enterprise_procurement where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

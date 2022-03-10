@@ -64,7 +64,11 @@ public interface TeaEnterpriseYieldSalesMapper
      */
     public int deleteTeaEnterpriseYieldSalesByIds(Long[] ids);
 
-    List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(@Param("start") int start,@Param("end") int end);
+    List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(@Param("enterpriseId") Long enterpriseId,@Param("start") int start,@Param("end") int end);
 
     JSONObject getSalesYearOnYear(@Param("lastYear") int lastYear,@Param("beforeLastYear") int beforeLastYear);
+
+    List<JSONObject> getSalesByRegion(@Param("region") String region,@Param("start") int start,@Param("end") int end);
+
+    List<JSONObject> costAndProfitStatistics(@Param("enterpriseId") Long enterpriseId,@Param("start") int start,@Param("end") int end);
 }

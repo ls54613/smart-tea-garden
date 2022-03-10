@@ -1,19 +1,21 @@
 package com.wanou.project.system.mapper;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseProcurement;
 
 /**
  * 近半年采购情况Mapper接口
- * 
+ *
  * @author MrYao
  * @date 2022-03-03
  */
-public interface TeaEnterpriseProcurementMapper 
+public interface TeaEnterpriseProcurementMapper
 {
     /**
      * 查询近半年采购情况
-     * 
+     *
      * @param id 近半年采购情况主键
      * @return 近半年采购情况
      */
@@ -21,7 +23,7 @@ public interface TeaEnterpriseProcurementMapper
 
     /**
      * 查询近半年采购情况列表
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 近半年采购情况集合
      */
@@ -29,7 +31,7 @@ public interface TeaEnterpriseProcurementMapper
 
     /**
      * 新增近半年采购情况
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 结果
      */
@@ -37,7 +39,7 @@ public interface TeaEnterpriseProcurementMapper
 
     /**
      * 修改近半年采购情况
-     * 
+     *
      * @param teaEnterpriseProcurement 近半年采购情况
      * @return 结果
      */
@@ -45,7 +47,7 @@ public interface TeaEnterpriseProcurementMapper
 
     /**
      * 删除近半年采购情况
-     * 
+     *
      * @param id 近半年采购情况主键
      * @return 结果
      */
@@ -53,9 +55,11 @@ public interface TeaEnterpriseProcurementMapper
 
     /**
      * 批量删除近半年采购情况
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTeaEnterpriseProcurementByIds(Long[] ids);
+
+    List<JSONObject> selectTeaEnterpriseProcurementByEnterpriseId(Long enterpriseId);
 }

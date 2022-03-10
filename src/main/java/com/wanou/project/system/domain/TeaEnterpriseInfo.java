@@ -92,4 +92,7 @@ public class TeaEnterpriseInfo extends BaseEntity
     @Excel(name = "茶叶品种")
     private List<Integer> teaType;
 
+    @Excel(name = "茶企所属区域")
+    private String region; //茶企所属区域
+
 }

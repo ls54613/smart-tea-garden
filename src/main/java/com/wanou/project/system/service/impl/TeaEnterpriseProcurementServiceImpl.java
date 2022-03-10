@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaEnterpriseProcurementMapper;
@@ -89,5 +91,15 @@ public class TeaEnterpriseProcurementServiceImpl implements ITeaEnterpriseProcur
     public int deleteTeaEnterpriseProcurementById(Long id)
     {
         return teaEnterpriseProcurementMapper.deleteTeaEnterpriseProcurementById(id);
+    }
+
+    /**
+     * 根据企业id查询采购动态
+     * @param enterpriseId
+     * @return
+     */
+    @Override
+    public List<JSONObject> selectTeaEnterpriseProcurementByEnterpriseId(Long enterpriseId) {
+        return teaEnterpriseProcurementMapper.selectTeaEnterpriseProcurementByEnterpriseId(enterpriseId);
     }
 }

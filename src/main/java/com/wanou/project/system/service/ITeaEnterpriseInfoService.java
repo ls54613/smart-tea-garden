@@ -68,5 +68,9 @@ public interface ITeaEnterpriseInfoService
      */
     TeaEnterpriseTotal getTotal();
 
-    List<JSONObject> getTeaSalesTypes();
+    List<JSONObject> getTeaSalesTypes(String region);
+
+    List<JSONObject> getYieldGroupRegion();
+
+    int selectTeaEnterpriseCount();
 }

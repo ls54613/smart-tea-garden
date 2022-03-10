@@ -63,7 +63,11 @@ public interface ITeaEnterpriseYieldSalesService
      */
     public int deleteTeaEnterpriseYieldSalesById(Long id);
 
-    List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(int start, int end);
+    List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(Long enterpriseId,int start, int end);
 
     JSONObject getSalesYearOnYear();
+
+    List<JSONObject> getSalesByRegion(String region);
+
+    List<JSONObject> costAndProfitStatistics(Long id);
 }

@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaEnterpriseInfoMapper">
 
-    <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult">
+    <resultMap type="com.wanou.project.system.domain.TeaEnterpriseInfo" id="TeaEnterpriseInfoResult">
         <result property="id"    column="id"    />
         <result property="enterpriseName"    column="enterprise_name"    />
         <result property="type"    column="type"    />
@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="address"    column="address"    />
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
+        <result property="region" column="region" />
     </resultMap>
 
     <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult1">
@@ -32,11 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="address"    column="address"    />
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
+        <result property="region" column="region" />
         <collection property="teaType" column="id" select="com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper.selectTeaEnterpriseTeaTypeIntListByTeaEnterpriseId" />
     </resultMap>
 
     <sql id="selectTeaEnterpriseInfoVo">
-        select id, enterprise_name, type, nature, set_up_date, legal_person, legal_person_id_card, operation_status, reg_capital, address, cultivated_area, work_person_num from tea_enterprise_info
+        select id, enterprise_name, `type`, nature, set_up_date, legal_person, legal_person_id_card, operation_status, reg_capital, address, cultivated_area, work_person_num,region from tea_enterprise_info
     </sql>
 
     <select id="selectTeaEnterpriseInfoList" parameterType="TeaEnterpriseInfo" resultMap="TeaEnterpriseInfoResult1">
@@ -53,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="cultivatedArea != null "> and cultivated_area = #{cultivatedArea}</if>
             <if test="workPersonNum != null "> and work_person_num = #{workPersonNum}</if>
+            <if test="region != null and region != ''"> and region = #{region}</if>
         </where>
     </select>
 
@@ -79,8 +82,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	COUNT( t1.tea_type ) `value`
         FROM
         	`tea_enterprise_tea_type` t1 INNER JOIN sys_dict_data t2 ON t2.dict_value = t1.tea_type AND t2.dict_type = 'sys_tea_type'
+            INNER JOIN tea_enterprise_info t3 ON t3.id = t1.tea_enterprise_id
+        <where>
+            <if test="region != null and region != ''">t3.region = #{region}</if>
+        </where>
         GROUP BY
         	t1.tea_type
+        ORDER BY
+            t2.dict_sort
+    </select>
+
+    <select id="getYieldGroupRegion" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        	COUNT(DISTINCT(t1.id)) enterpriseCount,(SUM(yield_value_number) / 20000000) yieldValueNum,(SUM(yield_value_money) / 10000) yieldValueMoney,t1.region
+        FROM
+        	tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2 ON t2.tea_peasant_id = t1.id
+        GROUP BY
+        	t1.region
+    </select>
+
+    <select id="selectTeaEnterpriseCount" resultType="java.lang.Integer">
+        select count(id) from tea_enterprise_info
     </select>
 
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
@@ -97,6 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">address,</if>
             <if test="cultivatedArea != null">cultivated_area,</if>
             <if test="workPersonNum != null">work_person_num,</if>
+            <if test="region != null and region != ''">region,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="enterpriseName != null">#{enterpriseName},</if>
@@ -110,6 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">#{address},</if>
             <if test="cultivatedArea != null">#{cultivatedArea},</if>
             <if test="workPersonNum != null">#{workPersonNum},</if>
+            <if test="region != null and region != ''">#{region},</if>
          </trim>
     </insert>
 
@@ -127,6 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="address != null">address = #{address},</if>
             <if test="cultivatedArea != null">cultivated_area = #{cultivatedArea},</if>
             <if test="workPersonNum != null">work_person_num = #{workPersonNum},</if>
+            <if test="region != null and region != ''">region = #{region},</if>
         </trim>
         where id = #{id}
     </update>

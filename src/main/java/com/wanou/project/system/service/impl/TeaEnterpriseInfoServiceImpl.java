@@ -167,7 +167,17 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     }
 
     @Override
-    public List<JSONObject> getTeaSalesTypes() {
-        return teaEnterpriseInfoMapper.getTeaSalesTypes();
+    public List<JSONObject> getTeaSalesTypes(String region) {
+        return teaEnterpriseInfoMapper.getTeaSalesTypes(region);
+    }
+
+    @Override
+    public List<JSONObject> getYieldGroupRegion() {
+        return teaEnterpriseInfoMapper.getYieldGroupRegion();
+    }
+
+    @Override
+    public int selectTeaEnterpriseCount() {
+        return teaEnterpriseInfoMapper.selectTeaEnterpriseCount();
     }
 }
