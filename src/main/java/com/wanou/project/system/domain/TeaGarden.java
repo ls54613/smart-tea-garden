@@ -1,5 +1,6 @@
 package com.wanou.project.system.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.wanou.framework.aspectj.lang.annotation.Excel;
@@ -11,6 +12,7 @@ import com.wanou.framework.web.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-03-03
  */
+@Data
 public class TeaGarden extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -54,110 +56,6 @@ public class TeaGarden extends BaseEntity
     @Excel(name = "负责人")
     private String head;
 
-    public void setTeaGardenId(Long teaGardenId)
-    {
-        this.teaGardenId = teaGardenId;
-    }
-
-    public Long getTeaGardenId()
-    {
-        return teaGardenId;
-    }
-    public void setEnterprises(String enterprises)
-    {
-        this.enterprises = enterprises;
-    }
-
-    public String getEnterprises()
-    {
-        return enterprises;
-    }
-    public void setTeaArea(Long teaArea)
-    {
-        this.teaArea = teaArea;
-    }
-
-    public Long getTeaArea()
-    {
-        return teaArea;
-    }
-    public void setTeaTreeVariety(Long teaTreeVariety)
-    {
-        this.teaTreeVariety = teaTreeVariety;
-    }
-
-    public Long getTeaTreeVariety()
-    {
-        return teaTreeVariety;
-    }
-    public void setEmployNum(Long employNum)
-    {
-        this.employNum = employNum;
-    }
-
-    public Long getEmployNum()
-    {
-        return employNum;
-    }
-    public void setFacilitiesNum(Long facilitiesNum)
-    {
-        this.facilitiesNum = facilitiesNum;
-    }
-
-    public Long getFacilitiesNum()
-    {
-        return facilitiesNum;
-    }
-    public void setAverageYield(Long averageYield)
-    {
-        this.averageYield = averageYield;
-    }
-
-    public Long getAverageYield()
-    {
-        return averageYield;
-    }
-    public void setTotalProduction(String totalProduction)
-    {
-        this.totalProduction = totalProduction;
-    }
-
-    public String getTotalProduction()
-    {
-        return totalProduction;
-    }
-    public void setTeaType(Long teaType)
-    {
-        this.teaType = teaType;
-    }
-
-    public Long getTeaType()
-    {
-        return teaType;
-    }
-    public void setHead(String head)
-    {
-        this.head = head;
-    }
-
-    public String getHead()
-    {
-        return head;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("teaGardenId", getTeaGardenId())
-            .append("enterprises", getEnterprises())
-            .append("teaArea", getTeaArea())
-            .append("teaTreeVariety", getTeaTreeVariety())
-            .append("employNum", getEmployNum())
-            .append("facilitiesNum", getFacilitiesNum())
-            .append("averageYield", getAverageYield())
-            .append("totalProduction", getTotalProduction())
-            .append("teaType", getTeaType())
-            .append("head", getHead())
-            .toString();
-    }
+    @Excel(name = "所属区域")
+    private String region;
 }

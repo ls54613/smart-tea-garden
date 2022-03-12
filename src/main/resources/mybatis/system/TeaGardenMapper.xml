@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaGardenMapper">
-    
+
     <resultMap type="TeaGarden" id="TeaGardenResult">
         <result property="teaGardenId"    column="tea_garden_id"    />
         <result property="enterprises"    column="enterprises"    />
@@ -15,19 +15,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="totalProduction"    column="total_production"    />
         <result property="teaType"    column="tea_type"    />
         <result property="head"    column="head"    />
+        <result property="region"    column="region"    />
     </resultMap>
 
     <resultMap id="TeaGardenVoResult" type="com.wanou.project.system.domain.vo.TeaGardenVo" extends="TeaGardenResult">
     </resultMap>
 
     <sql id="selectTeaGardenVo">
-        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head
+        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,region
          from tea_garden
     </sql>
 
     <select id="selectTeaGardenList" parameterType="TeaGarden" resultMap="TeaGardenResult">
         <include refid="selectTeaGardenVo"/>
-        <where>  
+        <where>
             <if test="enterprises != null  and enterprises != ''"> and enterprises = #{enterprises}</if>
             <if test="teaArea != null "> and tea_area = #{teaArea}</if>
             <if test="teaTreeVariety != null "> and tea_tree_variety = #{teaTreeVariety}</if>
@@ -37,9 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null  and totalProduction != ''"> and total_production = #{totalProduction}</if>
             <if test="teaType != null "> and tea_type = #{teaType}</if>
             <if test="head != null  and head != ''"> and head = #{head}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaGardenByTeaGardenId" parameterType="Long" resultMap="TeaGardenResult">
         <include refid="selectTeaGardenVo"/>
         where tea_garden_id = #{teaGardenId}
@@ -67,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-        
+
     <insert id="insertTeaGarden" parameterType="TeaGarden">
         insert into tea_garden
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -80,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null">total_production,</if>
             <if test="teaType != null">tea_type,</if>
             <if test="head != null">head,</if>
+            <if test="region != null and region != ''">region,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="teaGardenId != null">#{teaGardenId},</if>
@@ -92,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null">#{totalProduction},</if>
             <if test="teaType != null">#{teaType},</if>
             <if test="head != null">#{head},</if>
+            <if test="region != null and region != ''">#{region},</if>
          </trim>
     </insert>
 
@@ -107,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null">total_production = #{totalProduction},</if>
             <if test="teaType != null">tea_type = #{teaType},</if>
             <if test="head != null">head = #{head},</if>
+            <if test="region != null and region != ''">region = #{region},</if>
         </trim>
         where tea_garden_id = #{teaGardenId}
     </update>
@@ -116,7 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaGardenByTeaGardenIds" parameterType="String">
-        delete from tea_garden where tea_garden_id in 
+        delete from tea_garden where tea_garden_id in
         <foreach item="teaGardenId" collection="array" open="(" separator="," close=")">
             #{teaGardenId}
         </foreach>

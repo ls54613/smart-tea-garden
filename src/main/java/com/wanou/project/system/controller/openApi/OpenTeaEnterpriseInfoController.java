@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -60,15 +61,27 @@ public class OpenTeaEnterpriseInfoController {
     @GetMapping("/getTeaSalesTypes")
     public AjaxResult getTeaSalesTypes(String region){
         List<JSONObject> result = teaEnterpriseInfoService.getTeaSalesTypes(region);
-        return AjaxResult.success(result);
+        Integer max = result.stream().max(Comparator.comparing(item -> item.getInteger("value"))).map(item -> item.getInteger("value")).get();
+        JSONObject finalResult = new JSONObject();
+        finalResult.put("max",max);
+        finalResult.put("data",result);
+        return AjaxResult.success(finalResult);
     }
 
+    /**
+     * 销量及销售额同比
+     * @return
+     */
     @GetMapping("/getSalesYearOnYear")
     public AjaxResult getSalesYearOnYear(){
         JSONObject result = teaEnterpriseYieldSalesService.getSalesYearOnYear();
         return AjaxResult.success(result);
     }
 
+    /**
+     * 区域产量产值
+     * @return
+     */
     @GetMapping("/getYieldGroupRegion")
     public AjaxResult getYieldGroupRegion(){
         List<JSONObject> result =  teaEnterpriseInfoService.getYieldGroupRegion();

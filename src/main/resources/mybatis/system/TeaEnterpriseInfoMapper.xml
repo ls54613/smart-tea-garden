@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getTotalData" resultType="com.wanou.project.system.domain.openApi.TeaEnterpriseTotal">
         SELECT
-        	t1.yield,t2.productionValue,t3.teaEnterPriseCount,t4.teaPeasantCount,t5.teaGardenCount,t6.plantArea
+        	TRUNCATE(t1.yield,2) yield,TRUNCATE(t2.productionValue,2) productionValue,t3.teaEnterPriseCount,t4.teaPeasantCount,t5.teaGardenCount,TRUNCATE(t6.plantArea,2) plantArea
         FROM
         	(SELECT (SUM(yield_value_money) / 10000) yield FROM tea_enterprise_yield_sales) t1,
         	(SELECT (SUM(yield_value_number) / 20000000) productionValue  FROM tea_enterprise_yield_sales) t2,
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getYieldGroupRegion" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
-        	COUNT(DISTINCT(t1.id)) enterpriseCount,(SUM(yield_value_number) / 20000000) yieldValueNum,(SUM(yield_value_money) / 10000) yieldValueMoney,t1.region
+        	COUNT(DISTINCT(t1.id)) enterpriseCount,TRUNCATE((SUM(yield_value_number) / 20000000),2) yieldValueNum,TRUNCATE((SUM(yield_value_money) / 10000),2) yieldValueMoney,t1.region
         FROM
         	tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2 ON t2.tea_peasant_id = t1.id
         GROUP BY
