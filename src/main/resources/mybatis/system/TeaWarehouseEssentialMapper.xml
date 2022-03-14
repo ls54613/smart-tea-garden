@@ -14,10 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="personCharge"    column="person_charge"    />
         <result property="quantity"    column="quantity"    />
         <result property="outboundVolume"    column="outbound_volume"    />
+        <result property="warehouseType"    column="warehouse_type"    />
     </resultMap>
 
     <sql id="selectTeaWarehouseEssentialVo">
-        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume from tea_warehouse_essential
+        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume,warehouse_type from tea_warehouse_essential
     </sql>
 
     <select id="selectTeaWarehouseEssentialList" parameterType="TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
@@ -31,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="personCharge != null  and personCharge != ''"> and person_charge = #{personCharge}</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="outboundVolume != null "> and outbound_volume = #{outboundVolume}</if>
+            <if test="warehouseType != null "> and warehouse_type = #{outboundVolume}</if>
         </where>
     </select>
 
@@ -40,13 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <select id="getWarehouseInformation" resultType="com.wanou.project.system.domain.TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
+    <select id="getWarehouseInformation" resultType="com.alibaba.fastjson.JSONObject">
         select
-            warehouse_name,location,enterprise_id,rate,warehouse_type
+            t2.warehouse_name warehouseName,t2.location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.rate
         from
-            tea_warehouse_essential
+            tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.enterprise_id=t1.id LEFT JOIN sys_dict_data t3 ON (t3.dict_type = 'tea_enterprise_operation_status' AND t3.dict_value = t1.operation_status)
         where
-            id=#{id}
+            t2.id=#{id}
     </select>
 
     <select id="getValueDistribution"

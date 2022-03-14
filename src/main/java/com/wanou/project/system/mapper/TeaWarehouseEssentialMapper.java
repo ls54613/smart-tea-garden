@@ -1,6 +1,8 @@
 package com.wanou.project.system.mapper;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaWarehouseEssential;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
 
@@ -60,7 +62,7 @@ public interface TeaWarehouseEssentialMapper
      */
     public int deleteTeaWarehouseEssentialByIds(Long[] ids);
 
-    public TeaWarehouseEssential getWarehouseInformation(long id);
+    public JSONObject getWarehouseInformation(long id);
 
     public List<TeaValueDistribution> getValueDistribution();
 }

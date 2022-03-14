@@ -1,8 +1,11 @@
 package com.wanou.project.system.service;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaPeasantInfo;
 import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
+import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 
 /**
@@ -64,10 +67,12 @@ public interface ITeaPeasantInfoService
     /**
      * 获取茶农文化程度统计
      * */
-    public List<TeaPeasantEducation> getPeasantEducation();
+    public List<JSONObject> getPeasantEducation();
 
     public int getTotalNumber();
 
 
     public TeaPersonalInformation getTeaPersonalInformation(int id);
+
+    List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue();
 }

@@ -2,6 +2,7 @@ package com.wanou.project.system.service.impl;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,7 +95,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     }
 
     @Override
-    public TeaWarehouseEssential getWarehouseInformation(long id) {
+    public JSONObject getWarehouseInformation(long id) {
         return teaWarehouseEssentialMapper.getWarehouseInformation(id);
     }
 

@@ -1,5 +1,6 @@
 package com.wanou.project.system.controller.openApi;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.common.core.domain.AjaxResult;
 import com.wanou.project.system.domain.TeaWarehouseEssential;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
@@ -22,7 +23,7 @@ public class OpenTeaWarehouseInfoController {
      * */
     @GetMapping("/getWarehouseInformation")
     public AjaxResult getWarehouseInformation(long id){
-        TeaWarehouseEssential teaWarehouseEssential=teaWarehouseEssentialService.getWarehouseInformation(id);
+        JSONObject teaWarehouseEssential=teaWarehouseEssentialService.getWarehouseInformation(id);
         return AjaxResult.success(teaWarehouseEssential);
     }
 

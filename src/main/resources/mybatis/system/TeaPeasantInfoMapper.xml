@@ -49,14 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="getPeasantEducation" resultType="com.wanou.project.system.domain.openApi.TeaPeasantEducation">
+    <select id="getPeasantEducation" resultType="com.alibaba.fastjson.JSONObject">
         select
             count(education) educationNumber,t2.dict_label education
         from
             tea_peasant_info t1 LEFT JOIN sys_dict_data t2 ON (t2.dict_type = 'sys_education' AND t1.education = t2.dict_value)
         group by
             t1.education
-
     </select>
 
     <select id="getTotalNumber" resultType="int">
@@ -66,11 +65,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getTeaPersonalInformation"
             resultType="com.wanou.project.system.domain.openApi.TeaPersonalInformation" parameterType="int">
         select
-            person_name teaGrowerName,sex teaGrowerSex,age teaGrowerAge,nation,education,politics_status politicsStatus,mobile,job,home_address homePhone,
-            skill,credit_level creditLevel
+            t1.person_name teaGrowerName,t5.dict_label teaGrowerSex,t1.age teaGrowerAge,t1.nation,t2.dict_label education,t3.dict_label politicsStatus,t1.mobile,t1.job,t1.home_address homePhone, t1.skill,t4.dict_label creditLevel
         from
-            tea_peasant_info
-        where id=#{id}
+            tea_peasant_info t1 LEFT JOIN sys_dict_data t2 on (t2.dict_type='sys_education' and t2.dict_value=t1.education) LEFT JOIN sys_dict_data t3 on(t3.dict_type='sys_politics_status' and t3.dict_value=t1.politics_status) LEFT JOIN sys_dict_data t4 on(t4.dict_type='tea_peasant_credit_level' and t4.dict_value=t1.credit_level) LEFT JOIN sys_dict_data t5 on(t5.dict_type='sys_user_sex' and t5.dict_value=t1.sex)
+        where
+            t1.id=#{id}
+    </select>
+
+    <select id="getPeasantRegionYieldValue"
+            resultType="com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue">
+        SELECT
+            COUNT(DISTINCT(t3.id)) personNumber,(SUM(yield_value_number) / 20000000) yieldValueNum,(SUM(yield_value_money) / 10000) yieldValueMoney,t1.region
+        FROM
+            tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2  ON t2.tea_peasant_id = t1.id
+        LEFT JOIN tea_peasant_info t3 on t3.enterprise_id=t1.id
+        GROUP BY
+            t1.region
     </select>
 
     <insert id="insertTeaPeasantInfo" parameterType="TeaPeasantInfo" useGeneratedKeys="true" keyProperty="id">
