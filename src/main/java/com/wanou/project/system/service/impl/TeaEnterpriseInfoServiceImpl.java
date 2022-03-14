@@ -180,4 +180,14 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     public int selectTeaEnterpriseCount() {
         return teaEnterpriseInfoMapper.selectTeaEnterpriseCount();
     }
+
+    /**
+     * 获取茶企数量
+     * @param region
+     * @return
+     */
+    @Override
+    public Integer getEnterpriseCount(String region) {
+        return teaEnterpriseInfoMapper.getEnterpriseCount(region);
+    }
 }

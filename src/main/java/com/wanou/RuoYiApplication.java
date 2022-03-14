@@ -1,11 +1,14 @@
 package com.wanou;
 
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.TimedCache;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.auth.sts.AssumeRoleRequest;
 import com.aliyuncs.profile.DefaultProfile;
+import com.wanou.project.system.domain.VisualTianQi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -70,5 +73,12 @@ public class RuoYiApplication
     @Bean(name = "OSSClient")
     public OSS createdOSSClient(){
         return new OSSClientBuilder().build(END_POINT,ACCESS_KEY_ID,ACCESS_SECRET);
+    }
+
+    @Bean(name = "tianQiCache")
+    public TimedCache<String, VisualTianQi> getTianQiCache(){
+        TimedCache<String, VisualTianQi> timedCache = CacheUtil.newTimedCache(1000 * 60 * 60);  //1小时过期
+        timedCache.schedulePrune(100);  //100毫秒检查过期
+        return timedCache;
     }
 }

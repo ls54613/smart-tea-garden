@@ -1,13 +1,17 @@
 package com.wanou.project.system.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.wanou.project.system.domain.TeaEnterpriseInfo;
+import com.wanou.project.system.service.ITeaEnterpriseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaEnterpriseYieldSalesMapper;
@@ -25,6 +29,8 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
 {
     @Autowired
     private TeaEnterpriseYieldSalesMapper teaEnterpriseYieldSalesMapper;
+    @Autowired
+    private ITeaEnterpriseInfoService teaEnterpriseInfoService;
 
     /**
      * 查询企业历年产量及销售情况
@@ -104,12 +110,49 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
     }
 
     @Override
-    public JSONObject getSalesYearOnYear() {
+    public JSONObject getSalesYearOnYear(String region,Boolean isCountyEmp,Boolean isTownEmp) {
+        //获取企业列表
+        TeaEnterpriseInfo selectTeaEnterpriseInfo = new TeaEnterpriseInfo();
+        selectTeaEnterpriseInfo.setIsCountyEmp(isCountyEmp);
+        selectTeaEnterpriseInfo.setIsTownEmp(isTownEmp);
+        selectTeaEnterpriseInfo.setRegion(region);
+        List<TeaEnterpriseInfo> teaEnterpriseInfos = teaEnterpriseInfoService.selectTeaEnterpriseInfoList(selectTeaEnterpriseInfo);
+        if(CollUtil.isEmpty(teaEnterpriseInfos)){
+            return null;
+        }
         //获取去年及前年
         DateTime nowDate = DateUtil.date();
         DateTime lastYear = DateUtil.offset(nowDate, DateField.YEAR, -1); //去年
         DateTime qianYear = DateUtil.offset(nowDate, DateField.YEAR, -2); //前年
-        return teaEnterpriseYieldSalesMapper.getSalesYearOnYear(DateUtil.year(lastYear),DateUtil.year(qianYear));
+
+        List<BigDecimal> salesNumYearOnYearArr = new ArrayList<>(teaEnterpriseInfos.size()); //销量同比
+        List<BigDecimal> salesMoneyOnYearArr = new ArrayList<>(teaEnterpriseInfos.size()); //销售额同比
+        List<String> categories = new ArrayList<>();
+        teaEnterpriseInfos.forEach(teaEnterpriseInfo -> {
+            //企业名
+            categories.add(teaEnterpriseInfo.getEnterpriseName());
+
+            //查询销量同比
+            BigDecimal salesNumYearOnYear = teaEnterpriseYieldSalesMapper.getSalesNumYearOnYear(teaEnterpriseInfo.getId(),DateUtil.year(lastYear),DateUtil.year(qianYear));
+            if(salesNumYearOnYear == null){
+                salesNumYearOnYearArr.add(new BigDecimal(0));
+            }else {
+                salesNumYearOnYearArr.add(salesNumYearOnYear);
+            }
+
+            //查询销售额同比
+            BigDecimal salesMoneyYearOnYear = teaEnterpriseYieldSalesMapper.getSalesMoneyYearOnYear(teaEnterpriseInfo.getId(),DateUtil.year(lastYear),DateUtil.year(qianYear));
+            if(salesMoneyYearOnYear == null){
+                salesMoneyOnYearArr.add(new BigDecimal(0));
+            }else {
+                salesMoneyOnYearArr.add(salesMoneyYearOnYear);
+            }
+        });
+        JSONObject result = new JSONObject();
+        result.put("categories",categories);
+        result.put("salesNumYearOnYearArr",salesNumYearOnYearArr);
+        result.put("salesMoneyOnYearArr",salesMoneyOnYearArr);
+        return result;
     }
 
     @Override
@@ -131,5 +174,18 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
         DateTime startDate = DateUtil.offset(nowDate, DateField.YEAR, -5);
         DateTime endDate = DateUtil.offset(nowDate, DateField.YEAR, -1);
         return teaEnterpriseYieldSalesMapper.costAndProfitStatistics(enterpriseId,DateUtil.year(startDate),DateUtil.year(endDate));
+    }
+
+    /**
+     * 按企业分组统计销量及销售额
+     * @param region
+     * @return
+     */
+    @Override
+    public List<JSONObject> getYieldGroupEnterprise(String region) {
+        DateTime nowDate = DateUtil.date();
+        DateTime end = DateUtil.offset(nowDate, DateField.YEAR,-1);
+        DateTime start = DateUtil.offset(nowDate, DateField.YEAR, -5);
+        return teaEnterpriseYieldSalesMapper.getYieldGroupEnterprise(region,start,end);
     }
 }
