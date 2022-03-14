@@ -1,8 +1,11 @@
 package com.wanou.project.system.mapper;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaPeasantInfo;
 import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
+import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 
 /**
@@ -61,9 +64,11 @@ public interface TeaPeasantInfoMapper
      */
     public int deleteTeaPeasantInfoByIds(Long[] ids);
 
-    public List<TeaPeasantEducation> getPeasantEducation();
+    public List<JSONObject> getPeasantEducation();
 
     public int getTotalNumber();
 
     public TeaPersonalInformation getTeaPersonalInformation(int id);
+
+    public List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue();
 }

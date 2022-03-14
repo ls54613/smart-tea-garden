@@ -1,5 +1,6 @@
 package com.wanou.project.system.controller.openApi;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.common.core.domain.AjaxResult;
 import com.wanou.project.system.domain.TeaPeasantAnnual;
 import com.wanou.project.system.domain.TeaPeasantAsset;
@@ -7,6 +8,7 @@ import com.wanou.project.system.domain.TeaPeasantFamily;
 import com.wanou.project.system.domain.TeaPeasantYieldSales;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
+import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 import com.wanou.project.system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -56,8 +59,12 @@ public class OpenTeaPeasantInfoController {
      * */
     @GetMapping("/getPeasantEducation")
     public AjaxResult getPeasantEducation(){
-      List<TeaPeasantEducation>  teaPeasantEducation= teaPeasantInfoService.getPeasantEducation();
-      return AjaxResult.success(teaPeasantEducation);
+        List<JSONObject>  result= teaPeasantInfoService.getPeasantEducation();
+        Integer max = result.stream().max(Comparator.comparing(item -> item.getInteger("educationNumber"))).map(item -> item.getInteger("educationNumber")).get();
+        JSONObject finalResult = new JSONObject();
+        finalResult.put("max",max);
+        finalResult.put("data",result);
+      return AjaxResult.success(finalResult);
     }
 
     /**
@@ -122,6 +129,15 @@ public class OpenTeaPeasantInfoController {
     public AjaxResult getYieldValueMoney(long teaPeasantId){
         List<TeaPeasantYieldSales> teaPeasantYieldSales= teaPeasantYieldSalesService.getYieldValueMoney(teaPeasantId);
         return AjaxResult.success(teaPeasantYieldSales);
+    }
+
+    /**
+     * 获取茶农所在的区域以及产量和产值
+     * */
+    @GetMapping("/getPeasantRegionYieldValue")
+    public AjaxResult getPeasantRegionYieldValue(){
+        List<TeaPeasantRegionYieldValue> teaPeasantRegionYieldValues=teaPeasantInfoService.getPeasantRegionYieldValue();
+        return AjaxResult.success(teaPeasantRegionYieldValues);
     }
 }
 

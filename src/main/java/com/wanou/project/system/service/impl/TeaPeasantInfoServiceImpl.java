@@ -2,7 +2,9 @@ package com.wanou.project.system.service.impl;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
+import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,7 +97,7 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     }
 
     @Override
-    public List<TeaPeasantEducation> getPeasantEducation() {
+    public List<JSONObject> getPeasantEducation() {
         return teaPeasantInfoMapper.getPeasantEducation();
     }
 
@@ -108,5 +110,10 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     @Override
     public TeaPersonalInformation getTeaPersonalInformation(int id) {
         return teaPeasantInfoMapper.getTeaPersonalInformation(id);
+    }
+
+    @Override
+    public List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue() {
+        return teaPeasantInfoMapper.getPeasantRegionYieldValue();
     }
 }
