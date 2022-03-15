@@ -75,4 +75,6 @@ public interface ITeaEnterpriseInfoService
     int selectTeaEnterpriseCount();
 
     Integer getEnterpriseCount(String region);
+
+    List<JSONObject> getEnterpriseNameAndNumberMorney();
 }

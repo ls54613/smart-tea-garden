@@ -119,6 +119,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="getEnterpriseNameAndNumberMorney" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t1.enterprise_name , t2.yield_value_money,t2.yield_value_number
+        from
+            tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2
+        on t2.tea_peasant_id=t1.id
+    </select>
+
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

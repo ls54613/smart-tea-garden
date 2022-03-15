@@ -190,4 +190,9 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     public Integer getEnterpriseCount(String region) {
         return teaEnterpriseInfoMapper.getEnterpriseCount(region);
     }
+
+    @Override
+    public List<JSONObject> getEnterpriseNameAndNumberMorney() {
+        return teaEnterpriseInfoMapper.getEnterpriseNameAndNumberMorney();
+    }
 }
