@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaWarehouseCurrentValueMapper">
-    
+
     <resultMap type="TeaWarehouseCurrentValue" id="TeaWarehouseCurrentValueResult">
         <result property="id"    column="id"    />
         <result property="varieties"    column="varieties"    />
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaWarehouseCurrentValueList" parameterType="TeaWarehouseCurrentValue" resultMap="TeaWarehouseCurrentValueResult">
         <include refid="selectTeaWarehouseCurrentValueVo"/>
-        <where>  
+        <where>
             <if test="varieties != null "> and varieties = #{varieties}</if>
             <if test="currentInventory != null "> and current_inventory = #{currentInventory}</if>
             <if test="goodsValue != null "> and goods_value = #{goodsValue}</if>
@@ -27,12 +27,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaWarehouseId != null "> and tea_warehouse_id = #{teaWarehouseId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaWarehouseCurrentValueById" parameterType="Long" resultMap="TeaWarehouseCurrentValueResult">
         <include refid="selectTeaWarehouseCurrentValueVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getValueDistribution" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t1.goods_value , t2.dict_label
+        from
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2
+        on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
+        where
+            tea_warehouse_id=#{teaWarehouseId};
+    </select>
+
     <insert id="insertTeaWarehouseCurrentValue" parameterType="TeaWarehouseCurrentValue" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_current_value
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaWarehouseCurrentValueByIds" parameterType="String">
-        delete from tea_warehouse_current_value where id in 
+        delete from tea_warehouse_current_value where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

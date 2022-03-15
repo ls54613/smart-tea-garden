@@ -116,4 +116,9 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     public List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue() {
         return teaPeasantInfoMapper.getPeasantRegionYieldValue();
     }
+
+    @Override
+    public List<JSONObject> getLargeHouseholdIncome() {
+        return teaPeasantInfoMapper.getLargeHouseholdIncome();
+    }
 }

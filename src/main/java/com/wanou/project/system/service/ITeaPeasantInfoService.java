@@ -75,4 +75,6 @@ public interface ITeaPeasantInfoService
     public TeaPersonalInformation getTeaPersonalInformation(int id);
 
     List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue();
+
+    List<JSONObject> getLargeHouseholdIncome();
 }
