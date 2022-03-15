@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaWarehouseCurrentValueMapper;
@@ -89,5 +91,10 @@ public class TeaWarehouseCurrentValueServiceImpl implements ITeaWarehouseCurrent
     public int deleteTeaWarehouseCurrentValueById(Long id)
     {
         return teaWarehouseCurrentValueMapper.deleteTeaWarehouseCurrentValueById(id);
+    }
+
+    @Override
+    public List<JSONObject> getValueDistribution(int teaWarehouseId) {
+        return teaWarehouseCurrentValueMapper.getValueDistribution(teaWarehouseId);
     }
 }

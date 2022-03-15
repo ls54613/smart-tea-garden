@@ -61,6 +61,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1.varieties
     </select>
 
+    <select id="getTeaWarehouse" parameterType="int" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            measure,capacity,outbound_volume outboundVolume
+        from
+            tea_warehouse_essential
+        where
+            tea_enterprise_id=#{enterpriseId}
+    </select>
+
+    <select id="getWarehouseInAndOutWarning" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t1.current_inventory,t2.dict_label,t1.goods_value,t1.inventory_warning_quantity
+        from
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2
+        on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
+        where
+            t1.tea_warehouse_id=#{teaWarehouseId}
+    </select>
+
+    <select id="getCapacityAndWarehousingAndOut" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            warehouse_name warehouseName,capacity,quantity,outbound_volume outboundVolume
+        from
+            tea_warehouse_essential
+        where
+            tea_enterprise_id=#{teaWarehouseId}
+    </select>
+
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_essential
         <trim prefix="(" suffix=")" suffixOverrides=",">

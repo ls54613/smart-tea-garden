@@ -139,6 +139,15 @@ public class OpenTeaPeasantInfoController {
         List<TeaPeasantRegionYieldValue> teaPeasantRegionYieldValues=teaPeasantInfoService.getPeasantRegionYieldValue();
         return AjaxResult.success(teaPeasantRegionYieldValues);
     }
+
+    /**
+     * 种植大户收入
+     * */
+    @GetMapping("/getLargeHouseholdIncome")
+    public AjaxResult getLargeHouseholdIncome(){
+        List<JSONObject> jsonObjectList= teaPeasantInfoService.getLargeHouseholdIncome();
+        return AjaxResult.success(jsonObjectList);
+    }
 }
 
 

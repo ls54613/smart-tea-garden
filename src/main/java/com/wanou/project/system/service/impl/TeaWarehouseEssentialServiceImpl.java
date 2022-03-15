@@ -103,4 +103,19 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     public List<TeaValueDistribution> getValueDistribution() {
         return teaWarehouseEssentialMapper.getValueDistribution();
     }
+
+    @Override
+    public JSONObject getTeaWarehouse(int teaEnterpriseId) {
+        return teaWarehouseEssentialMapper.getTeaWarehouse(teaEnterpriseId);
+    }
+
+    @Override
+    public List<JSONObject> getWarehouseInAndOutWarning(int teaWarehouseId) {
+        return teaWarehouseEssentialMapper.getWarehouseInAndOutWarning(teaWarehouseId);
+    }
+
+    @Override
+    public List<JSONObject> getCapacityAndWarehousingAndOut(int teaWarehouseId) {
+        return teaWarehouseEssentialMapper.getCapacityAndWarehousingAndOut(teaWarehouseId);
+    }
 }

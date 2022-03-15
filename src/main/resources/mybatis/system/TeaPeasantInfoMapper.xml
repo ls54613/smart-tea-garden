@@ -83,6 +83,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1.region
     </select>
 
+    <select id="getLargeHouseholdIncome" resultType="com.alibaba.fastjson.JSONObject">
+        select
+        count((select estimated_income from tea_peasant_annual where estimated_income>100000)) belowFive,
+        count((select estimated_income from tea_peasant_annual where estimated_income &lt; 50000)) moreThanFive,
+        count((select estimated_income from tea_peasant_annual where estimated_income>50000 and estimated_income &lt;100000)) moreThanTen
+        from tea_peasant_annual
+    </select>
+
     <insert id="insertTeaPeasantInfo" parameterType="TeaPeasantInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_peasant_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
