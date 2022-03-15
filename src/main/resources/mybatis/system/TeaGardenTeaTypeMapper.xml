@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaGardenTeaTypeMapper">
+
+    <resultMap type="com.wanou.project.system.domain.TeaGardenTeaType" id="TeaGardenTeaTypeResult">
+        <result property="id"    column="id"    />
+        <result property="teaGardenId"    column="tea_garden_id"    />
+        <result property="type"    column="type"    />
+        <result property="proportion"    column="proportion"    />
+    </resultMap>
+
+    <sql id="selectTeaGardenTeaTypeVo">
+        select id, tea_garden_id, type, proportion from tea_garden_tea_type
+    </sql>
+
+    <select id="selectTeaGardenTeaTypeList" parameterType="com.wanou.project.system.domain.TeaGardenTeaType" resultMap="TeaGardenTeaTypeResult">
+        <include refid="selectTeaGardenTeaTypeVo"/>
+        <where>
+            <if test="teaGardenId != null "> and tea_garden_id = #{teaGardenId}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaGardenTeaTypeById" parameterType="Long" resultMap="TeaGardenTeaTypeResult">
+        <include refid="selectTeaGardenTeaTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTeaGardenTeaType" parameterType="com.wanou.project.system.domain.TeaGardenTeaType" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_garden_tea_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaGardenId != null">tea_garden_id,</if>
+            <if test="type != null">type,</if>
+            <if test="proportion != null">proportion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teaGardenId != null">#{teaGardenId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="proportion != null">#{proportion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaGardenTeaType" parameterType="com.wanou.project.system.domain.TeaGardenTeaType">
+        update tea_garden_tea_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teaGardenId != null">tea_garden_id = #{teaGardenId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="proportion != null">proportion = #{proportion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaGardenTeaTypeById" parameterType="Long">
+        delete from tea_garden_tea_type where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaGardenTeaTypeByIds" parameterType="String">
+        delete from tea_garden_tea_type where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
