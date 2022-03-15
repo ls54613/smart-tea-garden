@@ -84,6 +84,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         t1.`year`
     </select>
 
+    <select id="getSalesNumYearOnYear" resultType="java.math.BigDecimal">
+        SELECT
+        	TRUNCATE((((t2.salesNum/t1.salesNum) - 1) * 100),2)
+        FROM
+        	(
+        	SELECT
+        		t1.sales_volume_number salesNum
+        	FROM
+        		tea_enterprise_yield_sales t1
+        	INNER JOIN tea_enterprise_info t2 ON t1.tea_peasant_id = t2.id
+        	WHERE
+        		t2.id = #{enterpriseId} AND t1.`year`=#{end}
+        	) t1,
+        	(
+        	SELECT
+        		t1.sales_volume_number salesNum
+        	FROM
+        		tea_enterprise_yield_sales t1
+        	INNER JOIN tea_enterprise_info t2 ON t1.tea_peasant_id = t2.id
+        	WHERE
+        		t2.id = #{enterpriseId} AND t1.`year`=#{start}
+        	) t2
+    </select>
+
+    <select id="getSalesMoneyYearOnYear" resultType="java.math.BigDecimal">
+        SELECT
+        	TRUNCATE((((t2.salesMoney/t1.salesMoney) - 1) * 100),2)
+        FROM
+        	(
+        	SELECT
+        		t1.sales_volume_money salesMoney
+        	FROM
+        		tea_enterprise_yield_sales t1
+        	INNER JOIN tea_enterprise_info t2 ON t1.tea_peasant_id = t2.id
+        	WHERE
+        		t2.id = #{enterpriseId} AND t1.`year`=#{end}
+        	) t1,
+        	(
+        	SELECT
+        		t1.sales_volume_money salesMoney
+        	FROM
+        		tea_enterprise_yield_sales t1
+        	INNER JOIN tea_enterprise_info t2 ON t1.tea_peasant_id = t2.id
+        	WHERE
+        		t2.id = #{enterpriseId} AND t1.`year`=#{start}
+        	) t2
+    </select>
+
+    <select id="getYieldGroupEnterprise" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        	TRUNCATE (( SUM( IFNULL(yield_value_number,0) ) / 20000000 ), 2 ) yieldValueNum,
+        	TRUNCATE (( SUM( IFNULL(yield_value_money,0) ) / 10000 ), 2 ) yieldValueMoney,
+        	t1.enterprise_name enterpriseName
+        FROM
+        	tea_enterprise_info t1
+        	LEFT JOIN tea_enterprise_yield_sales t2 ON t2.tea_peasant_id = t1.id
+        WHERE
+            t2.year >= #{start} AND t2.year &lt;= #{end}
+            <if test="region != null and region != ''">
+                AND t1.region = #{region}
+            </if>
+        GROUP BY
+        	t1.id
+    </select>
+
 
     <insert id="insertTeaEnterpriseYieldSales" parameterType="TeaEnterpriseYieldSales" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_yield_sales

@@ -34,6 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
         <result property="region" column="region" />
+        <result property="isCountyEmp" column="is_county_emp" />
+        <result property="isTownEmp" column="is_town_emp" />
         <collection property="teaType" column="id" select="com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper.selectTeaEnterpriseTeaTypeIntListByTeaEnterpriseId" />
     </resultMap>
 
@@ -56,7 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null "> and cultivated_area = #{cultivatedArea}</if>
             <if test="workPersonNum != null "> and work_person_num = #{workPersonNum}</if>
             <if test="region != null and region != ''"> and region = #{region}</if>
+             <if test="isCountyEmp != null">and is_county_emp = #{isCountyEmp}</if>
+             <if test="isTownEmp != null">and is_town_emp = #{isTownEmp}</if>
         </where>
+        ORDER BY `order`
     </select>
 
     <select id="selectTeaEnterpriseInfoById" parameterType="Long" resultMap="TeaEnterpriseInfoResult1">
@@ -103,6 +108,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaEnterpriseCount" resultType="java.lang.Integer">
         select count(id) from tea_enterprise_info
+    </select>
+
+    <select id="getEnterpriseCount" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM tea_enterprise_info
+        <where>
+            <if test="region != null and region != ''">
+                region = #{region}
+            </if>
+        </where>
     </select>
 
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">

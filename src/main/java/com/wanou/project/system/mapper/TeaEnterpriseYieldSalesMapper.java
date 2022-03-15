@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.date.DateTime;
 import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaEnterpriseYieldSales;
 import org.apache.ibatis.annotations.Param;
@@ -71,4 +72,10 @@ public interface TeaEnterpriseYieldSalesMapper
     List<JSONObject> getSalesByRegion(@Param("region") String region,@Param("start") int start,@Param("end") int end);
 
     List<JSONObject> costAndProfitStatistics(@Param("enterpriseId") Long enterpriseId,@Param("start") int start,@Param("end") int end);
+
+    BigDecimal getSalesNumYearOnYear(@Param("enterpriseId") Long enterpriseId,@Param("start") int start,@Param("end") int end);
+
+    BigDecimal getSalesMoneyYearOnYear(@Param("enterpriseId")Long enterpriseId,@Param("start") int start,@Param("end") int end);
+
+    List<JSONObject> getYieldGroupEnterprise(@Param("region") String region,@Param("start") DateTime start,@Param("end") DateTime end);
 }

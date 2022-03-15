@@ -73,8 +73,8 @@ public class OpenTeaEnterpriseInfoController {
      * @return
      */
     @GetMapping("/getSalesYearOnYear")
-    public AjaxResult getSalesYearOnYear(){
-        JSONObject result = teaEnterpriseYieldSalesService.getSalesYearOnYear();
+    public AjaxResult getSalesYearOnYear(String region,Boolean isCountyEmp,Boolean isTownEmp){
+        JSONObject result = teaEnterpriseYieldSalesService.getSalesYearOnYear(region,isCountyEmp,isTownEmp);
         return AjaxResult.success(result);
     }
 
@@ -90,6 +90,28 @@ public class OpenTeaEnterpriseInfoController {
         data.put("data",result);
         data.put("count",count);
         return AjaxResult.success(data);
+    }
+
+    /**
+     * 企业分组产量产值
+     * @param region
+     * @return
+     */
+    @GetMapping("/getYieldGroupEnterprise")
+    public AjaxResult getYieldGroupEnterprise(String region){
+        List<JSONObject> result = teaEnterpriseYieldSalesService.getYieldGroupEnterprise(region);
+        return AjaxResult.success(result);
+    }
+
+    /**
+     * 获取茶企数量
+     * @param region
+     * @return
+     */
+    @GetMapping("/getEnterpriseCount")
+    public AjaxResult getEnterpriseCount(String region){
+        Integer count = teaEnterpriseInfoService.getEnterpriseCount(region);
+        return AjaxResult.success(count);
     }
 
     @GetMapping("/getSalesByRegion")

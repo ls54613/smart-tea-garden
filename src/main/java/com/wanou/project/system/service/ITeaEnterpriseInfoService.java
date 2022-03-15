@@ -73,4 +73,6 @@ public interface ITeaEnterpriseInfoService
     List<JSONObject> getYieldGroupRegion();
 
     int selectTeaEnterpriseCount();
+
+    Integer getEnterpriseCount(String region);
 }

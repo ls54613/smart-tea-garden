@@ -65,9 +65,11 @@ public interface ITeaEnterpriseYieldSalesService
 
     List<Map<String,List>> selectTeaEnterpriseYieldSalesTotalRange(Long enterpriseId,int start, int end);
 
-    JSONObject getSalesYearOnYear();
+    JSONObject getSalesYearOnYear(String region,Boolean isCountyEmp,Boolean isTownEmp);
 
     List<JSONObject> getSalesByRegion(String region);
 
     List<JSONObject> costAndProfitStatistics(Long id);
+
+    List<JSONObject> getYieldGroupEnterprise(String region);
 }

@@ -95,4 +95,8 @@ public class TeaEnterpriseInfo extends BaseEntity
     @Excel(name = "茶企所属区域")
     private String region; //茶企所属区域
 
+    private Boolean isCountyEmp; //是否县重点企业
+
+    private Boolean isTownEmp; //是否乡镇重点企业
+
 }
