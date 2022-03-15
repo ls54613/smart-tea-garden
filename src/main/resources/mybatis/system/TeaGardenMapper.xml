@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="teaType"    column="tea_type"    />
         <result property="head"    column="head"    />
         <result property="region"    column="region"    />
+        <result property="teaEnterpriseId" column="tea_enterprise_id"/>
     </resultMap>
 
     <resultMap id="TeaGardenVoResult" type="com.wanou.project.system.domain.vo.TeaGardenVo" extends="TeaGardenResult">

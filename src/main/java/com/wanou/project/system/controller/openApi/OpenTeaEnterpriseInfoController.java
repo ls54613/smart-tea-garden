@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.spring.web.json.Json;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -151,5 +152,15 @@ public class OpenTeaEnterpriseInfoController {
     public AjaxResult purchaseMonitor(Long id){
         List<JSONObject> result = teaEnterpriseProcurementService.selectTeaEnterpriseProcurementByEnterpriseId(id);
         return AjaxResult.success(result);
+    }
+
+    /**
+     * 3.15
+     * 获取茶企名称以及产量and产值
+     * */
+    @GetMapping("/getEnterpriseNameAndNumberMorney")
+    public AjaxResult getEnterpriseNameAndNumberMorney(){
+        List<JSONObject> jsonObjectList=teaEnterpriseInfoService.getEnterpriseNameAndNumberMorney();
+        return AjaxResult.success(jsonObjectList);
     }
 }
