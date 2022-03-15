@@ -58,4 +58,6 @@ public class TeaGarden extends BaseEntity
 
     @Excel(name = "所属区域")
     private String region;
+
+    private Long teaEnterpriseId; //关联茶企
 }

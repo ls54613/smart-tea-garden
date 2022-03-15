@@ -16,13 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="teaType"    column="tea_type"    />
         <result property="head"    column="head"    />
         <result property="region"    column="region"    />
+        <result property="teaEnterpriseId" column="tea_enterprise_id" />
     </resultMap>
 
     <resultMap id="TeaGardenVoResult" type="com.wanou.project.system.domain.vo.TeaGardenVo" extends="TeaGardenResult">
     </resultMap>
 
     <sql id="selectTeaGardenVo">
-        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,region
+        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,region,tea_enterprise_id
          from tea_garden
     </sql>
 
@@ -39,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaType != null "> and tea_type = #{teaType}</if>
             <if test="head != null  and head != ''"> and head = #{head}</if>
             <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="teaEnterpriseId != null"> and tea_enterprise_id = #{teaEnterpriseId}</if>
         </where>
     </select>
 
@@ -48,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="listTeaGarden" parameterType="TeaGarden" resultMap="TeaGardenVoResult">
-        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,
+        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,tea_enterprise_id,
                 dictVariety.dict_label as teaTreeVarietyName, dictTeaType.dict_label as teaTypeName
          from tea_garden
          left join sys_dict_data as dictVariety on tea_tree_variety = dictVariety.dict_value and dictVariety.dict_type = "sys_variety_type"
@@ -63,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null  and totalProduction != ''"> and total_production = #{totalProduction}</if>
             <if test="teaType != null "> and tea_type = #{teaType}</if>
             <if test="head != null  and head != ''"> and head = #{head}</if>
+            <if test="teaEnterpriseId != null"> and tea_enterprise_id = #{teaEnterpriseId}</if>
         </where>
     </select>
 
@@ -83,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaType != null">tea_type,</if>
             <if test="head != null">head,</if>
             <if test="region != null and region != ''">region,</if>
+            <if test="teaEnterpriseId != null">tea_enterprise_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="teaGardenId != null">#{teaGardenId},</if>
@@ -96,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaType != null">#{teaType},</if>
             <if test="head != null">#{head},</if>
             <if test="region != null and region != ''">#{region},</if>
+            <if test="teaEnterpriseId != null">#{teaEnterpriseId},</if>
          </trim>
     </insert>
 
@@ -112,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaType != null">tea_type = #{teaType},</if>
             <if test="head != null">head = #{head},</if>
             <if test="region != null and region != ''">region = #{region},</if>
+            <if test="teaEnterpriseId != null">tea_enterprise_id = #{teaEnterpriseId},</if>
         </trim>
         where tea_garden_id = #{teaGardenId}
     </update>
