@@ -47,6 +47,17 @@ public class TeaGardenController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 获取所有茶园
+     * @param teaGarden
+     * @return
+     */
+    @GetMapping("/listAll")
+    public AjaxResult listAll(TeaGarden teaGarden){
+        List<TeaGarden> list = teaGardenService.selectTeaGardenList(teaGarden);
+        return AjaxResult.success(list);
+    }
+
 
     @PreAuthorize("@ss.hasPermi('system:garden:list')")
     @GetMapping("/listTeaGarden")
