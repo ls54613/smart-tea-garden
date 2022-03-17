@@ -105,8 +105,8 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     }
 
     @Override
-    public JSONObject getTeaWarehouse(int teaEnterpriseId) {
-        return teaWarehouseEssentialMapper.getTeaWarehouse(teaEnterpriseId);
+    public JSONObject getTeaWarehouse(int teaWarehouseId) {
+        return teaWarehouseEssentialMapper.getTeaWarehouse(teaWarehouseId);
     }
 
     @Override
@@ -117,5 +117,10 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     @Override
     public List<JSONObject> getCapacityAndWarehousingAndOut(int teaWarehouseId) {
         return teaWarehouseEssentialMapper.getCapacityAndWarehousingAndOut(teaWarehouseId);
+    }
+
+    @Override
+    public List<JSONObject> getEnterpriseNameCapacity() {
+        return teaWarehouseEssentialMapper.getEnterpriseNameCapacity();
     }
 }

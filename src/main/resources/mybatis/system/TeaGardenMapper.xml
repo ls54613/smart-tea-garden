@@ -66,9 +66,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="head != null  and head != ''"> and head = #{head}</if>
         </where>
     </select>
+    <select id="getEnterpriseNameAndArea" resultType="cn.hutool.json.JSONObject">
+        SELECT
+            t2.enterprise_name enterpriseName,SUM(t1.tea_area) teaArea,SUM(t1.average_yield) averageYieId
+        FROM
+            tea_garden t1 INNER JOIN tea_enterprise_info t2 ON t1.tea_enterprise_id = t2.id
+        GROUP BY
+            t2.id
+    </select>
+    <select id="getRegionAverageYieldAndTeaArea" resultType="cn.hutool.json.JSONObject">
+        select
+            region,sum(average_yield) averageYield,count(tea_garden_id) teaGardenId,sum(tea_area) teaArea
+        from
+            tea_garden
+        GROUP BY
+            region
+    </select>
 
+    <select id="getProportionYieldAndDictLabel" resultType="cn.hutool.json.JSONObject">
+        select
+            t1.proportion,t2.dict_label dictLabel
+        from
+            tea_garden_tea_type t1 LEFT JOIN sys_dict_data t2
+        on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.type)
+    </select>
 
-
+    <select id="getTeaGardenInformation" resultType="cn.hutool.json.JSONObject" parameterType="string">
+        select
+            tea_area teaArea,tea_tree_variety teaTreeVariety,facilities_num facilitiesNum,employ_num employNum,average_yield averageYield,total_production totalProduction,tea_type teaType,head
+        from
+            tea_garden
+        where
+            name=#{name}
+    </select>
 
 
     <insert id="insertTeaGarden" parameterType="TeaGarden">
