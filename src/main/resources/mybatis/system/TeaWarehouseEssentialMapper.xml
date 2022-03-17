@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getWarehouseInformation" resultType="com.alibaba.fastjson.JSONObject">
         select
-            t2.warehouse_name warehouseName,t2.location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.rate
+            t2.warehouse_name warehouseName,t2.location location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.rate
         from
             tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.enterprise_id=t1.id LEFT JOIN sys_dict_data t3 ON (t3.dict_type = 'tea_enterprise_operation_status' AND t3.dict_value = t1.operation_status)
         where
@@ -63,11 +63,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getTeaWarehouse" parameterType="int" resultType="com.alibaba.fastjson.JSONObject">
         select
-            measure,capacity,outbound_volume outboundVolume
+            area_covered areaCovered,total_inventory totalInventory,total_outbound totalOutbound
         from
-            tea_warehouse_essential
+            tea_warehouse_details
         where
-            tea_enterprise_id=#{enterpriseId}
+            tea_warehouse_id=#{teaWarehouseId}
     </select>
 
     <select id="getWarehouseInAndOutWarning" resultType="com.alibaba.fastjson.JSONObject">
@@ -87,6 +87,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tea_warehouse_essential
         where
             tea_enterprise_id=#{teaWarehouseId}
+    </select>
+    <select id="getEnterpriseNameCapacity" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t1.enterprise_name enterpriseName,sum(t2.capacity) capacity,sum(t2.outbound_volume) outboundVolume
+        from
+            tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.tea_enterprise_id=t1.id
+        GROUP BY
+            t2.id
     </select>
 
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">

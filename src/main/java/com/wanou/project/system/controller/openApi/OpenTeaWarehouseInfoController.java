@@ -44,8 +44,8 @@ public class OpenTeaWarehouseInfoController {
      * 获取茶仓情况
      * */
     @GetMapping("/getTeaWarehouse")
-    public AjaxResult getTeaWarehouse(int teaEnterpriseId){
-        JSONObject teaWarehouse=teaWarehouseEssentialService.getTeaWarehouse(teaEnterpriseId);
+    public AjaxResult getTeaWarehouse(int teaWarehouseId){
+        JSONObject teaWarehouse=teaWarehouseEssentialService.getTeaWarehouse(teaWarehouseId);
         return AjaxResult.success(teaWarehouse);
     }
 
@@ -74,6 +74,16 @@ public class OpenTeaWarehouseInfoController {
     @GetMapping("/getCapacityAndWarehousingAndOut")
     public AjaxResult getCapacityAndWarehousingAndOut(int teaWarehouseId){
         List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getCapacityAndWarehousingAndOut(teaWarehouseId);
+        return AjaxResult.success(jsonObjectList);
+    }
+
+    /**
+     * 3.16
+     *获取企业名称以及对应的所有茶仓的容量以及出库总量
+     * */
+    @GetMapping("/getEnterpriseNameCapacity")
+    public AjaxResult getEnterpriseNameCapacity(){
+        List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getEnterpriseNameCapacity();
         return AjaxResult.success(jsonObjectList);
     }
 }

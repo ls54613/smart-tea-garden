@@ -66,9 +66,11 @@ public interface ITeaWarehouseEssentialService
 
     public List<TeaValueDistribution> getValueDistribution();
 
-    JSONObject getTeaWarehouse(int teaEnterpriseId);
+    JSONObject getTeaWarehouse(int teaWarehouseId);
 
     List<JSONObject> getWarehouseInAndOutWarning(int teaWarehouseId);
 
     List<JSONObject> getCapacityAndWarehousingAndOut(int teaWarehouseId);
+
+    List<JSONObject> getEnterpriseNameCapacity();
 }

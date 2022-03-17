@@ -2,6 +2,7 @@ package com.wanou.project.system.service.impl;
 
 import java.util.List;
 
+import cn.hutool.json.JSONObject;
 import com.wanou.project.system.domain.vo.TeaGardenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,5 +97,25 @@ public class TeaGardenServiceImpl implements ITeaGardenService
     @Override
     public List<TeaGardenVo> listTeaGarden(TeaGarden teaGarden) {
         return teaGardenMapper.listTeaGarden(teaGarden);
+    }
+
+    @Override
+    public List<JSONObject> getEnterpriseNameAndArea() {
+        return teaGardenMapper.getEnterpriseNameAndArea();
+    }
+
+    @Override
+    public List<JSONObject> getRegionAverageYieldAndTeaArea() {
+        return teaGardenMapper.getRegionAverageYieldAndTeaArea();
+    }
+
+    @Override
+    public List<JSONObject> getProportionYieldAndDictLabel() {
+        return teaGardenMapper.getProportionYieldAndDictLabel();
+    }
+
+    @Override
+    public JSONObject getTeaGardenInformation(String name) {
+        return teaGardenMapper.getTeaGardenInformation(name);
     }
 }
