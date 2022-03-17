@@ -62,7 +62,7 @@ public class OpenTeaEnterpriseInfoController {
     @GetMapping("/getTeaSalesTypes")
     public AjaxResult getTeaSalesTypes(String region){
         List<JSONObject> result = teaEnterpriseInfoService.getTeaSalesTypes(region);
-        Integer max = result.stream().max(Comparator.comparing(item -> item.getInteger("value"))).map(item -> item.getInteger("value")).get();
+        Integer max = result.stream().max(Comparator.comparing(item -> item.getInteger("value"))).map(item -> item.getInteger("value")).orElse(0);
         JSONObject finalResult = new JSONObject();
         finalResult.put("max",max);
         finalResult.put("data",result);
