@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaGardenSoilMonitorMapper">
+
+    <resultMap type="TeaGardenSoilMonitor" id="TeaGardenSoilMonitorResult">
+        <result property="id"    column="id"    />
+        <result property="teaGardenId"    column="tea_garden_id"    />
+        <result property="key"    column="key"    />
+        <result property="value"    column="value"    />
+    </resultMap>
+
+    <sql id="selectTeaGardenSoilMonitorVo">
+        select id, tea_garden_id, `key`, `value` from tea_garden_soil_monitor
+    </sql>
+
+    <select id="selectTeaGardenSoilMonitorList" parameterType="TeaGardenSoilMonitor" resultMap="TeaGardenSoilMonitorResult">
+        <include refid="selectTeaGardenSoilMonitorVo"/>
+        <where>
+            <if test="teaGardenId != null "> and tea_garden_id = #{teaGardenId}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaGardenSoilMonitorById" parameterType="Long" resultMap="TeaGardenSoilMonitorResult">
+        <include refid="selectTeaGardenSoilMonitorVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTeaGardenSoilMonitor" parameterType="TeaGardenSoilMonitor" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_garden_soil_monitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaGardenId != null">tea_garden_id,</if>
+            <if test="key != null and key != ''">`key`,</if>
+            <if test="value != null">`value`,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teaGardenId != null">#{teaGardenId},</if>
+            <if test="key != null and key != ''">#{key},</if>
+            <if test="value != null">#{value},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaGardenSoilMonitor" parameterType="TeaGardenSoilMonitor">
+        update tea_garden_soil_monitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teaGardenId != null">tea_garden_id = #{teaGardenId},</if>
+            <if test="key != null and key != ''">`key` = #{key},</if>
+            <if test="value != null">`value` = #{value},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaGardenSoilMonitorById" parameterType="Long">
+        delete from tea_garden_soil_monitor where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaGardenSoilMonitorByIds" parameterType="String">
+        delete from tea_garden_soil_monitor where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

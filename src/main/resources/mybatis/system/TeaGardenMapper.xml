@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaGardenMapper">
 
-    <resultMap type="TeaGarden" id="TeaGardenResult">
+    <resultMap type="com.wanou.project.system.domain.TeaGarden" id="TeaGardenResult">
         <result property="teaGardenId"    column="tea_garden_id"    />
-        <result property="enterprises"    column="enterprises"    />
+        <result property="name"    column="name"    />
         <result property="teaArea"    column="tea_area"    />
         <result property="teaTreeVariety"    column="tea_tree_variety"    />
         <result property="employNum"    column="employ_num"    />
@@ -23,14 +23,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTeaGardenVo">
-        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,region,tea_enterprise_id
+        select tea_garden_id, `name`, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,region,tea_enterprise_id
          from tea_garden
     </sql>
 
-    <select id="selectTeaGardenList" parameterType="TeaGarden" resultMap="TeaGardenResult">
+    <select id="selectTeaGardenList" parameterType="com.wanou.project.system.domain.TeaGarden" resultMap="TeaGardenResult">
         <include refid="selectTeaGardenVo"/>
         <where>
-            <if test="enterprises != null  and enterprises != ''"> and enterprises = #{enterprises}</if>
+            <if test="name != null  and name != ''"> and `name` LIKE CONCAT('%',#{name},'%')</if>
             <if test="teaArea != null "> and tea_area = #{teaArea}</if>
             <if test="teaTreeVariety != null "> and tea_tree_variety = #{teaTreeVariety}</if>
             <if test="employNum != null "> and employ_num = #{employNum}</if>
@@ -49,14 +49,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where tea_garden_id = #{teaGardenId}
     </select>
 
-    <select id="listTeaGarden" parameterType="TeaGarden" resultMap="TeaGardenVoResult">
-        select tea_garden_id, enterprises, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,tea_enterprise_id,
+    <select id="listTeaGarden" parameterType="com.wanou.project.system.domain.TeaGarden" resultMap="TeaGardenVoResult">
+        select tea_garden_id,`name`, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,tea_enterprise_id,
                 dictVariety.dict_label as teaTreeVarietyName, dictTeaType.dict_label as teaTypeName
          from tea_garden
          left join sys_dict_data as dictVariety on tea_tree_variety = dictVariety.dict_value and dictVariety.dict_type = "sys_variety_type"
          left join sys_dict_data as dictTeaType on tea_type = dictTeaType.dict_value and dictTeaType.dict_type = "sys_enterprise_type"
         <where>
-            <if test="enterprises != null  and enterprises != ''"> and enterprises = #{enterprises}</if>
+            <if test="name != null  and name != ''"> and `name` LIKE CONCAT('%',#{name},'%')</if>
             <if test="teaArea != null "> and tea_area = #{teaArea}</if>
             <if test="teaTreeVariety != null "> and tea_tree_variety = #{teaTreeVariety}</if>
             <if test="employNum != null "> and employ_num = #{employNum}</if>
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertTeaGarden" parameterType="TeaGarden">
         insert into tea_garden
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="enterprises != null">enterprises,</if>
+            <if test="name != null and name != ''">`name`,</if>
             <if test="teaArea != null">tea_area,</if>
             <if test="teaTreeVariety != null">tea_tree_variety,</if>
             <if test="employNum != null">employ_num,</if>
@@ -89,8 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teaEnterpriseId != null">tea_enterprise_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="teaGardenId != null">#{teaGardenId},</if>
-            <if test="enterprises != null">#{enterprises},</if>
+            <if test="name != null and name != ''">#{name},</if>
             <if test="teaArea != null">#{teaArea},</if>
             <if test="teaTreeVariety != null">#{teaTreeVariety},</if>
             <if test="employNum != null">#{employNum},</if>
@@ -107,7 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTeaGarden" parameterType="TeaGarden">
         update tea_garden
         <trim prefix="SET" suffixOverrides=",">
-            <if test="enterprises != null">enterprises = #{enterprises},</if>
+            <if test="name != null">`name` = #{name},</if>
             <if test="teaArea != null">tea_area = #{teaArea},</if>
             <if test="teaTreeVariety != null">tea_tree_variety = #{teaTreeVariety},</if>
             <if test="employNum != null">employ_num = #{employNum},</if>

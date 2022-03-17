@@ -20,9 +20,9 @@ public class TeaGarden extends BaseEntity
     /** 茶园id */
     private Long teaGardenId;
 
-    /** 企业单位 */
-    @Excel(name = "企业单位")
-    private String enterprises;
+    /** 茶园名称 */
+    @Excel(name = "茶园名称")
+    private String name;
 
     /** 茶园面积 */
     @Excel(name = "茶园面积")

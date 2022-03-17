@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaGardenDiseaseMapper">
+
+    <resultMap type="TeaGardenDisease" id="TeaGardenDiseaseResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="value"    column="value"    />
+        <result property="teaGardenId"    column="tea_garden_id"    />
+    </resultMap>
+
+    <sql id="selectTeaGardenDiseaseVo">
+        select id, `type`, `value`, tea_garden_id from tea_garden_disease
+    </sql>
+
+    <select id="selectTeaGardenDiseaseList" parameterType="TeaGardenDisease" resultMap="TeaGardenDiseaseResult">
+        <include refid="selectTeaGardenDiseaseVo"/>
+        <where>
+            <if test="teaGardenId != null "> and tea_garden_id = #{teaGardenId}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaGardenDiseaseById" parameterType="Long" resultMap="TeaGardenDiseaseResult">
+        <include refid="selectTeaGardenDiseaseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTeaGardenDisease" parameterType="TeaGardenDisease" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_garden_disease
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">`type`,</if>
+            <if test="value != null">`value`,</if>
+            <if test="teaGardenId != null">tea_garden_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="value != null">#{value},</if>
+            <if test="teaGardenId != null">#{teaGardenId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaGardenDisease" parameterType="TeaGardenDisease">
+        update tea_garden_disease
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">`type` = #{type},</if>
+            <if test="value != null">`value` = #{value},</if>
+            <if test="teaGardenId != null">tea_garden_id = #{teaGardenId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaGardenDiseaseById" parameterType="Long">
+        delete from tea_garden_disease where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaGardenDiseaseByIds" parameterType="String">
+        delete from tea_garden_disease where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

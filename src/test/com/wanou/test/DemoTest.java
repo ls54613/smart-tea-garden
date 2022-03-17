@@ -1,6 +1,7 @@
 package com.wanou.test;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateField;
@@ -22,7 +23,6 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.wanou.common.utils.IdUtils;
-import com.wanou.common.utils.sign.Base64;
 import com.wanou.project.system.domain.SysDept;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
@@ -98,15 +98,10 @@ public class DemoTest {
 
     @Test
     public void syncTest() throws InterruptedException {
-        DateTime date = DateUtil.date();
-        DateTime start = DateUtil.offset(date, DateField.YEAR, -5);
-        DateTime end = DateUtil.offset(date, DateField.YEAR, -1);
-
-        List<Integer> list = DateUtil.rangeFunc(start, end, DateField.YEAR, (year) -> {
-            System.out.println(year);
-            return DateUtil.year(year);
-        });
-        System.out.println(list);
+        File file = new File("C:\\Users\\Administrator\\Desktop\\农田.png");
+        byte[] bytes = FileUtil.readBytes(file);
+        String encode = Base64.encode(bytes);
+        System.out.println(encode);
     }
 
     @Test
