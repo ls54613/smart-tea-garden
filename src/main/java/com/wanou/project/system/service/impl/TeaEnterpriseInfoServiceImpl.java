@@ -142,7 +142,7 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
         teaEnterpriseTeaTypeMapper.deleteTeaEnterpriseTeaTypeByTeaEnterpriseIds(ids);
         return teaEnterpriseInfoMapper.deleteTeaEnterpriseInfoByIds(ids);
     }
-    
+
     /**
      * 删除茶企基本信息信息
      *

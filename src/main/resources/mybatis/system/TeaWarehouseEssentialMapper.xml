@@ -15,10 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="quantity"    column="quantity"    />
         <result property="outboundVolume"    column="outbound_volume"    />
         <result property="warehouseType"    column="warehouse_type"    />
+        <result property="warehouseName"    column="warehouse_name"    />
     </resultMap>
 
     <sql id="selectTeaWarehouseEssentialVo">
-        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume,warehouse_type from tea_warehouse_essential
+        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume,warehouse_type warehouse_name from tea_warehouse_essential
     </sql>
 
     <select id="selectTeaWarehouseEssentialList" parameterType="TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">

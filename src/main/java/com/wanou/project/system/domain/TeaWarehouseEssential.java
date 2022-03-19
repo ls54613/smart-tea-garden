@@ -42,6 +42,9 @@ public class TeaWarehouseEssential extends BaseEntity
     @Excel(name = "利用率")
     private String utilization;
 
+    @Excel(name = "茶仓名称")
+    private String warehouseName;
+
     /** 负责人 */
     @Excel(name = "负责人")
     private String personCharge;
