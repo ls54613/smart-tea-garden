@@ -75,10 +75,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getPeasantRegionYieldValue"
             resultType="com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue">
         SELECT
-            COUNT(DISTINCT(t3.id)) personNumber,(SUM(yield_value_number) / 20000000) yieldValueNum,(SUM(yield_value_money) / 10000) yieldValueMoney,t1.region
+            COUNT(DISTINCT(t3.id)) personNumber,TRUNCATE((SUM(yield_value_number) / 20000000),2) yieldValueNum,TRUNCATE((SUM(yield_value_money) / 10000),2) yieldValueMoney,t1.region
         FROM
-            tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2  ON t2.tea_peasant_id = t1.id
-        LEFT JOIN tea_peasant_info t3 on t3.enterprise_id=t1.id
+            tea_enterprise_info t1 LEFT JOIN tea_enterprise_yield_sales t2  ON t2.tea_peasant_id = t1.id LEFT JOIN tea_peasant_info t3 on t3.enterprise_id=t1.id
         GROUP BY
             t1.region
     </select>

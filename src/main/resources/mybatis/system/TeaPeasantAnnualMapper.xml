@@ -37,9 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <select id="getPeasantAnnual" resultType="com.wanou.project.system.domain.TeaPeasantAnnual" resultMap="TeaPeasantAnnualResult">
-        <include refid="selectTeaPeasantAnnualVo"/>
-        where tea_peasant_id=#{teaPeasantId}
+    <select id="getPeasantAnnual" resultType="com.alibaba.fastjson.JSONObject" >
+        select
+            t1.estimated_income estimatedIncome,t1.income_type incomeType,t2.dict_label isZengShou
+        from
+            tea_peasant_annual t1 LEFT JOIN sys_dict_data t2 on(t2.dict_type='sys_is_increase' and t2.dict_value=t1.whether_increase)
+        where
+            t1.tea_peasant_id=#{teaPeasantId}
+
     </select>
 
 

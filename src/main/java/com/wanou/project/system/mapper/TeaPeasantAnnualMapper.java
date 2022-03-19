@@ -1,6 +1,8 @@
 package com.wanou.project.system.mapper;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaPeasantAnnual;
 import com.wanou.project.system.domain.TeaPeasantAsset;
 import org.apache.ibatis.annotations.Param;
@@ -68,6 +70,6 @@ public interface TeaPeasantAnnualMapper
     void insertOrUpdate(TeaPeasantAnnual teaPeasantAnnual);
 
 
-    TeaPeasantAnnual getPeasantAnnual(long teaPeasantId);
+    JSONObject getPeasantAnnual(long teaPeasantId);
 
 }

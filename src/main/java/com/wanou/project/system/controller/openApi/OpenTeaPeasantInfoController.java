@@ -99,7 +99,7 @@ public class OpenTeaPeasantInfoController {
      * */
     @GetMapping("/getPeasantAnnual")
     public AjaxResult getPeasantAnnual(long teaPeasantId){
-        TeaPeasantAnnual teaPeasantAnnual= teaPeasantAnnualService.getPeasantAnnual(teaPeasantId);
+        JSONObject teaPeasantAnnual= teaPeasantAnnualService.getPeasantAnnual(teaPeasantId);
         return AjaxResult.success(teaPeasantAnnual);
     }
 

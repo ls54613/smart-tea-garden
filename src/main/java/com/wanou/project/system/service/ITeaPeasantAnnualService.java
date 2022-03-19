@@ -1,6 +1,8 @@
 package com.wanou.project.system.service;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaPeasantAnnual;
 import com.wanou.project.system.domain.TeaPeasantAsset;
 
@@ -60,6 +62,6 @@ public interface ITeaPeasantAnnualService
      */
     public int deleteTeaPeasantAnnualById(Long id);
 
-    public TeaPeasantAnnual getPeasantAnnual(long teaPeasantId);
+    public JSONObject getPeasantAnnual(long teaPeasantId);
 
 }

@@ -2,6 +2,7 @@ package com.wanou.project.system.service.impl;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.TeaPeasantAsset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,7 +103,7 @@ public class TeaPeasantAnnualServiceImpl implements ITeaPeasantAnnualService
     }
 
     @Override
-    public TeaPeasantAnnual getPeasantAnnual(long teaPeasantId) {
+    public JSONObject getPeasantAnnual(long teaPeasantId) {
         return teaPeasantAnnualMapper.getPeasantAnnual(teaPeasantId);
     }
 
