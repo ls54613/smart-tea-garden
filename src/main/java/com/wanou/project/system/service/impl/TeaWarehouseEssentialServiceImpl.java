@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
+import com.wanou.project.system.mapper.TeaWarehouseDetailsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaWarehouseEssentialMapper;
@@ -21,6 +22,8 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
 {
     @Autowired
     private TeaWarehouseEssentialMapper teaWarehouseEssentialMapper;
+    @Autowired
+    private TeaWarehouseDetailsMapper teaWarehouseDetailsMapper;
 
     /**
      * 查询茶仓基本情况
@@ -79,6 +82,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     @Override
     public int deleteTeaWarehouseEssentialByIds(Long[] ids)
     {
+        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsByIds(ids);
         return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
     }
 
@@ -91,6 +95,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     @Override
     public int deleteTeaWarehouseEssentialById(Long id)
     {
+        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsById(id);
         return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
     }
 
