@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTeaWarehouseEssentialVo">
-        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume,warehouse_type ,warehouse_name from tea_warehouse_essential
+        select id, enterprise_id, measure, capacity, facilities_number, utilization, person_charge, quantity, outbound_volume,warehouse_type, warehouse_name from tea_warehouse_essential
     </sql>
 
     <select id="selectTeaWarehouseEssentialList" parameterType="TeaWarehouseEssential" resultMap="TeaWarehouseEssentialResult">
