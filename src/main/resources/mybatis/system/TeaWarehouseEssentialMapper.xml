@@ -103,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="enterpriseId != null">enterprise_id,</if>
             <if test="measure != null">measure,</if>
+            <if test="warehouseName!=null">warehouse_name,</if>
             <if test="capacity != null">capacity,</if>
             <if test="facilitiesNumber != null">facilities_number,</if>
             <if test="utilization != null">utilization,</if>
@@ -113,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="enterpriseId != null">#{enterpriseId},</if>
             <if test="measure != null">#{measure},</if>
+            <if test="warehouseName!=null">#{warehouseName},</if>
             <if test="capacity != null">#{capacity},</if>
             <if test="facilitiesNumber != null">#{facilitiesNumber},</if>
             <if test="utilization != null">#{utilization},</if>
