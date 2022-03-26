@@ -130,6 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
             <if test="measure != null">measure = #{measure},</if>
             <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="warehouseName!=null">warehouse_name=#{warehouseName},</if>
             <if test="facilitiesNumber != null">facilities_number = #{facilitiesNumber},</if>
             <if test="utilization != null">utilization = #{utilization},</if>
             <if test="personCharge != null">person_charge = #{personCharge},</if>

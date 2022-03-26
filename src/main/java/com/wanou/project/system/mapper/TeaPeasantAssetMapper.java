@@ -60,4 +60,6 @@ public interface TeaPeasantAssetMapper
     public int deleteTeaPeasantAssetByIds(Long[] ids);
 
     public TeaPeasantAsset getpeasantasset(long teaPeasantId);
+
+    void deleteTeaPeasantAssetByPeasantId(Long[] ids);
 }

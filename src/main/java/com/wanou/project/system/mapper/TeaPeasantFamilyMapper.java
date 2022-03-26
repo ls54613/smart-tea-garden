@@ -60,4 +60,6 @@ public interface TeaPeasantFamilyMapper
     public int deleteTeaPeasantFamilyByIds(Long[] ids);
 
     public TeaPeasantFamily getMemberOfFamily(long teaPeasantId);
+
+    void deleteTeapeasantFamilyByPeasantId(Long[] ids);
 }

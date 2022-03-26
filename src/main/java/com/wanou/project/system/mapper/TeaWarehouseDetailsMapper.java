@@ -5,15 +5,15 @@ import com.wanou.project.system.domain.TeaWarehouseDetails;
 
 /**
  * 茶仓详情Mapper接口
- * 
+ *
  * @author ruoyi
  * @date 2022-03-07
  */
-public interface TeaWarehouseDetailsMapper 
+public interface TeaWarehouseDetailsMapper
 {
     /**
      * 查询茶仓详情
-     * 
+     *
      * @param id 茶仓详情主键
      * @return 茶仓详情
      */
@@ -21,7 +21,7 @@ public interface TeaWarehouseDetailsMapper
 
     /**
      * 查询茶仓详情列表
-     * 
+     *
      * @param teaWarehouseDetails 茶仓详情
      * @return 茶仓详情集合
      */
@@ -29,7 +29,7 @@ public interface TeaWarehouseDetailsMapper
 
     /**
      * 新增茶仓详情
-     * 
+     *
      * @param teaWarehouseDetails 茶仓详情
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface TeaWarehouseDetailsMapper
 
     /**
      * 修改茶仓详情
-     * 
+     *
      * @param teaWarehouseDetails 茶仓详情
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface TeaWarehouseDetailsMapper
 
     /**
      * 删除茶仓详情
-     * 
+     *
      * @param id 茶仓详情主键
      * @return 结果
      */
@@ -53,9 +53,11 @@ public interface TeaWarehouseDetailsMapper
 
     /**
      * 批量删除茶仓详情
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTeaWarehouseDetailsByIds(Long[] ids);
+
+    int deleteTeaWarehouseDetailsByTeaWarehouseId(Long[] ids);
 }

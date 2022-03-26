@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.wanou.framework.aspectj.lang.annotation.Excel;
 import com.wanou.framework.web.domain.BaseEntity;
 
+import java.math.BigDecimal;
+
 /**
  * 【请填写功能名称】对象 tea_garden
  *
@@ -42,11 +44,11 @@ public class TeaGarden extends BaseEntity
 
     /** 年均产量 */
     @Excel(name = "年均产量")
-    private Long averageYield;
+    private BigDecimal averageYield;
 
     /** 预计总产量 */
     @Excel(name = "预计总产量")
-    private String totalProduction;
+    private BigDecimal totalProduction;
 
     /** 茶园类型 */
     @Excel(name = "茶园类型")

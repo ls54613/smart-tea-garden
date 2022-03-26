@@ -61,4 +61,6 @@ public interface TeaGardenTeaTypeMapper
      * @return 结果
      */
     public int deleteTeaGardenTeaTypeByIds(Long[] ids);
+
+    void deleteTeaGardenTeaTypeByteaGardenId(Long[] teaGardenIds);
 }

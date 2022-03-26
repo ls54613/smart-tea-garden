@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
+import com.wanou.project.system.mapper.TeaWarehouseCurrentValueMapper;
 import com.wanou.project.system.mapper.TeaWarehouseDetailsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaWarehouseEssentialMapper;
 import com.wanou.project.system.domain.TeaWarehouseEssential;
 import com.wanou.project.system.service.ITeaWarehouseEssentialService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 茶仓基本情况Service业务层处理
@@ -24,6 +26,8 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     private TeaWarehouseEssentialMapper teaWarehouseEssentialMapper;
     @Autowired
     private TeaWarehouseDetailsMapper teaWarehouseDetailsMapper;
+    @Autowired
+    private TeaWarehouseCurrentValueMapper teaWarehouseCurrentValueMapper;
 
     /**
      * 查询茶仓基本情况
@@ -80,10 +84,13 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialByIds(Long[] ids)
     {
-        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsByIds(ids);
-        return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
+        teaWarehouseCurrentValueMapper.deleteTeaWarehouseCUrrentValueByTeaWarehouseId(ids);
+        int i = teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
+        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsByTeaWarehouseId(ids);
+        return i;
     }
 
     /**
@@ -93,6 +100,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialById(Long id)
     {
         teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsById(id);
@@ -100,6 +108,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     }
 
     @Override
+
     public JSONObject getWarehouseInformation(long id) {
         return teaWarehouseEssentialMapper.getWarehouseInformation(id);
     }
