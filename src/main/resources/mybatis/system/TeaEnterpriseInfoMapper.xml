@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
         <result property="region" column="region" />
+        <result property="deptId" column="dept_id" />
     </resultMap>
 
     <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult1">
@@ -36,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="region" column="region" />
         <result property="isCountyEmp" column="is_county_emp" />
         <result property="isTownEmp" column="is_town_emp" />
+        <result property="deptId" column="dept_id" />
         <collection property="teaType" column="id" select="com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper.selectTeaEnterpriseTeaTypeIntListByTeaEnterpriseId" />
     </resultMap>
 
@@ -129,6 +131,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1.id
     </select>
 
+    <select id="findTeaEnterpriseInfoById" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.dict_label type,t1.cultivated_area cultivatedArea,t1.nature,t1.set_up_date setUpDate,t1.legal_person legalPerson,t1.legal_person_id_card legalPersonIdCard,t1.reg_capital regCapital,t3.dict_label operationStatus
+        from
+            tea_enterprise_info t1 LEFT JOIN sys_dict_data t2 on(t2.dict_type='sys_zhuti_type' and t2.dict_value=t1.type)
+                                   LEFT JOIN sys_dict_data t3 on(t3.dict_type='tea_enterprise_operation_status' and t3.dict_value=t1.operation_status)
+        where
+            id=#{id}
+
+    </select>
+
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -144,6 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">cultivated_area,</if>
             <if test="workPersonNum != null">work_person_num,</if>
             <if test="region != null and region != ''">region,</if>
+            <if test="deptId != null and deptId !=''">dept_id</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="enterpriseName != null">#{enterpriseName},</if>
@@ -158,6 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">#{cultivatedArea},</if>
             <if test="workPersonNum != null">#{workPersonNum},</if>
             <if test="region != null and region != ''">#{region},</if>
+            <if test="deptId != null and deptId !=''">#{deptId}</if>
          </trim>
     </insert>
 
@@ -176,6 +191,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">cultivated_area = #{cultivatedArea},</if>
             <if test="workPersonNum != null">work_person_num = #{workPersonNum},</if>
             <if test="region != null and region != ''">region = #{region},</if>
+            <if test="deptId != null and deptId != ''">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

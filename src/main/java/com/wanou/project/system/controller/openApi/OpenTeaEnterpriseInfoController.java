@@ -128,7 +128,7 @@ public class OpenTeaEnterpriseInfoController {
      */
     @GetMapping("/getBaseInfo/{id}")
     public AjaxResult getBaseInfo(@PathVariable("id") Long id){
-        TeaEnterpriseInfo teaEnterpriseInfo = teaEnterpriseInfoService.selectTeaEnterpriseInfoById(id);
+        JSONObject teaEnterpriseInfo = teaEnterpriseInfoService.findTeaEnterpriseInfoById(id);
         return AjaxResult.success(teaEnterpriseInfo);
     }
 

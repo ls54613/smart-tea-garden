@@ -83,11 +83,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getCapacityAndWarehousingAndOut" resultType="com.alibaba.fastjson.JSONObject">
         select
-            warehouse_name warehouseName,capacity,quantity,outbound_volume outboundVolume
+            t1.current_inventory,t2.dict_label,t1.goods_value,t1.inventory_warning_quantity
         from
-            tea_warehouse_essential
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2
+        on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
         where
-            tea_enterprise_id=#{teaWarehouseId}
+            t1.tea_warehouse_id=#{teaWarehouseId}
     </select>
     <select id="getEnterpriseNameCapacity" resultType="com.alibaba.fastjson.JSONObject">
         select
