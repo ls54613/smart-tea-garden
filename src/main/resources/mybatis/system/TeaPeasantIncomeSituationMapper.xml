@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaPeasantIncomeSituationMapper">
+    
+    <resultMap type="TeaPeasantIncomeSituation" id="TeaPeasantIncomeSituationResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="teaFarmersPer"    column="tea_farmers_per"    />
+        <result property="totalPerCapita"    column="total_per_capita"    />
+    </resultMap>
+
+    <sql id="selectTeaPeasantIncomeSituationVo">
+        select id, year, tea_farmers_per, total_per_capita from tea_peasant_income_situation
+    </sql>
+
+    <select id="selectTeaPeasantIncomeSituationList" parameterType="TeaPeasantIncomeSituation" resultMap="TeaPeasantIncomeSituationResult">
+        <include refid="selectTeaPeasantIncomeSituationVo"/>
+        <where>  
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="teaFarmersPer != null "> and tea_farmers_per = #{teaFarmersPer}</if>
+            <if test="totalPerCapita != null "> and total_per_capita = #{totalPerCapita}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaPeasantIncomeSituationById" parameterType="Long" resultMap="TeaPeasantIncomeSituationResult">
+        <include refid="selectTeaPeasantIncomeSituationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaPeasantIncomeSituation" parameterType="TeaPeasantIncomeSituation">
+        insert into tea_peasant_income_situation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="year != null">year,</if>
+            <if test="teaFarmersPer != null">tea_farmers_per,</if>
+            <if test="totalPerCapita != null">total_per_capita,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="year != null">#{year},</if>
+            <if test="teaFarmersPer != null">#{teaFarmersPer},</if>
+            <if test="totalPerCapita != null">#{totalPerCapita},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaPeasantIncomeSituation" parameterType="TeaPeasantIncomeSituation">
+        update tea_peasant_income_situation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="teaFarmersPer != null">tea_farmers_per = #{teaFarmersPer},</if>
+            <if test="totalPerCapita != null">total_per_capita = #{totalPerCapita},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaPeasantIncomeSituationById" parameterType="Long">
+        delete from tea_peasant_income_situation where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaPeasantIncomeSituationByIds" parameterType="String">
+        delete from tea_peasant_income_situation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
