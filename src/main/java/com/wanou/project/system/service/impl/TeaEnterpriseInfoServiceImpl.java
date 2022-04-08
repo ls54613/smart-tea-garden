@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import com.wanou.project.system.domain.TeaEnterpriseTeaType;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 import com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper;
@@ -39,7 +40,7 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     @Override
     public TeaEnterpriseInfo selectTeaEnterpriseInfoById(Long id)
     {
-        return teaEnterpriseInfoMapper.selectTeaEnterpriseInfoById(id);
+        return teaEnterpriseInfoMapper.selectTeaEnterpriseInfoById(id, SecurityUtils.getDeptId());
     }
 
     /**
@@ -51,6 +52,9 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     @Override
     public List<TeaEnterpriseInfo> selectTeaEnterpriseInfoList(TeaEnterpriseInfo teaEnterpriseInfo)
     {
+        if(teaEnterpriseInfo.getDeptId() == null){
+            teaEnterpriseInfo.setDeptId(SecurityUtils.getDeptId());
+        }
         return teaEnterpriseInfoMapper.selectTeaEnterpriseInfoList(teaEnterpriseInfo);
     }
 

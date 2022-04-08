@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaWarehouseDetailsMapper">
-    
+
     <resultMap type="TeaWarehouseDetails" id="TeaWarehouseDetailsResult">
         <result property="id"    column="id"    />
         <result property="areaCovered"    column="area_covered"    />
@@ -18,19 +18,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaWarehouseDetailsList" parameterType="TeaWarehouseDetails" resultMap="TeaWarehouseDetailsResult">
         <include refid="selectTeaWarehouseDetailsVo"/>
-        <where>  
+        <where>
             <if test="areaCovered != null "> and area_covered = #{areaCovered}</if>
             <if test="totalInventory != null "> and total_inventory = #{totalInventory}</if>
             <if test="totalOutbound != null "> and total_outbound = #{totalOutbound}</if>
             <if test="teaWarehouseId != null "> and tea_warehouse_id = #{teaWarehouseId}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaWarehouseDetailsById" parameterType="Long" resultMap="TeaWarehouseDetailsResult">
         <include refid="selectTeaWarehouseDetailsVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertTeaWarehouseDetails" parameterType="TeaWarehouseDetails" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_details
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -63,9 +63,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaWarehouseDetailsByIds" parameterType="String">
-        delete from tea_warehouse_details where id in 
+        delete from tea_warehouse_details where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteTeaWarehouseDetailsByTeaWarehouseIds">
+        delete from tea_warehouse_details where tea_warehouse_id in
+        <foreach item="teaWarehouseId" collection="teaWarehouseIds" open="(" separator="," close=")">
+            #{teaWarehouseId}
         </foreach>
     </delete>
 </mapper>

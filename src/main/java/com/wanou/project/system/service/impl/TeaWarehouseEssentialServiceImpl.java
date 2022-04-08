@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaWarehouseEssentialMapper;
 import com.wanou.project.system.domain.TeaWarehouseEssential;
 import com.wanou.project.system.service.ITeaWarehouseEssentialService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 茶仓基本情况Service业务层处理
@@ -80,10 +81,12 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialByIds(Long[] ids)
     {
-        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsByIds(ids);
-        return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
+        int i = teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
+        teaWarehouseDetailsMapper.batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(ids);
+        return i;
     }
 
     /**
@@ -93,10 +96,13 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialById(Long id)
     {
-        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsById(id);
-        return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
+        int i = teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
+        Long[] ids = {id};
+        teaWarehouseDetailsMapper.batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(ids);
+        return i;
     }
 
     @Override

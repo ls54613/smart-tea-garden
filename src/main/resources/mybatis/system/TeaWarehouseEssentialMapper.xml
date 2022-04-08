@@ -128,6 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update tea_warehouse_essential
         <trim prefix="SET" suffixOverrides=",">
             <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+            <if test="warehouseName != null and warehouseName != ''">warehouse_name = #{warehouseName},</if>
             <if test="measure != null">measure = #{measure},</if>
             <if test="capacity != null">capacity = #{capacity},</if>
             <if test="facilitiesNumber != null">facilities_number = #{facilitiesNumber},</if>

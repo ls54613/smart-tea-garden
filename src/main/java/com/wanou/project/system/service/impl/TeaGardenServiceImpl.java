@@ -3,6 +3,7 @@ package com.wanou.project.system.service.impl;
 import java.util.List;
 
 import cn.hutool.json.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import com.wanou.project.system.domain.vo.TeaGardenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,9 @@ public class TeaGardenServiceImpl implements ITeaGardenService
     @Override
     public List<TeaGarden> selectTeaGardenList(TeaGarden teaGarden)
     {
+        if(teaGarden.getDeptId() == null){
+            teaGarden.setDeptId(SecurityUtils.getDeptId());
+        }
         return teaGardenMapper.selectTeaGardenList(teaGarden);
     }
 
