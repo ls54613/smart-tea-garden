@@ -199,4 +199,9 @@ public class TeaEnterpriseInfoServiceImpl implements ITeaEnterpriseInfoService
     public List<JSONObject> getEnterpriseNameAndNumberMorney() {
         return teaEnterpriseInfoMapper.getEnterpriseNameAndNumberMorney();
     }
+
+    @Override
+    public JSONObject findTeaEnterpriseInfoById(Long id) {
+        return teaEnterpriseInfoMapper.findTeaEnterpriseInfoById(id);
+    }
 }

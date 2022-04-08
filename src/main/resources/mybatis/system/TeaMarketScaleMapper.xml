@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaMarketScaleMapper">
+
+    <resultMap type="TeaMarketScale" id="TeaMarketScaleResult">
+        <result property="id"    column="id"    />
+        <result property="teaMarketSize"    column="tea_market_size"    />
+        <result property="teaGrowthRate"    column="tea_growth_rate"    />
+        <result property="year"    column="year"    />
+    </resultMap>
+
+    <sql id="selectTeaMarketScaleVo">
+        select id, tea_market_size, tea_growth_rate, year from tea_market_scale
+    </sql>
+
+    <select id="selectTeaMarketScaleList" parameterType="TeaMarketScale" resultMap="TeaMarketScaleResult">
+        <include refid="selectTeaMarketScaleVo"/>
+        <where>
+            <if test="teaMarketSize != null "> and tea_market_size = #{teaMarketSize}</if>
+            <if test="teaGrowthRate != null "> and tea_growth_rate = #{teaGrowthRate}</if>
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaMarketScaleById" parameterType="Long" resultMap="TeaMarketScaleResult">
+        <include refid="selectTeaMarketScaleVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getOnlineSalesTestData" resultType="cn.hutool.json.JSONObject">
+        select
+            tea_market_size marketSize,tea_growth_rate growthRate,year
+        from
+            tea_market_scale
+        GROUP BY
+            `year`
+    </select>
+
+    <insert id="insertTeaMarketScale" parameterType="TeaMarketScale" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_market_scale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaMarketSize != null">tea_market_size,</if>
+            <if test="teaGrowthRate != null">tea_growth_rate,</if>
+            <if test="year != null and year != ''">year,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teaMarketSize != null">#{teaMarketSize},</if>
+            <if test="teaGrowthRate != null">#{teaGrowthRate},</if>
+            <if test="year != null and year != ''">#{year},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaMarketScale" parameterType="TeaMarketScale">
+        update tea_market_scale
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teaMarketSize != null">tea_market_size = #{teaMarketSize},</if>
+            <if test="teaGrowthRate != null">tea_growth_rate = #{teaGrowthRate},</if>
+            <if test="year != null and year != ''">year = #{year},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaMarketScaleById" parameterType="Long">
+        delete from tea_market_scale where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaMarketScaleByIds" parameterType="String">
+        delete from tea_market_scale where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaValueDistribution;
+import com.wanou.project.system.mapper.TeaWarehouseCurrentValueMapper;
 import com.wanou.project.system.mapper.TeaWarehouseDetailsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     private TeaWarehouseEssentialMapper teaWarehouseEssentialMapper;
     @Autowired
     private TeaWarehouseDetailsMapper teaWarehouseDetailsMapper;
+    @Autowired
+    private TeaWarehouseCurrentValueMapper teaWarehouseCurrentValueMapper;
 
     /**
      * 查询茶仓基本情况
@@ -84,8 +87,9 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialByIds(Long[] ids)
     {
+        teaWarehouseCurrentValueMapper.deleteTeaWarehouseCUrrentValueByTeaWarehouseId(ids);
         int i = teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialByIds(ids);
-        teaWarehouseDetailsMapper.batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(ids);
+        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsByTeaWarehouseId(ids);
         return i;
     }
 
@@ -106,6 +110,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     }
 
     @Override
+
     public JSONObject getWarehouseInformation(long id) {
         return teaWarehouseEssentialMapper.getWarehouseInformation(id);
     }
@@ -131,7 +136,7 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     }
 
     @Override
-    public List<JSONObject> getEnterpriseNameCapacity() {
-        return teaWarehouseEssentialMapper.getEnterpriseNameCapacity();
+    public List<JSONObject> getEnterpriseNameCapacity(long id) {
+        return teaWarehouseEssentialMapper.getEnterpriseNameCapacity(id);
     }
 }

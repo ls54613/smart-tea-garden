@@ -81,4 +81,6 @@ public interface TeaEnterpriseInfoMapper
     Integer getEnterpriseCount(@Param("region") String region);
 
     List<JSONObject> getEnterpriseNameAndNumberMorney();
+
+    JSONObject findTeaEnterpriseInfoById(Long id);
 }

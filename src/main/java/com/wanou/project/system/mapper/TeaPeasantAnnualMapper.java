@@ -72,4 +72,5 @@ public interface TeaPeasantAnnualMapper
 
     JSONObject getPeasantAnnual(long teaPeasantId);
 
+    void deleteTeaPeasantannualByPeasantId(Long[] ids);
 }

@@ -69,6 +69,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <delete id="deleteTeaWarehouseDetailsByTeaWarehouseId">
+        delete from tea_warehouse_details where tea_warehouse_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <delete id="batchDeleteTeaWarehouseDetailsByTeaWarehouseIds">
         delete from tea_warehouse_details where tea_warehouse_id in
         <foreach item="teaWarehouseId" collection="teaWarehouseIds" open="(" separator="," close=")">

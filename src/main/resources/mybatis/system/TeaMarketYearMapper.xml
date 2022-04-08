@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaMarketYearMapper">
+
+    <resultMap type="TeaMarketYear" id="TeaMarketYearResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="teaTotalSales"    column="tea_total_sales"    />
+        <result property="teaOnlineProportion"    column="tea_online_proportion"    />
+        <result property="teaOfflineProportion"    column="tea_offline_proportion"    />
+        <result property="teaCapitaConsumption"    column="tea_capita_consumption"    />
+        <result property="teaChangningTotalSales"    column="tea_changning_total_sales"    />
+        <result property="teaChangningYield"    column="tea_changning_yield"    />
+    </resultMap>
+
+    <sql id="selectTeaMarketYearVo">
+        select id, year, tea_total_sales, tea_online_proportion, tea_offline_proportion, tea_capita_consumption, tea_changning_total_sales, tea_changning_yield from tea_market_year
+    </sql>
+
+    <select id="selectTeaMarketYearList" parameterType="TeaMarketYear" resultMap="TeaMarketYearResult">
+        <include refid="selectTeaMarketYearVo"/>
+        <where>
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="teaTotalSales != null "> and tea_total_sales = #{teaTotalSales}</if>
+            <if test="teaOnlineProportion != null "> and tea_online_proportion = #{teaOnlineProportion}</if>
+            <if test="teaOfflineProportion != null "> and tea_offline_proportion = #{teaOfflineProportion}</if>
+            <if test="teaCapitaConsumption != null "> and tea_capita_consumption = #{teaCapitaConsumption}</if>
+            <if test="teaChangningTotalSales != null "> and tea_changning_total_sales = #{teaChangningTotalSales}</if>
+            <if test="teaChangningYield != null "> and tea_changning_yield = #{teaChangningYield}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaMarketYearById" parameterType="Long" resultMap="TeaMarketYearResult">
+        <include refid="selectTeaMarketYearVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getTeaSalesChina" resultType="cn.hutool.json.JSONObject">
+        select
+            year, tea_total_sales totalSales
+        from
+            tea_market_year
+        GROUP BY `year`
+    </select>
+
+    <select id="getProportionOfSalesVolume" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_online_proportion onlineProportion,tea_offline_proportion offLineProportion
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getPerCapitaConsumption" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_capita_consumption capitaConsumption
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getTeaConsumption" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_changning_total_sales changningTotalSales
+        from
+            tea_market_year
+        GROUP BY
+            year
+    </select>
+
+    <select id="getChangNingTeaYield" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_changning_yield changNingYield
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getTypeProportion" resultType="cn.hutool.json.JSONObject">
+        select
+            tea_type teaType,proportion
+        from
+            tea_market_proportion
+    </select>
+
+    <insert id="insertTeaMarketYear" parameterType="TeaMarketYear">
+        insert into tea_market_year
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="year != null and year != ''">year,</if>
+            <if test="teaTotalSales != null">tea_total_sales,</if>
+            <if test="teaOnlineProportion != null">tea_online_proportion,</if>
+            <if test="teaOfflineProportion != null">tea_offline_proportion,</if>
+            <if test="teaCapitaConsumption != null">tea_capita_consumption,</if>
+            <if test="teaChangningTotalSales != null">tea_changning_total_sales,</if>
+            <if test="teaChangningYield != null">tea_changning_yield,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="year != null and year != ''">#{year},</if>
+            <if test="teaTotalSales != null">#{teaTotalSales},</if>
+            <if test="teaOnlineProportion != null">#{teaOnlineProportion},</if>
+            <if test="teaOfflineProportion != null">#{teaOfflineProportion},</if>
+            <if test="teaCapitaConsumption != null">#{teaCapitaConsumption},</if>
+            <if test="teaChangningTotalSales != null">#{teaChangningTotalSales},</if>
+            <if test="teaChangningYield != null">#{teaChangningYield},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaMarketYear" parameterType="TeaMarketYear">
+        update tea_market_year
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null and year != ''">year = #{year},</if>
+            <if test="teaTotalSales != null">tea_total_sales = #{teaTotalSales},</if>
+            <if test="teaOnlineProportion != null">tea_online_proportion = #{teaOnlineProportion},</if>
+            <if test="teaOfflineProportion != null">tea_offline_proportion = #{teaOfflineProportion},</if>
+            <if test="teaCapitaConsumption != null">tea_capita_consumption = #{teaCapitaConsumption},</if>
+            <if test="teaChangningTotalSales != null">tea_changning_total_sales = #{teaChangningTotalSales},</if>
+            <if test="teaChangningYield != null">tea_changning_yield = #{teaChangningYield},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaMarketYearById" parameterType="Long">
+        delete from tea_market_year where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaMarketYearByIds" parameterType="String">
+        delete from tea_market_year where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

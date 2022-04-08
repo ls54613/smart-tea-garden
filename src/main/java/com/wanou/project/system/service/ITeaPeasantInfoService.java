@@ -76,5 +76,5 @@ public interface ITeaPeasantInfoService
 
     List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue();
 
-    List<JSONObject> getLargeHouseholdIncome();
+    JSONObject getLargeHouseholdIncome();
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaMarketPreferenceRateMapper">
+
+    <resultMap type="TeaMarketPreferenceRate" id="TeaMarketPreferenceRateResult">
+        <result property="id"    column="id"    />
+        <result property="teaType"    column="tea_type"    />
+        <result property="preferenceRate"    column="preference_rate"    />
+    </resultMap>
+
+    <sql id="selectTeaMarketPreferenceRateVo">
+        select id, tea_type, preference_rate from tea_market_preference_rate
+    </sql>
+
+    <select id="selectTeaMarketPreferenceRateList" parameterType="TeaMarketPreferenceRate" resultMap="TeaMarketPreferenceRateResult">
+        <include refid="selectTeaMarketPreferenceRateVo"/>
+        <where>
+            <if test="teaType != null  and teaType != ''"> and tea_type = #{teaType}</if>
+            <if test="preferenceRate != null "> and preference_rate = #{preferenceRate}</if>
+        </where>
+    </select>
+
+    <select id="selectTeaMarketPreferenceRateById" parameterType="Long" resultMap="TeaMarketPreferenceRateResult">
+        <include refid="selectTeaMarketPreferenceRateVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getSaleTypeTestData" resultType="cn.hutool.json.JSONObject">
+        select
+            tea_type teaType,preference_rate preferenceRate
+        from
+            tea_market_preference_rate
+    </select>
+
+    <insert id="insertTeaMarketPreferenceRate" parameterType="TeaMarketPreferenceRate" useGeneratedKeys="true" keyProperty="id">
+        insert into tea_market_preference_rate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teaType != null and teaType != ''">tea_type,</if>
+            <if test="preferenceRate != null">preference_rate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teaType != null and teaType != ''">#{teaType},</if>
+            <if test="preferenceRate != null">#{preferenceRate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaMarketPreferenceRate" parameterType="TeaMarketPreferenceRate">
+        update tea_market_preference_rate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teaType != null and teaType != ''">tea_type = #{teaType},</if>
+            <if test="preferenceRate != null">preference_rate = #{preferenceRate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaMarketPreferenceRateById" parameterType="Long">
+        delete from tea_market_preference_rate where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaMarketPreferenceRateByIds" parameterType="String">
+        delete from tea_market_preference_rate where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

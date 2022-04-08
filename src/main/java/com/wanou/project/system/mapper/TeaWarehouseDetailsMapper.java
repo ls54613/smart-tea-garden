@@ -65,4 +65,5 @@ public interface TeaWarehouseDetailsMapper
      * @param ids
      */
     void batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(@Param("teaWarehouseIds") Long[] ids);
+    int deleteTeaWarehouseDetailsByTeaWarehouseId(Long[] ids);
 }

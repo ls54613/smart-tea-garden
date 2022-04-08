@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
         <result property="region" column="region" />
+        <result property="deptId" column="dept_id" />
     </resultMap>
 
     <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult1">
@@ -131,6 +132,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on t2.tea_peasant_id=t1.id
         GROUP BY
             t1.id
+    </select>
+
+    <select id="findTeaEnterpriseInfoById" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.dict_label type,t1.cultivated_area cultivatedArea,t1.nature,t1.set_up_date setUpDate,t1.legal_person legalPerson,t1.legal_person_id_card legalPersonIdCard,t1.reg_capital regCapital,t3.dict_label operationStatus
+        from
+            tea_enterprise_info t1 LEFT JOIN sys_dict_data t2 on(t2.dict_type='sys_zhuti_type' and t2.dict_value=t1.type)
+                                   LEFT JOIN sys_dict_data t3 on(t3.dict_type='tea_enterprise_operation_status' and t3.dict_value=t1.operation_status)
+        where
+            id=#{id}
+
     </select>
 
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">

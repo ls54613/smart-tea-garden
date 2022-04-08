@@ -77,4 +77,6 @@ public interface ITeaEnterpriseInfoService
     Integer getEnterpriseCount(String region);
 
     List<JSONObject> getEnterpriseNameAndNumberMorney();
+
+    JSONObject findTeaEnterpriseInfoById(Long id);
 }

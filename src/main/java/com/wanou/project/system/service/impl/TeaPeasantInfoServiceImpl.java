@@ -6,11 +6,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
 import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
+import com.wanou.project.system.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.wanou.project.system.mapper.TeaPeasantInfoMapper;
 import com.wanou.project.system.domain.TeaPeasantInfo;
 import com.wanou.project.system.service.ITeaPeasantInfoService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 茶农基本信息Service业务层处理
@@ -23,6 +24,14 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
 {
     @Autowired
     private TeaPeasantInfoMapper teaPeasantInfoMapper;
+    @Autowired
+    private TeaPeasantFamilyMapper teaPeasantFamilyMapper;
+    @Autowired
+    private TeaPeasantAnnualMapper teaPeasantAnnualMapper;
+    @Autowired
+    private TeaPeasantAssetMapper teaPeasantAssetMapper;
+    @Autowired
+    private TeaPeasantYieldSalesMapper teaPeasantYieldSalesMapper;
 
     /**
      * 查询茶农基本信息
@@ -79,9 +88,15 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaPeasantInfoByIds(Long[] ids)
     {
-        return teaPeasantInfoMapper.deleteTeaPeasantInfoByIds(ids);
+        int i = teaPeasantInfoMapper.deleteTeaPeasantInfoByIds(ids);
+            teaPeasantFamilyMapper.deleteTeapeasantFamilyByPeasantId(ids);
+            teaPeasantAnnualMapper.deleteTeaPeasantannualByPeasantId(ids);
+            teaPeasantAssetMapper.deleteTeaPeasantAssetByPeasantId(ids);
+            teaPeasantYieldSalesMapper.deleteTeaPeasantYieldsalesBYPeasantId(ids);
+        return i ;
     }
 
     /**
@@ -118,7 +133,7 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     }
 
     @Override
-    public List<JSONObject> getLargeHouseholdIncome() {
+    public JSONObject getLargeHouseholdIncome() {
         return teaPeasantInfoMapper.getLargeHouseholdIncome();
     }
 }

@@ -62,4 +62,6 @@ public interface TeaPeasantYieldSalesMapper
     public List<TeaPeasantYieldSales> getYieldValueNumber(long teaPeasantId);
 
      List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId);
+
+    void deleteTeaPeasantYieldsalesBYPeasantId(Long[] ids);
 }

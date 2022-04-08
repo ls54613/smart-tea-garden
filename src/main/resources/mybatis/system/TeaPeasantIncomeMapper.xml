@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanou.project.system.mapper.TeaPeasantIncomeMapper">
+    
+    <resultMap type="TeaPeasantIncome" id="TeaPeasantIncomeResult">
+        <result property="id"    column="id"    />
+        <result property="fiftyThousandLower"    column="fifty_thousand_lower"    />
+        <result property="fiftyThousandUpper"    column="fifty_thousand_upper"    />
+        <result property="tenThousandUpper"    column="ten_thousand_upper"    />
+    </resultMap>
+
+    <sql id="selectTeaPeasantIncomeVo">
+        select id, fifty_thousand_lower, fifty_thousand_upper, ten_thousand_upper from tea_peasant_income
+    </sql>
+
+    <select id="selectTeaPeasantIncomeList" parameterType="TeaPeasantIncome" resultMap="TeaPeasantIncomeResult">
+        <include refid="selectTeaPeasantIncomeVo"/>
+        <where>  
+            <if test="fiftyThousandLower != null "> and fifty_thousand_lower = #{fiftyThousandLower}</if>
+            <if test="fiftyThousandUpper != null "> and fifty_thousand_upper = #{fiftyThousandUpper}</if>
+            <if test="tenThousandUpper != null "> and ten_thousand_upper = #{tenThousandUpper}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeaPeasantIncomeById" parameterType="Long" resultMap="TeaPeasantIncomeResult">
+        <include refid="selectTeaPeasantIncomeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeaPeasantIncome" parameterType="TeaPeasantIncome">
+        insert into tea_peasant_income
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fiftyThousandLower != null">fifty_thousand_lower,</if>
+            <if test="fiftyThousandUpper != null">fifty_thousand_upper,</if>
+            <if test="tenThousandUpper != null">ten_thousand_upper,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="fiftyThousandLower != null">#{fiftyThousandLower},</if>
+            <if test="fiftyThousandUpper != null">#{fiftyThousandUpper},</if>
+            <if test="tenThousandUpper != null">#{tenThousandUpper},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeaPeasantIncome" parameterType="TeaPeasantIncome">
+        update tea_peasant_income
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fiftyThousandLower != null">fifty_thousand_lower = #{fiftyThousandLower},</if>
+            <if test="fiftyThousandUpper != null">fifty_thousand_upper = #{fiftyThousandUpper},</if>
+            <if test="tenThousandUpper != null">ten_thousand_upper = #{tenThousandUpper},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeaPeasantIncomeById" parameterType="Long">
+        delete from tea_peasant_income where id = #{id}
+    </delete>
+
+    <delete id="deleteTeaPeasantIncomeByIds" parameterType="String">
+        delete from tea_peasant_income where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
