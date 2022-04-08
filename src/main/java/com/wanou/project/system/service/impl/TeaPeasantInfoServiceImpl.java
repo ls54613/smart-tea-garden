@@ -133,7 +133,7 @@ public class TeaPeasantInfoServiceImpl implements ITeaPeasantInfoService
     }
 
     @Override
-    public List<JSONObject> getLargeHouseholdIncome() {
+    public JSONObject getLargeHouseholdIncome() {
         return teaPeasantInfoMapper.getLargeHouseholdIncome();
     }
 }

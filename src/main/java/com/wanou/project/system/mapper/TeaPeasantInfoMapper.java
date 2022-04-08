@@ -72,5 +72,5 @@ public interface TeaPeasantInfoMapper
 
     public List<TeaPeasantRegionYieldValue> getPeasantRegionYieldValue();
 
-    List<JSONObject> getLargeHouseholdIncome();
+    JSONObject getLargeHouseholdIncome();
 }

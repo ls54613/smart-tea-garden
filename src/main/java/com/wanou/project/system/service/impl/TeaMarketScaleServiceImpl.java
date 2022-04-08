@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaMarketScaleMapper;
@@ -8,10 +10,10 @@ import com.wanou.project.system.domain.TeaMarketScale;
 import com.wanou.project.system.service.ITeaMarketScaleService;
 
 /**
- * 2021年各品种产量占比情况Service业务层处理
+ * 中国茶叶线上销售规模监测数据Service业务层处理
  *
  * @author MrYao
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 @Service
 public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
@@ -20,10 +22,10 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     private TeaMarketScaleMapper teaMarketScaleMapper;
 
     /**
-     * 查询2021年各品种产量占比情况
+     * 查询中国茶叶线上销售规模监测数据
      *
-     * @param id 2021年各品种产量占比情况主键
-     * @return 2021年各品种产量占比情况
+     * @param id 中国茶叶线上销售规模监测数据主键
+     * @return 中国茶叶线上销售规模监测数据
      */
     @Override
     public TeaMarketScale selectTeaMarketScaleById(Long id)
@@ -32,10 +34,10 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     }
 
     /**
-     * 查询2021年各品种产量占比情况列表
+     * 查询中国茶叶线上销售规模监测数据列表
      *
-     * @param teaMarketScale 2021年各品种产量占比情况
-     * @return 2021年各品种产量占比情况
+     * @param teaMarketScale 中国茶叶线上销售规模监测数据
+     * @return 中国茶叶线上销售规模监测数据
      */
     @Override
     public List<TeaMarketScale> selectTeaMarketScaleList(TeaMarketScale teaMarketScale)
@@ -44,9 +46,9 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     }
 
     /**
-     * 新增2021年各品种产量占比情况
+     * 新增中国茶叶线上销售规模监测数据
      *
-     * @param teaMarketScale 2021年各品种产量占比情况
+     * @param teaMarketScale 中国茶叶线上销售规模监测数据
      * @return 结果
      */
     @Override
@@ -56,9 +58,9 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     }
 
     /**
-     * 修改2021年各品种产量占比情况
+     * 修改中国茶叶线上销售规模监测数据
      *
-     * @param teaMarketScale 2021年各品种产量占比情况
+     * @param teaMarketScale 中国茶叶线上销售规模监测数据
      * @return 结果
      */
     @Override
@@ -68,9 +70,9 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     }
 
     /**
-     * 批量删除2021年各品种产量占比情况
+     * 批量删除中国茶叶线上销售规模监测数据
      *
-     * @param ids 需要删除的2021年各品种产量占比情况主键
+     * @param ids 需要删除的中国茶叶线上销售规模监测数据主键
      * @return 结果
      */
     @Override
@@ -80,14 +82,19 @@ public class TeaMarketScaleServiceImpl implements ITeaMarketScaleService
     }
 
     /**
-     * 删除2021年各品种产量占比情况信息
+     * 删除中国茶叶线上销售规模监测数据信息
      *
-     * @param id 2021年各品种产量占比情况主键
+     * @param id 中国茶叶线上销售规模监测数据主键
      * @return 结果
      */
     @Override
     public int deleteTeaMarketScaleById(Long id)
     {
         return teaMarketScaleMapper.deleteTeaMarketScaleById(id);
+    }
+
+    @Override
+    public List<JSONObject> getOnlineSalesTestData() {
+        return teaMarketScaleMapper.getOnlineSalesTestData();
     }
 }

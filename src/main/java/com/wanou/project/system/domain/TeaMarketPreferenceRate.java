@@ -7,25 +7,25 @@ import com.wanou.framework.aspectj.lang.annotation.Excel;
 import com.wanou.framework.web.domain.BaseEntity;
 
 /**
- * 2021年各品种产量占比情况对象 tea_market_proportion
+ * 中国茶叶线上销售品类数据监测对象 tea_market_preference_rate
  *
  * @author ruoyi
  * @date 2022-04-06
  */
-public class TeaMarketProportion extends BaseEntity
+public class TeaMarketPreferenceRate extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 茶市id */
+    /** $column.columnComment */
     private Long id;
 
-    /** 茶叶品种 */
-    @Excel(name = "茶叶品种")
+    /** 茶品种类 */
+    @Excel(name = "茶品种类")
     private String teaType;
 
-    /** 占比情况 */
-    @Excel(name = "占比情况")
-    private BigDecimal proportion;
+    /** 偏好率 */
+    @Excel(name = "偏好率")
+    private BigDecimal preferenceRate;
 
     public void setId(Long id)
     {
@@ -45,14 +45,14 @@ public class TeaMarketProportion extends BaseEntity
     {
         return teaType;
     }
-    public void setProportion(BigDecimal proportion)
+    public void setPreferenceRate(BigDecimal preferenceRate)
     {
-        this.proportion = proportion;
+        this.preferenceRate = preferenceRate;
     }
 
-    public BigDecimal getProportion()
+    public BigDecimal getPreferenceRate()
     {
-        return proportion;
+        return preferenceRate;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TeaMarketProportion extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("teaType", getTeaType())
-            .append("proportion", getProportion())
+            .append("preferenceRate", getPreferenceRate())
             .toString();
     }
 }

@@ -72,5 +72,5 @@ public interface TeaWarehouseEssentialMapper
 
     List<JSONObject> getCapacityAndWarehousingAndOut(int teaWarehouseId);
 
-    List<JSONObject> getEnterpriseNameCapacity();
+    List<JSONObject> getEnterpriseNameCapacity(long id);
 }

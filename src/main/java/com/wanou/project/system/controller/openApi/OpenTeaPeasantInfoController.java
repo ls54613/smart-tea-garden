@@ -11,6 +11,7 @@ import com.wanou.project.system.domain.openApi.TeaPeasantEducation;
 import com.wanou.project.system.domain.openApi.TeaPeasantRegionYieldValue;
 import com.wanou.project.system.domain.openApi.TeaPersonalInformation;
 import com.wanou.project.system.service.*;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,12 @@ public class OpenTeaPeasantInfoController {
 
     @Autowired
     private ITeaPeasantYieldSalesService teaPeasantYieldSalesService;
+
+    @Autowired
+    private ITeaPeasantIncomeService teaPeasantIncomeService;
+
+    @Autowired
+    private ITeaPeasantIncomeSituationService teaPeasantIncomeSituationService;
 
     @GetMapping("/getTotal")
     public AjaxResult getTotal(){
@@ -141,11 +148,21 @@ public class OpenTeaPeasantInfoController {
     }
 
     /**
-     * 种植大户收入
+     * 茶农人均与总体人均的收入
      * */
+    @GetMapping("/getPeasantIncomeSituationService")
+    public AjaxResult getPeasantIncomeSituationService(){
+        List<JSONObject> jsonObjectList=teaPeasantIncomeSituationService.getPeasantIncomeSituationService();
+        return AjaxResult.success(jsonObjectList);
+    }
+
+    /**
+     *
+     *种植大户收入
+     */
     @GetMapping("/getLargeHouseholdIncome")
     public AjaxResult getLargeHouseholdIncome(){
-        List<JSONObject> jsonObjectList= teaPeasantInfoService.getLargeHouseholdIncome();
+        JSONObject jsonObjectList= teaPeasantInfoService.getLargeHouseholdIncome();
         return AjaxResult.success(jsonObjectList);
     }
 }

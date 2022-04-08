@@ -37,6 +37,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="getTeaSalesChina" resultType="cn.hutool.json.JSONObject">
+        select
+            year, tea_total_sales totalSales
+        from
+            tea_market_year
+        GROUP BY `year`
+    </select>
+
+    <select id="getProportionOfSalesVolume" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_online_proportion onlineProportion,tea_offline_proportion offLineProportion
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getPerCapitaConsumption" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_capita_consumption capitaConsumption
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getTeaConsumption" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_changning_total_sales changningTotalSales
+        from
+            tea_market_year
+        GROUP BY
+            year
+    </select>
+
+    <select id="getChangNingTeaYield" resultType="cn.hutool.json.JSONObject">
+        select
+            year,tea_changning_yield changNingYield
+        from
+            tea_market_year
+        GROUP BY
+            `year`
+    </select>
+
+    <select id="getTypeProportion" resultType="cn.hutool.json.JSONObject">
+        select
+            tea_type teaType,proportion
+        from
+            tea_market_proportion
+    </select>
+
     <insert id="insertTeaMarketYear" parameterType="TeaMarketYear">
         insert into tea_market_year
         <trim prefix="(" suffix=")" suffixOverrides=",">

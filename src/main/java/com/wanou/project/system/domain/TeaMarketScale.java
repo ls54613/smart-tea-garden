@@ -7,10 +7,10 @@ import com.wanou.framework.aspectj.lang.annotation.Excel;
 import com.wanou.framework.web.domain.BaseEntity;
 
 /**
- * 2021年各品种产量占比情况对象 tea_market_scale
+ * 中国茶叶线上销售规模监测数据对象 tea_market_scale
  *
  * @author MrYao
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 public class TeaMarketScale extends BaseEntity
 {
@@ -26,6 +26,10 @@ public class TeaMarketScale extends BaseEntity
     /** 增长率 */
     @Excel(name = "增长率")
     private BigDecimal teaGrowthRate;
+
+    /** 年份 */
+    @Excel(name = "年份")
+    private String year;
 
     public void setId(Long id)
     {
@@ -54,6 +58,15 @@ public class TeaMarketScale extends BaseEntity
     {
         return teaGrowthRate;
     }
+    public void setYear(String year)
+    {
+        this.year = year;
+    }
+
+    public String getYear()
+    {
+        return year;
+    }
 
     @Override
     public String toString() {
@@ -61,6 +74,7 @@ public class TeaMarketScale extends BaseEntity
             .append("id", getId())
             .append("teaMarketSize", getTeaMarketSize())
             .append("teaGrowthRate", getTeaGrowthRate())
+            .append("year", getYear())
             .toString();
     }
 }

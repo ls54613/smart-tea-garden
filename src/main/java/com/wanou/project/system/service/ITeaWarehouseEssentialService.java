@@ -72,5 +72,5 @@ public interface ITeaWarehouseEssentialService
 
     List<JSONObject> getCapacityAndWarehousingAndOut(int teaWarehouseId);
 
-    List<JSONObject> getEnterpriseNameCapacity();
+    List<JSONObject> getEnterpriseNameCapacity(long id);
 }

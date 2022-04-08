@@ -82,8 +82,8 @@ public class OpenTeaWarehouseInfoController {
      *获取企业名称以及对应的所有茶仓的容量以及出库总量
      * */
     @GetMapping("/getEnterpriseNameCapacity")
-    public AjaxResult getEnterpriseNameCapacity(){
-        List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getEnterpriseNameCapacity();
+    public AjaxResult getEnterpriseNameCapacity(long id){
+        List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getEnterpriseNameCapacity(id);
         return AjaxResult.success(jsonObjectList);
     }
 }

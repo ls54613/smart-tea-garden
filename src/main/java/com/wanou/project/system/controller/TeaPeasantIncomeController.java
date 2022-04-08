@@ -24,7 +24,7 @@ import com.wanou.framework.web.page.TableDataInfo;
  * 种植大户收入Controller
  *
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 @RestController
 @RequestMapping("/system/teaPeasantIncome")

@@ -21,10 +21,10 @@ import com.wanou.common.utils.poi.ExcelUtil;
 import com.wanou.framework.web.page.TableDataInfo;
 
 /**
- * 人均收入情况Controller
+ * 常宁茶农人均收入与总体人均收入Controller
  *
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 @RestController
 @RequestMapping("/system/teaPeasantIncomeSituation")
@@ -34,7 +34,7 @@ public class TeaPeasantIncomeSituationController extends BaseController
     private ITeaPeasantIncomeSituationService teaPeasantIncomeSituationService;
 
     /**
-     * 查询人均收入情况列表
+     * 查询常宁茶农人均收入与总体人均收入列表
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:list')")
     @GetMapping("/list")
@@ -46,20 +46,20 @@ public class TeaPeasantIncomeSituationController extends BaseController
     }
 
     /**
-     * 导出人均收入情况列表
+     * 导出常宁茶农人均收入与总体人均收入列表
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:export')")
-    @Log(title = "人均收入情况", businessType = BusinessType.EXPORT)
+    @Log(title = "常宁茶农人均收入与总体人均收入", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(TeaPeasantIncomeSituation teaPeasantIncomeSituation)
     {
         List<TeaPeasantIncomeSituation> list = teaPeasantIncomeSituationService.selectTeaPeasantIncomeSituationList(teaPeasantIncomeSituation);
         ExcelUtil<TeaPeasantIncomeSituation> util = new ExcelUtil<TeaPeasantIncomeSituation>(TeaPeasantIncomeSituation.class);
-        return util.exportExcel(list, "人均收入情况数据");
+        return util.exportExcel(list, "常宁茶农人均收入与总体人均收入数据");
     }
 
     /**
-     * 获取人均收入情况详细信息
+     * 获取常宁茶农人均收入与总体人均收入详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:query')")
     @GetMapping(value = "/{id}")
@@ -69,10 +69,10 @@ public class TeaPeasantIncomeSituationController extends BaseController
     }
 
     /**
-     * 新增人均收入情况
+     * 新增常宁茶农人均收入与总体人均收入
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:add')")
-    @Log(title = "人均收入情况", businessType = BusinessType.INSERT)
+    @Log(title = "常宁茶农人均收入与总体人均收入", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TeaPeasantIncomeSituation teaPeasantIncomeSituation)
     {
@@ -80,10 +80,10 @@ public class TeaPeasantIncomeSituationController extends BaseController
     }
 
     /**
-     * 修改人均收入情况
+     * 修改常宁茶农人均收入与总体人均收入
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:edit')")
-    @Log(title = "人均收入情况", businessType = BusinessType.UPDATE)
+    @Log(title = "常宁茶农人均收入与总体人均收入", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TeaPeasantIncomeSituation teaPeasantIncomeSituation)
     {
@@ -91,10 +91,10 @@ public class TeaPeasantIncomeSituationController extends BaseController
     }
 
     /**
-     * 删除人均收入情况
+     * 删除常宁茶农人均收入与总体人均收入
      */
     @PreAuthorize("@ss.hasPermi('system:teaPeasantIncomeSituation:remove')")
-    @Log(title = "人均收入情况", businessType = BusinessType.DELETE)
+    @Log(title = "常宁茶农人均收入与总体人均收入", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {

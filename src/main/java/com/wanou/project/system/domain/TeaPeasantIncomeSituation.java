@@ -7,16 +7,16 @@ import com.wanou.framework.aspectj.lang.annotation.Excel;
 import com.wanou.framework.web.domain.BaseEntity;
 
 /**
- * 人均收入情况对象 tea_peasant_income_situation
+ * 常宁茶农人均收入与总体人均收入对象 tea_peasant_income_situation
  *
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 public class TeaPeasantIncomeSituation extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
+    /** 编号 */
     private Long id;
 
     /** 年份 */

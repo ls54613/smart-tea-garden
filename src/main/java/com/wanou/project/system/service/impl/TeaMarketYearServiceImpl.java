@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaMarketYearMapper;
@@ -89,5 +91,35 @@ public class TeaMarketYearServiceImpl implements ITeaMarketYearService
     public int deleteTeaMarketYearById(Long id)
     {
         return teaMarketYearMapper.deleteTeaMarketYearById(id);
+    }
+
+    @Override
+    public List<JSONObject> getTeaSalesChina() {
+        return teaMarketYearMapper.getTeaSalesChina();
+    }
+
+    @Override
+    public List<JSONObject> getProportionOfSalesVolume() {
+        return teaMarketYearMapper.getProportionOfSalesVolume();
+    }
+
+    @Override
+    public List<JSONObject> getPerCapitaConsumption() {
+        return teaMarketYearMapper.getPerCapitaConsumption();
+    }
+
+    @Override
+    public List<JSONObject> getTeaConsumption() {
+        return teaMarketYearMapper.getTeaConsumption();
+    }
+
+    @Override
+    public List<JSONObject> getChangNingTeaYield() {
+        return teaMarketYearMapper.getChangNingTeaYield();
+    }
+
+    @Override
+    public List<JSONObject> getTypeProportion() {
+        return teaMarketYearMapper.getTypeProportion();
     }
 }

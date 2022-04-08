@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wanou.project.system.mapper.TeaPeasantIncomeSituationMapper">
-    
+
     <resultMap type="TeaPeasantIncomeSituation" id="TeaPeasantIncomeSituationResult">
         <result property="id"    column="id"    />
         <result property="year"    column="year"    />
@@ -17,18 +17,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaPeasantIncomeSituationList" parameterType="TeaPeasantIncomeSituation" resultMap="TeaPeasantIncomeSituationResult">
         <include refid="selectTeaPeasantIncomeSituationVo"/>
-        <where>  
+        <where>
             <if test="year != null  and year != ''"> and year = #{year}</if>
             <if test="teaFarmersPer != null "> and tea_farmers_per = #{teaFarmersPer}</if>
             <if test="totalPerCapita != null "> and total_per_capita = #{totalPerCapita}</if>
         </where>
     </select>
-    
+
     <select id="selectTeaPeasantIncomeSituationById" parameterType="Long" resultMap="TeaPeasantIncomeSituationResult">
         <include refid="selectTeaPeasantIncomeSituationVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getPeasantIncomeSituationService" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            year,tea_farmers_per teaFarmersPer,total_per_capita totalPerCapita
+        from
+            tea_peasant_income_situation
+    </select>
+
     <insert id="insertTeaPeasantIncomeSituation" parameterType="TeaPeasantIncomeSituation">
         insert into tea_peasant_income_situation
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -60,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTeaPeasantIncomeSituationByIds" parameterType="String">
-        delete from tea_peasant_income_situation where id in 
+        delete from tea_peasant_income_situation where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

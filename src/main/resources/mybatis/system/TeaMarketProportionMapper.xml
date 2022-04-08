@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectTeaMarketProportionList" parameterType="TeaMarketProportion" resultMap="TeaMarketProportionResult">
         <include refid="selectTeaMarketProportionVo"/>
         <where>  
-            <if test="teaType != null "> and tea_type = #{teaType}</if>
+            <if test="teaType != null  and teaType != ''"> and tea_type = #{teaType}</if>
             <if test="proportion != null "> and proportion = #{proportion}</if>
         </where>
     </select>
@@ -27,16 +27,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
         
-    <insert id="insertTeaMarketProportion" parameterType="TeaMarketProportion">
+    <insert id="insertTeaMarketProportion" parameterType="TeaMarketProportion" useGeneratedKeys="true" keyProperty="id">
         insert into tea_market_proportion
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="teaType != null">tea_type,</if>
+            <if test="teaType != null and teaType != ''">tea_type,</if>
             <if test="proportion != null">proportion,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="teaType != null">#{teaType},</if>
+            <if test="teaType != null and teaType != ''">#{teaType},</if>
             <if test="proportion != null">#{proportion},</if>
          </trim>
     </insert>
@@ -44,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTeaMarketProportion" parameterType="TeaMarketProportion">
         update tea_market_proportion
         <trim prefix="SET" suffixOverrides=",">
-            <if test="teaType != null">tea_type = #{teaType},</if>
+            <if test="teaType != null and teaType != ''">tea_type = #{teaType},</if>
             <if test="proportion != null">proportion = #{proportion},</if>
         </trim>
         where id = #{id}

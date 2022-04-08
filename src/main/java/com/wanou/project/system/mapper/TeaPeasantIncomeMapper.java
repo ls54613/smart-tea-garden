@@ -7,7 +7,7 @@ import com.wanou.project.system.domain.TeaPeasantIncome;
  * 种植大户收入Mapper接口
  * 
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 public interface TeaPeasantIncomeMapper 
 {

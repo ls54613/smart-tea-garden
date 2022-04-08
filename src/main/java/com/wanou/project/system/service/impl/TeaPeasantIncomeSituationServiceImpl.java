@@ -1,6 +1,8 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaPeasantIncomeSituationMapper;
@@ -8,10 +10,10 @@ import com.wanou.project.system.domain.TeaPeasantIncomeSituation;
 import com.wanou.project.system.service.ITeaPeasantIncomeSituationService;
 
 /**
- * 人均收入情况Service业务层处理
+ * 常宁茶农人均收入与总体人均收入Service业务层处理
  *
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 @Service
 public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSituationService
@@ -20,10 +22,10 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     private TeaPeasantIncomeSituationMapper teaPeasantIncomeSituationMapper;
 
     /**
-     * 查询人均收入情况
+     * 查询常宁茶农人均收入与总体人均收入
      *
-     * @param id 人均收入情况主键
-     * @return 人均收入情况
+     * @param id 常宁茶农人均收入与总体人均收入主键
+     * @return 常宁茶农人均收入与总体人均收入
      */
     @Override
     public TeaPeasantIncomeSituation selectTeaPeasantIncomeSituationById(Long id)
@@ -32,10 +34,10 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     }
 
     /**
-     * 查询人均收入情况列表
+     * 查询常宁茶农人均收入与总体人均收入列表
      *
-     * @param teaPeasantIncomeSituation 人均收入情况
-     * @return 人均收入情况
+     * @param teaPeasantIncomeSituation 常宁茶农人均收入与总体人均收入
+     * @return 常宁茶农人均收入与总体人均收入
      */
     @Override
     public List<TeaPeasantIncomeSituation> selectTeaPeasantIncomeSituationList(TeaPeasantIncomeSituation teaPeasantIncomeSituation)
@@ -44,9 +46,9 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     }
 
     /**
-     * 新增人均收入情况
+     * 新增常宁茶农人均收入与总体人均收入
      *
-     * @param teaPeasantIncomeSituation 人均收入情况
+     * @param teaPeasantIncomeSituation 常宁茶农人均收入与总体人均收入
      * @return 结果
      */
     @Override
@@ -56,9 +58,9 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     }
 
     /**
-     * 修改人均收入情况
+     * 修改常宁茶农人均收入与总体人均收入
      *
-     * @param teaPeasantIncomeSituation 人均收入情况
+     * @param teaPeasantIncomeSituation 常宁茶农人均收入与总体人均收入
      * @return 结果
      */
     @Override
@@ -68,9 +70,9 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     }
 
     /**
-     * 批量删除人均收入情况
+     * 批量删除常宁茶农人均收入与总体人均收入
      *
-     * @param ids 需要删除的人均收入情况主键
+     * @param ids 需要删除的常宁茶农人均收入与总体人均收入主键
      * @return 结果
      */
     @Override
@@ -80,14 +82,19 @@ public class TeaPeasantIncomeSituationServiceImpl implements ITeaPeasantIncomeSi
     }
 
     /**
-     * 删除人均收入情况信息
+     * 删除常宁茶农人均收入与总体人均收入信息
      *
-     * @param id 人均收入情况主键
+     * @param id 常宁茶农人均收入与总体人均收入主键
      * @return 结果
      */
     @Override
     public int deleteTeaPeasantIncomeSituationById(Long id)
     {
         return teaPeasantIncomeSituationMapper.deleteTeaPeasantIncomeSituationById(id);
+    }
+
+    @Override
+    public List<JSONObject> getPeasantIncomeSituationService() {
+        return teaPeasantIncomeSituationMapper.getPeasantIncomeSituationService();
     }
 }

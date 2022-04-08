@@ -9,7 +9,7 @@ import com.wanou.framework.web.domain.BaseEntity;
  * 种植大户收入对象 tea_peasant_income
  *
  * @author ruoyi
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 public class TeaPeasantIncome extends BaseEntity
 {

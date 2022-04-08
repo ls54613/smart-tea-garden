@@ -21,10 +21,10 @@ import com.wanou.common.utils.poi.ExcelUtil;
 import com.wanou.framework.web.page.TableDataInfo;
 
 /**
- * 2021年各品种产量占比情况Controller
+ * 中国茶叶线上销售规模监测数据Controller
  *
  * @author MrYao
- * @date 2022-04-02
+ * @date 2022-04-06
  */
 @RestController
 @RequestMapping("/system/teaMarketScale")
@@ -34,7 +34,7 @@ public class TeaMarketScaleController extends BaseController
     private ITeaMarketScaleService teaMarketScaleService;
 
     /**
-     * 查询2021年各品种产量占比情况列表
+     * 查询中国茶叶线上销售规模监测数据列表
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:list')")
     @GetMapping("/list")
@@ -46,20 +46,20 @@ public class TeaMarketScaleController extends BaseController
     }
 
     /**
-     * 导出2021年各品种产量占比情况列表
+     * 导出中国茶叶线上销售规模监测数据列表
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:export')")
-    @Log(title = "2021年各品种产量占比情况", businessType = BusinessType.EXPORT)
+    @Log(title = "中国茶叶线上销售规模监测数据", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
     public AjaxResult export(TeaMarketScale teaMarketScale)
     {
         List<TeaMarketScale> list = teaMarketScaleService.selectTeaMarketScaleList(teaMarketScale);
         ExcelUtil<TeaMarketScale> util = new ExcelUtil<TeaMarketScale>(TeaMarketScale.class);
-        return util.exportExcel(list, "2021年各品种产量占比情况数据");
+        return util.exportExcel(list, "中国茶叶线上销售规模监测数据数据");
     }
 
     /**
-     * 获取2021年各品种产量占比情况详细信息
+     * 获取中国茶叶线上销售规模监测数据详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:query')")
     @GetMapping(value = "/{id}")
@@ -69,10 +69,10 @@ public class TeaMarketScaleController extends BaseController
     }
 
     /**
-     * 新增2021年各品种产量占比情况
+     * 新增中国茶叶线上销售规模监测数据
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:add')")
-    @Log(title = "2021年各品种产量占比情况", businessType = BusinessType.INSERT)
+    @Log(title = "中国茶叶线上销售规模监测数据", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TeaMarketScale teaMarketScale)
     {
@@ -80,10 +80,10 @@ public class TeaMarketScaleController extends BaseController
     }
 
     /**
-     * 修改2021年各品种产量占比情况
+     * 修改中国茶叶线上销售规模监测数据
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:edit')")
-    @Log(title = "2021年各品种产量占比情况", businessType = BusinessType.UPDATE)
+    @Log(title = "中国茶叶线上销售规模监测数据", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TeaMarketScale teaMarketScale)
     {
@@ -91,10 +91,10 @@ public class TeaMarketScaleController extends BaseController
     }
 
     /**
-     * 删除2021年各品种产量占比情况
+     * 删除中国茶叶线上销售规模监测数据
      */
     @PreAuthorize("@ss.hasPermi('system:teaMarketScale:remove')")
-    @Log(title = "2021年各品种产量占比情况", businessType = BusinessType.DELETE)
+    @Log(title = "中国茶叶线上销售规模监测数据", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
