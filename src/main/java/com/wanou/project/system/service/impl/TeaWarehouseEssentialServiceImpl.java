@@ -103,8 +103,10 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     @Transactional(rollbackFor = Exception.class)
     public int deleteTeaWarehouseEssentialById(Long id)
     {
-        teaWarehouseDetailsMapper.deleteTeaWarehouseDetailsById(id);
-        return teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
+        int i = teaWarehouseEssentialMapper.deleteTeaWarehouseEssentialById(id);
+        Long[] ids = {id};
+        teaWarehouseDetailsMapper.batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(ids);
+        return i;
     }
 
     @Override

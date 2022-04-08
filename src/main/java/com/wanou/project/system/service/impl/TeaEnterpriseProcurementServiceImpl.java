@@ -3,6 +3,7 @@ package com.wanou.project.system.service.impl;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaEnterpriseProcurementMapper;
@@ -42,6 +43,9 @@ public class TeaEnterpriseProcurementServiceImpl implements ITeaEnterpriseProcur
     @Override
     public List<TeaEnterpriseProcurement> selectTeaEnterpriseProcurementList(TeaEnterpriseProcurement teaEnterpriseProcurement)
     {
+        if(teaEnterpriseProcurement.getDeptId() == null){
+            teaEnterpriseProcurement.setDeptId(SecurityUtils.getDeptId());
+        }
         return teaEnterpriseProcurementMapper.selectTeaEnterpriseProcurementList(teaEnterpriseProcurement);
     }
 

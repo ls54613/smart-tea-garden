@@ -99,6 +99,6 @@ public class TeaEnterpriseInfo extends BaseEntity
 
     private Boolean isTownEmp; //是否乡镇重点企业
 
-    private Integer deptId;
+    private Long deptId; //所属部门id
 
 }

@@ -1,10 +1,11 @@
 package com.wanou.framework.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Entity基类
@@ -37,6 +38,8 @@ public class BaseEntity implements Serializable
 
     /** 请求参数 */
     private Map<String, Object> params;
+
+    private Long deptId; //所属部门id
 
     public String getSearchValue()
     {
@@ -110,5 +113,13 @@ public class BaseEntity implements Serializable
     public void setParams(Map<String, Object> params)
     {
         this.params = params;
+    }
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
     }
 }

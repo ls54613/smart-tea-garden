@@ -2,6 +2,7 @@ package com.wanou.project.system.mapper;
 
 import java.util.List;
 import com.wanou.project.system.domain.TeaWarehouseDetails;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 茶仓详情Mapper接口
@@ -59,5 +60,10 @@ public interface TeaWarehouseDetailsMapper
      */
     public int deleteTeaWarehouseDetailsByIds(Long[] ids);
 
+    /**
+     * 根据茶仓id批量删除茶仓仓位详情
+     * @param ids
+     */
+    void batchDeleteTeaWarehouseDetailsByTeaWarehouseIds(@Param("teaWarehouseIds") Long[] ids);
     int deleteTeaWarehouseDetailsByTeaWarehouseId(Long[] ids);
 }

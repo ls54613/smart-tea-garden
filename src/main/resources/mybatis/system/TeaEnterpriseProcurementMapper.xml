@@ -17,12 +17,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectTeaEnterpriseProcurementList" parameterType="TeaEnterpriseProcurement" resultMap="TeaEnterpriseProcurementResult">
-        <include refid="selectTeaEnterpriseProcurementVo"/>
+        select t1.id, t1.purchase_date, t1.purchase_goods, t1.purchase_number, t1.tea_enterprise_id
+        from tea_enterprise_procurement t1
+        LEFT JOIN tea_enterprise_info t2 ON t2.id = t1.tea_enterprise_id
+        LEFT JOIN sys_dept t3 ON t3.dept_id = t2.dept_id
         <where>
-            <if test="purchaseDate != null "> and purchase_date = #{purchaseDate}</if>
-            <if test="purchaseGoods != null  and purchaseGoods != ''"> and purchase_goods = #{purchaseGoods}</if>
-            <if test="purchaseNumber != null "> and purchase_number = #{purchaseNumber}</if>
-            <if test="teaEnterpriseId != null "> and tea_enterprise_id = #{teaEnterpriseId}</if>
+            <if test="deptId != null">and (t3.dept_id = #{deptId} OR (FIND_IN_SET(#{deptId},t3.ancestors)))</if>
+            <if test="purchaseDate != null "> and t1.purchase_date = #{purchaseDate}</if>
+            <if test="purchaseGoods != null  and purchaseGoods != ''"> and t1.purchase_goods = #{purchaseGoods}</if>
+            <if test="purchaseNumber != null "> and t1.purchase_number = #{purchaseNumber}</if>
+            <if test="teaEnterpriseId != null "> and t1.tea_enterprise_id = #{teaEnterpriseId}</if>
         </where>
     </select>
 

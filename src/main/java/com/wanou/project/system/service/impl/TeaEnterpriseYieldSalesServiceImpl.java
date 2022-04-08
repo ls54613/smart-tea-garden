@@ -10,6 +10,7 @@ import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
 import com.wanou.project.system.service.ITeaEnterpriseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class TeaEnterpriseYieldSalesServiceImpl implements ITeaEnterpriseYieldSa
     @Override
     public List<TeaEnterpriseYieldSales> selectTeaEnterpriseYieldSalesList(TeaEnterpriseYieldSales teaEnterpriseYieldSales)
     {
+        if(teaEnterpriseYieldSales.getDeptId() == null){
+            teaEnterpriseYieldSales.setDeptId(SecurityUtils.getDeptId());
+        }
         return teaEnterpriseYieldSalesMapper.selectTeaEnterpriseYieldSalesList(teaEnterpriseYieldSales);
     }
 
