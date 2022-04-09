@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getWarehouseInformation" resultType="com.alibaba.fastjson.JSONObject">
         select
-            t2.warehouse_name warehouseName,t2.location location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.rate
+            t2.warehouse_name warehouseName,t2.location location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.person_charge personCharge
         from
             tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.enterprise_id=t1.id LEFT JOIN sys_dict_data t3 ON (t3.dict_type = 'tea_enterprise_operation_status' AND t3.dict_value = t1.operation_status)
         where
@@ -97,6 +97,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tea_warehouse_essential
         where
             id=#{id}
+    </select>
+
+    <select id="getEnterprisNameAndcapacityAndoutboundVolume" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.enterprise_name enterpriseName,t1.outbound_volume outboundVolume,t1.capacity
+        from
+            tea_warehouse_essential t1 LEFT JOIN tea_enterprise_info t2 on t1.enterprise_id=t2.id
     </select>
 
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
