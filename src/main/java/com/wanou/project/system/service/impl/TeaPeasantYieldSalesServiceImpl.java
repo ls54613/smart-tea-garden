@@ -1,6 +1,14 @@
 package com.wanou.project.system.service.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
+import com.wanou.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaPeasantYieldSalesMapper;
@@ -93,7 +101,24 @@ public class TeaPeasantYieldSalesServiceImpl implements ITeaPeasantYieldSalesSer
 
     @Override
     public List<TeaPeasantYieldSales> getYieldValueNumber(long teaPeasantId) {
-        return teaPeasantYieldSalesMapper.getYieldValueNumber(teaPeasantId);
+        DateTime nowDate = DateUtil.date();
+        DateTime startDate = DateUtil.offset(nowDate, DateField.YEAR, -5);
+        DateTime endDate = DateUtil.offset(nowDate, DateField.YEAR, -1);
+        List<TeaPeasantYieldSales> list = teaPeasantYieldSalesMapper.getYieldValueNumber(teaPeasantId, startDate, endDate);
+        List<DateTime> dateTimes = DateUtil.rangeToList(startDate, endDate, DateField.YEAR);
+        List<TeaPeasantYieldSales> result = new ArrayList<>(dateTimes.size());
+        dateTimes.forEach(dateTime -> {
+            TeaPeasantYieldSales one = CollUtil.findOne(list, (item -> String.valueOf(DateUtil.year(dateTime)).equals(item.getYear())));
+            if(one != null){
+                result.add(one);
+            }else {
+                TeaPeasantYieldSales teaPeasantYieldSales = new TeaPeasantYieldSales();
+                teaPeasantYieldSales.setYear(String.valueOf(DateUtil.year(dateTime)));
+                teaPeasantYieldSales.setYieldValueNumber(new BigDecimal(0));
+                result.add(teaPeasantYieldSales);
+            }
+        });
+        return result;
     }
 
     @Override

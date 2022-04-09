@@ -143,11 +143,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	t1.enterprise_name enterpriseName
         FROM
         	tea_enterprise_info t1
-        	LEFT JOIN tea_enterprise_yield_sales t2 ON t2.tea_peasant_id = t1.id
+        	LEFT JOIN tea_enterprise_yield_sales t2 ON (t2.tea_peasant_id = t1.id AND t2.year >= #{start} AND t2.year &lt;= #{end})
         WHERE
-            t2.year >= #{start} AND t2.year &lt;= #{end}
             <if test="region != null and region != ''">
-                AND t1.region = #{region}
+                t1.region = #{region}
             </if>
         GROUP BY
         	t1.id

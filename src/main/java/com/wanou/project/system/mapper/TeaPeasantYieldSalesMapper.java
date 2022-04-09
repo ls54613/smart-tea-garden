@@ -1,7 +1,9 @@
 package com.wanou.project.system.mapper;
 
+import java.util.Date;
 import java.util.List;
 import com.wanou.project.system.domain.TeaPeasantYieldSales;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 茶农个人历年销量及销售额统计Mapper接口
@@ -59,7 +61,7 @@ public interface TeaPeasantYieldSalesMapper
      */
     public int deleteTeaPeasantYieldSalesByIds(Long[] ids);
 
-    public List<TeaPeasantYieldSales> getYieldValueNumber(long teaPeasantId);
+    public List<TeaPeasantYieldSales> getYieldValueNumber(@Param("teaPeasantId") long teaPeasantId,@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
      List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId);
 
