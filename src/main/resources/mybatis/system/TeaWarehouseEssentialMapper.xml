@@ -99,6 +99,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             id=#{id}
     </select>
 
+    <select id="getEnterprisNameAndcapacityAndoutboundVolume" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.enterprise_name enterpriseName,t1.outbound_volume outboundVolume,t1.capacity
+        from
+            tea_warehouse_essential t1 LEFT JOIN tea_enterprise_info t2 on t1.enterprise_id=t2.id
+    </select>
+
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_essential
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -139,4 +139,9 @@ public class TeaWarehouseEssentialServiceImpl implements ITeaWarehouseEssentialS
     public List<JSONObject> getEnterpriseNameCapacity(long id) {
         return teaWarehouseEssentialMapper.getEnterpriseNameCapacity(id);
     }
+
+    @Override
+    public List<JSONObject> getEnterprisNameAndcapacityAndoutboundVolume() {
+        return teaWarehouseEssentialMapper.getEnterprisNameAndcapacityAndoutboundVolume();
+    }
 }
