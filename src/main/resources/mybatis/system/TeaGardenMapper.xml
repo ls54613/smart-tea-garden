@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getTeaGardenInformation" resultType="cn.hutool.json.JSONObject" parameterType="string">
         select
-            tea_area teaArea,tea_tree_variety teaTreeVariety,facilities_num facilitiesNum,employ_num employNum,average_yield averageYield,total_production totalProduction,t2.enterprise_name enterpriseName,head, t3.dict_label
+            tea_area teaArea,tea_tree_variety teaTreeVariety,facilities_num facilitiesNum,employ_num employNum,average_yield averageYield,total_production totalProduction,t2.enterprise_name enterpriseName,head, t3.dict_label teaType
         from
             tea_garden t1 LEFT JOIN tea_enterprise_info t2 on t1.tea_enterprise_id=t2.id
                           LEFT JOIN sys_dict_data t3 on(t3.dict_type='sys_enterprise_type' and t3.dict_value=t1.tea_type)

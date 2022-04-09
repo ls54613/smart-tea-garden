@@ -75,4 +75,6 @@ public interface ITeaWarehouseEssentialService
     List<JSONObject> getEnterpriseNameCapacity(long id);
 
     List<JSONObject> getEnterprisNameAndcapacityAndoutboundVolume();
+
+    List<JSONObject> getTypeInventory(long id);
 }

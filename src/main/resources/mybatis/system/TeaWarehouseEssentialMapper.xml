@@ -106,6 +106,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tea_warehouse_essential t1 LEFT JOIN tea_enterprise_info t2 on t1.enterprise_id=t2.id
     </select>
 
+    <select id="getTypeInventory" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.dict_label,sum(t1.current_inventory) currentInventory
+        from
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2 on (t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
+        where
+            tea_warehouse_id=#{id}
+        GROUP BY
+            t2.dict_label
+    </select>
+
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
         insert into tea_warehouse_essential
         <trim prefix="(" suffix=")" suffixOverrides=",">

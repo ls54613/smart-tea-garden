@@ -96,6 +96,15 @@ public class OpenTeaWarehouseInfoController {
         List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getEnterprisNameAndcapacityAndoutboundVolume();
         return AjaxResult.success(jsonObjectList);
     }
+
+    /**
+     * 品种以及当前库存量
+     * */
+    @GetMapping("/getTypeInventory")
+    public AjaxResult getTypeInventory(long id){
+        List<JSONObject> jsonObjectList=teaWarehouseEssentialService.getTypeInventory(id);
+        return AjaxResult.success(jsonObjectList);
+    }
 }
 
 
