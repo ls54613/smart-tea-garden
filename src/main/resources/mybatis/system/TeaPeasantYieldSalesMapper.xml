@@ -47,11 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getYieldValueMoney" resultType="com.wanou.project.system.domain.TeaPeasantYieldSales" resultMap="TeaPeasantYieldSalesResult">
         select
-            year,yield_value_money
+            `year`,yield_value_money
         from
             tea_peasant_yield_sales
         where
             tea_peasant_id=#{teaPeasantId}
+            AND `year` >= #{startDate} AND `year` &lt;= #{endDate}
     </select>
 
     <insert id="insertTeaPeasantYieldSales" parameterType="TeaPeasantYieldSales" useGeneratedKeys="true" keyProperty="id">

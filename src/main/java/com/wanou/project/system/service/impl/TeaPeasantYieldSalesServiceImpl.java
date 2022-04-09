@@ -123,6 +123,23 @@ public class TeaPeasantYieldSalesServiceImpl implements ITeaPeasantYieldSalesSer
 
     @Override
     public List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId) {
-        return teaPeasantYieldSalesMapper.getYieldValueMoney(teaPeasantId);
+        DateTime nowDate = DateUtil.date();
+        DateTime startDate = DateUtil.offset(nowDate, DateField.YEAR, -5);
+        DateTime endDate = DateUtil.offset(nowDate, DateField.YEAR, -1);
+        List<TeaPeasantYieldSales> list = teaPeasantYieldSalesMapper.getYieldValueMoney(teaPeasantId, startDate, endDate);
+        List<DateTime> dateTimes = DateUtil.rangeToList(startDate, endDate, DateField.YEAR);
+        List<TeaPeasantYieldSales> result = new ArrayList<>(dateTimes.size());
+        dateTimes.forEach(dateTime -> {
+            TeaPeasantYieldSales one = CollUtil.findOne(list, (item -> String.valueOf(DateUtil.year(dateTime)).equals(item.getYear())));
+            if(one != null){
+                result.add(one);
+            }else {
+                TeaPeasantYieldSales teaPeasantYieldSales = new TeaPeasantYieldSales();
+                teaPeasantYieldSales.setYear(String.valueOf(DateUtil.year(dateTime)));
+                teaPeasantYieldSales.setYieldValueMoney(new BigDecimal(0));
+                result.add(teaPeasantYieldSales);
+            }
+        });
+        return result;
     }
 }

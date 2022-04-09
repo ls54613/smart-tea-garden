@@ -63,7 +63,7 @@ public interface TeaPeasantYieldSalesMapper
 
     public List<TeaPeasantYieldSales> getYieldValueNumber(@Param("teaPeasantId") long teaPeasantId,@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
-     List<TeaPeasantYieldSales> getYieldValueMoney(long teaPeasantId);
+     List<TeaPeasantYieldSales> getYieldValueMoney(@Param("teaPeasantId") long teaPeasantId,@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
     void deleteTeaPeasantYieldsalesBYPeasantId(Long[] ids);
 }
