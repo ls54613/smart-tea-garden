@@ -44,7 +44,7 @@ public class OpenTeaGardenController {
 
     /**
      *
-     * 根据地区查出所有茶园个数以及这个地区茶园的面积以及总产量
+     * 茶園區域及年均產量預計
      * */
     @GetMapping("/getRegionAverageYieldAndTeaArea")
     public AjaxResult getRegionAverageYieldAndTeaArea(){

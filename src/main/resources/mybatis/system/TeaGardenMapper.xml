@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="listTeaGarden" parameterType="com.wanou.project.system.domain.TeaGarden" resultMap="TeaGardenVoResult">
-        select tea_garden_id,`name`, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield, total_production, tea_type, head,tea_enterprise_id,
+        select tea_garden_id,`name`, tea_area, tea_tree_variety, employ_num, facilities_num, average_yield,region, total_production, tea_type, head,tea_enterprise_id,
                 dictVariety.dict_label as teaTreeVarietyName, dictTeaType.dict_label as teaTypeName
          from tea_garden
          left join sys_dict_data as dictVariety on tea_tree_variety = dictVariety.dict_value and dictVariety.dict_type = "sys_variety_type"
@@ -68,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="totalProduction != null  and totalProduction != ''"> and total_production = #{totalProduction}</if>
             <if test="teaType != null "> and tea_type = #{teaType}</if>
             <if test="head != null  and head != ''"> and head = #{head}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
             <if test="teaEnterpriseId != null"> and tea_enterprise_id = #{teaEnterpriseId}</if>
         </where>
     </select>
@@ -79,18 +80,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY
             t2.id
     </select>
+
     <select id="getRegionAverageYieldAndTeaArea" resultType="cn.hutool.json.JSONObject">
         select
-            name,tea_area teaArea,average_yield averageYield
+            region,name,average_yield averageYield,total_production totalProduction
         from
             tea_garden
-        GROUP BY
-            `name`
     </select>
 
     <select id="getProportionYieldAndDictLabel" resultType="cn.hutool.json.JSONObject">
         SELECT
-            (SUM(proportion) / t3.total) * 100 proportion,t2.dict_label dictLabel
+            TRUNCATE((SUM(proportion) / t3.total) * 100,2) proportion,t2.dict_label dictLabel
         FROM
             tea_garden_tea_type t1
                 LEFT JOIN sys_dict_data t2 on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.type),
@@ -101,9 +101,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getTeaGardenInformation" resultType="cn.hutool.json.JSONObject" parameterType="string">
         select
-            tea_area teaArea,tea_tree_variety teaTreeVariety,facilities_num facilitiesNum,employ_num employNum,average_yield averageYield,total_production 		     totalProduction,t2.enterprise_name enterpriseName,head
+            tea_area teaArea,tea_tree_variety teaTreeVariety,facilities_num facilitiesNum,employ_num employNum,average_yield averageYield,total_production totalProduction,t2.enterprise_name enterpriseName,head, t3.dict_label
         from
             tea_garden t1 LEFT JOIN tea_enterprise_info t2 on t1.tea_enterprise_id=t2.id
+                          LEFT JOIN sys_dict_data t3 on(t3.dict_type='sys_enterprise_type' and t3.dict_value=t1.tea_type)
         where
             name=#{name}
     </select>
