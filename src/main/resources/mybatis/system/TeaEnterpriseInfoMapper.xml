@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cultivatedArea"    column="cultivated_area"    />
         <result property="workPersonNum"    column="work_person_num"    />
         <result property="region" column="region" />
+        <result property="deptId" column="dept_id" />
     </resultMap>
 
     <resultMap type="TeaEnterpriseInfo" id="TeaEnterpriseInfoResult1">
@@ -36,35 +37,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="region" column="region" />
         <result property="isCountyEmp" column="is_county_emp" />
         <result property="isTownEmp" column="is_town_emp" />
+        <result property="deptId" column="dept_id" />
         <collection property="teaType" column="id" select="com.wanou.project.system.mapper.TeaEnterpriseTeaTypeMapper.selectTeaEnterpriseTeaTypeIntListByTeaEnterpriseId" />
     </resultMap>
 
     <sql id="selectTeaEnterpriseInfoVo">
-        select id, enterprise_name, `type`, nature, set_up_date, legal_person, legal_person_id_card, operation_status, reg_capital, address, cultivated_area, work_person_num,region from tea_enterprise_info
+        select id, enterprise_name, `type`, nature, set_up_date, legal_person, legal_person_id_card, operation_status, reg_capital, address, cultivated_area, work_person_num,region,dept_id from tea_enterprise_info
     </sql>
 
     <select id="selectTeaEnterpriseInfoList" parameterType="TeaEnterpriseInfo" resultMap="TeaEnterpriseInfoResult1">
-        <include refid="selectTeaEnterpriseInfoVo"/>
+        select t1.id, t1.enterprise_name, t1.`type`, t1.nature, t1.set_up_date, t1.legal_person, t1.legal_person_id_card, t1.operation_status,
+        t1.reg_capital, t1.address, t1.cultivated_area, t1.work_person_num,t1.region,t1.dept_id
+        from tea_enterprise_info t1 LEFT JOIN sys_dept t2 ON t2.dept_id = t1.dept_id
         <where>
-            <if test="enterpriseName != null  and enterpriseName != ''"> and enterprise_name like concat('%', #{enterpriseName}, '%')</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="nature != null  and nature != ''"> and nature = #{nature}</if>
-            <if test="setUpDate != null "> and set_up_date = #{setUpDate}</if>
-            <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
-            <if test="legalPersonIdCard != null  and legalPersonIdCard != ''"> and legal_person_id_card = #{legalPersonIdCard}</if>
-            <if test="operationStatus != null "> and operation_status = #{operationStatus}</if>
-            <if test="regCapital != null  and regCapital != ''"> and reg_capital = #{regCapital}</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="cultivatedArea != null "> and cultivated_area = #{cultivatedArea}</if>
-            <if test="workPersonNum != null "> and work_person_num = #{workPersonNum}</if>
-            <if test="region != null and region != ''"> and region = #{region}</if>
-             <if test="isCountyEmp != null">and is_county_emp = #{isCountyEmp}</if>
-             <if test="isTownEmp != null">and is_town_emp = #{isTownEmp}</if>
+            <if test="deptId != null">and (t2.dept_id = #{deptId} OR FIND_IN_SET(#{deptId},t2.ancestors))</if>
+            <if test="enterpriseName != null  and enterpriseName != ''"> and t1.enterprise_name like concat('%', #{enterpriseName}, '%')</if>
+            <if test="type != null  and type != ''"> and t1.type = #{type}</if>
+            <if test="nature != null  and nature != ''"> and t1.nature = #{nature}</if>
+            <if test="setUpDate != null "> and t1.set_up_date = #{setUpDate}</if>
+            <if test="legalPerson != null  and legalPerson != ''"> and t1.legal_person = #{legalPerson}</if>
+            <if test="legalPersonIdCard != null  and legalPersonIdCard != ''"> and t1.legal_person_id_card = #{legalPersonIdCard}</if>
+            <if test="operationStatus != null "> and t1.operation_status = #{operationStatus}</if>
+            <if test="regCapital != null  and regCapital != ''"> and t1.reg_capital = #{regCapital}</if>
+            <if test="address != null  and address != ''"> and t1.address = #{address}</if>
+            <if test="cultivatedArea != null "> and t1.cultivated_area = #{cultivatedArea}</if>
+            <if test="workPersonNum != null "> and t1.work_person_num = #{workPersonNum}</if>
+            <if test="region != null and region != ''"> and t1.region = #{region}</if>
+            <if test="isCountyEmp != null">and t1.is_county_emp = #{isCountyEmp}</if>
+            <if test="isTownEmp != null">and t1.is_town_emp = #{isTownEmp}</if>
         </where>
         ORDER BY `order`
     </select>
 
-    <select id="selectTeaEnterpriseInfoById" parameterType="Long" resultMap="TeaEnterpriseInfoResult1">
+    <select id="selectTeaEnterpriseInfoById" resultMap="TeaEnterpriseInfoResult1">
         <include refid="selectTeaEnterpriseInfoVo"/>
         where id = #{id}
     </select>
@@ -129,6 +134,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1.id
     </select>
 
+    <select id="findTeaEnterpriseInfoById" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t1.enterprise_name enterpriseName,t2.dict_label type,t1.cultivated_area cultivatedArea,t1.nature,t1.set_up_date setUpDate,t1.legal_person legalPerson,t1.legal_person_id_card legalPersonIdCard,t1.reg_capital regCapital,t3.dict_label operationStatus
+        from
+            tea_enterprise_info t1 LEFT JOIN sys_dict_data t2 on(t2.dict_type='sys_zhuti_type' and t2.dict_value=t1.type)
+                                   LEFT JOIN sys_dict_data t3 on(t3.dict_type='tea_enterprise_operation_status' and t3.dict_value=t1.operation_status)
+        where
+            id=#{id}
+
+    </select>
+
     <insert id="insertTeaEnterpriseInfo" parameterType="TeaEnterpriseInfo" useGeneratedKeys="true" keyProperty="id">
         insert into tea_enterprise_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -144,6 +160,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">cultivated_area,</if>
             <if test="workPersonNum != null">work_person_num,</if>
             <if test="region != null and region != ''">region,</if>
+            <if test="deptId != null">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="enterpriseName != null">#{enterpriseName},</if>
@@ -158,6 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">#{cultivatedArea},</if>
             <if test="workPersonNum != null">#{workPersonNum},</if>
             <if test="region != null and region != ''">#{region},</if>
+            <if test="deptId != null">#{deptId},</if>
          </trim>
     </insert>
 
@@ -176,6 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cultivatedArea != null">cultivated_area = #{cultivatedArea},</if>
             <if test="workPersonNum != null">work_person_num = #{workPersonNum},</if>
             <if test="region != null and region != ''">region = #{region},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

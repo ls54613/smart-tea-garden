@@ -3,12 +3,17 @@ package com.wanou.project.system.service.impl;
 import java.util.List;
 
 import cn.hutool.json.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import com.wanou.project.system.domain.vo.TeaGardenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaGardenMapper;
 import com.wanou.project.system.domain.TeaGarden;
 import com.wanou.project.system.service.ITeaGardenService;
+import org.springframework.transaction.annotation.Transactional;
+import com.wanou.project.system.mapper.TeaGardenTeaTypeMapper;
+import com.wanou.project.system.mapper.TeaGardenSoilMonitorMapper;
+import com.wanou.project.system.mapper.TeaGardenDiseaseMapper;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -21,6 +26,13 @@ public class TeaGardenServiceImpl implements ITeaGardenService
 {
     @Autowired
     private TeaGardenMapper teaGardenMapper;
+    @Autowired
+    private TeaGardenTeaTypeMapper teaGardenTeaTypeMapper;
+    @Autowired
+    private TeaGardenSoilMonitorMapper teaGardenSoilMonitorMapper;
+    @Autowired
+    private TeaGardenDiseaseMapper teaGardenDiseaseMapper;
+
 
     /**
      * 查询【请填写功能名称】
@@ -43,6 +55,9 @@ public class TeaGardenServiceImpl implements ITeaGardenService
     @Override
     public List<TeaGarden> selectTeaGardenList(TeaGarden teaGarden)
     {
+        if(teaGarden.getDeptId() == null){
+            teaGarden.setDeptId(SecurityUtils.getDeptId());
+        }
         return teaGardenMapper.selectTeaGardenList(teaGarden);
     }
 
@@ -77,9 +92,14 @@ public class TeaGardenServiceImpl implements ITeaGardenService
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteTeaGardenByTeaGardenIds(Long[] teaGardenIds)
     {
-        return teaGardenMapper.deleteTeaGardenByTeaGardenIds(teaGardenIds);
+        int i = teaGardenMapper.deleteTeaGardenByTeaGardenIds(teaGardenIds);
+        teaGardenTeaTypeMapper.deleteTeaGardenTeaTypeByteaGardenId(teaGardenIds);
+        teaGardenSoilMonitorMapper.deleteTeaGardenTeaGardenSoilMonitorByTeaGardenId(teaGardenIds);
+        teaGardenDiseaseMapper.deleteTeaGardenDiseaseByTeaGardenId(teaGardenIds);
+        return i;
     }
 
     /**

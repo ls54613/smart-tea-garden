@@ -60,4 +60,6 @@ public interface TeaGardenDiseaseMapper
      * @return 结果
      */
     public int deleteTeaGardenDiseaseByIds(Long[] ids);
+
+    void deleteTeaGardenDiseaseByTeaGardenId(Long[] teaGardenIds);
 }

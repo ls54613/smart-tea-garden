@@ -21,8 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectTeaEnterpriseYieldSalesList" parameterType="TeaEnterpriseYieldSales" resultMap="TeaEnterpriseYieldSalesResult">
-        <include refid="selectTeaEnterpriseYieldSalesVo"/>
+        select t1.id, t1.`year`, t1.yield_value_number, t1.yield_value_money, t1.sales_volume_number, t1.sales_volume_money, t1.product_profit_statistics,
+        t1.product_cost_statistics, t1.tea_peasant_id
+         from tea_enterprise_yield_sales t1 LEFT JOIN tea_enterprise_info t2 ON t2.id = t1.tea_peasant_id
+         LEFT JOIN sys_dept t3 ON t3.dept_id = t2.dept_id
         <where>
+            <if test="deptId != null">and (t3.dept_id = #{deptId} OR (FIND_IN_SET(#{deptId},t3.ancestors)))</if>
             <if test="year != null"> and `year` = #{year}</if>
             <if test="teaPeasantId != null "> and tea_peasant_id = #{teaPeasantId}</if>
         </where>
@@ -139,11 +143,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	t1.enterprise_name enterpriseName
         FROM
         	tea_enterprise_info t1
-        	LEFT JOIN tea_enterprise_yield_sales t2 ON t2.tea_peasant_id = t1.id
+        	LEFT JOIN tea_enterprise_yield_sales t2 ON (t2.tea_peasant_id = t1.id AND t2.year >= #{start} AND t2.year &lt;= #{end})
         WHERE
-            t2.year >= #{start} AND t2.year &lt;= #{end}
             <if test="region != null and region != ''">
-                AND t1.region = #{region}
+                t1.region = #{region}
             </if>
         GROUP BY
         	t1.id

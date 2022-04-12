@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getWarehouseInformation" resultType="com.alibaba.fastjson.JSONObject">
         select
-            t2.warehouse_name warehouseName,t2.location location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.rate
+            t2.warehouse_name warehouseName,t2.location location,t1.enterprise_name enterpriseName,IF(t2.warehouse_type=1,'干仓','湿仓') warehouseType,t3.dict_label operationStatus,t2.person_charge personCharge
         from
             tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.enterprise_id=t1.id LEFT JOIN sys_dict_data t3 ON (t3.dict_type = 'tea_enterprise_operation_status' AND t3.dict_value = t1.operation_status)
         where
@@ -83,19 +83,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getCapacityAndWarehousingAndOut" resultType="com.alibaba.fastjson.JSONObject">
         select
-            warehouse_name warehouseName,capacity,quantity,outbound_volume outboundVolume
+            t1.current_inventory,t2.dict_label,t1.goods_value,t1.inventory_warning_quantity
+        from
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2
+        on(t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
+        where
+            t1.tea_warehouse_id=#{teaWarehouseId}
+    </select>
+    <select id="getEnterpriseNameCapacity" parameterType="long" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            warehouse_name warehouseName,quantity,outbound_volume outboundVolume,capacity
         from
             tea_warehouse_essential
         where
-            tea_enterprise_id=#{teaWarehouseId}
+            id=#{id}
     </select>
-    <select id="getEnterpriseNameCapacity" resultType="com.alibaba.fastjson.JSONObject">
+
+    <select id="getEnterprisNameAndcapacityAndoutboundVolume" resultType="com.alibaba.fastjson.JSONObject">
         select
-            t1.enterprise_name enterpriseName,sum(t2.capacity) capacity,sum(t2.outbound_volume) outboundVolume
+            t2.enterprise_name enterpriseName,t1.outbound_volume outboundVolume,t1.capacity
         from
-            tea_enterprise_info t1 LEFT JOIN tea_warehouse_essential t2 on t2.tea_enterprise_id=t1.id
+            tea_warehouse_essential t1 LEFT JOIN tea_enterprise_info t2 on t1.enterprise_id=t2.id
+    </select>
+
+    <select id="getTypeInventory" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            t2.dict_label,sum(t1.current_inventory) currentInventory
+        from
+            tea_warehouse_current_value t1 LEFT JOIN sys_dict_data t2 on (t2.dict_type='sys_tea_type' and t2.dict_value=t1.varieties)
+        where
+            tea_warehouse_id=#{id}
         GROUP BY
-            t2.id
+            t2.dict_label
     </select>
 
     <insert id="insertTeaWarehouseEssential" parameterType="TeaWarehouseEssential" useGeneratedKeys="true" keyProperty="id">
@@ -128,8 +147,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update tea_warehouse_essential
         <trim prefix="SET" suffixOverrides=",">
             <if test="enterpriseId != null">enterprise_id = #{enterpriseId},</if>
+            <if test="warehouseName != null and warehouseName != ''">warehouse_name = #{warehouseName},</if>
             <if test="measure != null">measure = #{measure},</if>
             <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="warehouseName!=null">warehouse_name=#{warehouseName},</if>
             <if test="facilitiesNumber != null">facilities_number = #{facilitiesNumber},</if>
             <if test="utilization != null">utilization = #{utilization},</if>
             <if test="personCharge != null">person_charge = #{personCharge},</if>

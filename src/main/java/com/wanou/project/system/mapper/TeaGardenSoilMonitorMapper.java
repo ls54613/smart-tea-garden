@@ -60,4 +60,6 @@ public interface TeaGardenSoilMonitorMapper
      * @return 结果
      */
     public int deleteTeaGardenSoilMonitorByIds(Long[] ids);
+
+    void deleteTeaGardenTeaGardenSoilMonitorByTeaGardenId(Long[] teaGardenIds);
 }

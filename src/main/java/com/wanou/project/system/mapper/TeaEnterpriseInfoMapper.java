@@ -24,7 +24,7 @@ public interface TeaEnterpriseInfoMapper
      * @param id 茶企基本信息主键
      * @return 茶企基本信息
      */
-    public TeaEnterpriseInfo selectTeaEnterpriseInfoById(Long id);
+    public TeaEnterpriseInfo selectTeaEnterpriseInfoById(Long id,Long deptId);
 
     /**
      * 查询茶企基本信息列表
@@ -81,4 +81,6 @@ public interface TeaEnterpriseInfoMapper
     Integer getEnterpriseCount(@Param("region") String region);
 
     List<JSONObject> getEnterpriseNameAndNumberMorney();
+
+    JSONObject findTeaEnterpriseInfoById(Long id);
 }

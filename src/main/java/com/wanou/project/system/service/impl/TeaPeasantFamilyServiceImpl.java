@@ -1,6 +1,11 @@
 package com.wanou.project.system.service.impl;
 
 import java.util.List;
+
+import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.IdcardUtil;
+import cn.hutool.core.util.ReUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.wanou.project.system.mapper.TeaPeasantFamilyMapper;
@@ -40,7 +45,12 @@ public class TeaPeasantFamilyServiceImpl implements ITeaPeasantFamilyService
     @Override
     public List<TeaPeasantFamily> selectTeaPeasantFamilyList(TeaPeasantFamily teaPeasantFamily)
     {
-        return teaPeasantFamilyMapper.selectTeaPeasantFamilyList(teaPeasantFamily);
+        List<TeaPeasantFamily> teaPeasantFamilies = teaPeasantFamilyMapper.selectTeaPeasantFamilyList(teaPeasantFamily);
+        teaPeasantFamilies.forEach(item -> {
+            item.setIdCard(DesensitizedUtil.idCardNum(item.getIdCard(),5,5));
+            System.out.println(item.getIdCard());
+        });
+        return teaPeasantFamilies;
     }
 
     /**

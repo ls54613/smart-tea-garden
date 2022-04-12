@@ -83,4 +83,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <delete id="deleteTeaWarehouseCUrrentValueByTeaWarehouseId">
+        delete from tea_warehouse_current_value where tea_warehouse_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

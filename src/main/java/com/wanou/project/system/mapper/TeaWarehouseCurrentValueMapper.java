@@ -62,4 +62,6 @@ public interface TeaWarehouseCurrentValueMapper
     public int deleteTeaWarehouseCurrentValueByIds(Long[] ids);
 
     List<JSONObject> getValueDistribution(int teaWarehouseId);
+
+    void deleteTeaWarehouseCUrrentValueByTeaWarehouseId(Long[] ids);
 }
