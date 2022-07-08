@@ -133,7 +133,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         "/mini/sendCode/**",
                         "/mini/common/upload").anonymous()//小程序登录不需要判断
                 .antMatchers("/mini/**").access("@miniSecurity.check(authentication,request)")
-
+                .antMatchers("/system/teaEnterpriseYieldSales/list").permitAll()
+                .antMatchers("/system/teaEnterpriseInfo/list").permitAll()
+                .antMatchers("/system/teaEnterpriseProcurement/list").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()

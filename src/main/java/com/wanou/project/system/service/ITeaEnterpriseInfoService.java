@@ -3,6 +3,7 @@ package com.wanou.project.system.service;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wanou.common.utils.SecurityUtils;
 import com.wanou.project.system.domain.TeaEnterpriseInfo;
 import com.wanou.project.system.domain.openApi.TeaEnterpriseTotal;
 
@@ -29,7 +30,6 @@ public interface ITeaEnterpriseInfoService
      * @return 茶企基本信息集合
      */
     public List<TeaEnterpriseInfo> selectTeaEnterpriseInfoList(TeaEnterpriseInfo teaEnterpriseInfo);
-
     /**
      * 新增茶企基本信息
      *

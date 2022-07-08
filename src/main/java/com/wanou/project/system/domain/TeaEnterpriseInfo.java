@@ -101,4 +101,169 @@ public class TeaEnterpriseInfo extends BaseEntity
 
     private Long deptId; //所属部门id
 
+
+
+    @Override
+    public String toString() {
+        return "TeaEnterpriseInfo{" +
+                "id=" + id +
+                ", enterpriseName='" + enterpriseName + '\'' +
+                ", type='" + type + '\'' +
+                ", nature='" + nature + '\'' +
+                ", setUpDate=" + setUpDate +
+                ", legalPerson='" + legalPerson + '\'' +
+                ", legalPersonIdCard='" + legalPersonIdCard + '\'' +
+                ", operationStatus=" + operationStatus +
+                ", regCapital='" + regCapital + '\'' +
+                ", address='" + address + '\'' +
+                ", cultivatedArea=" + cultivatedArea +
+                ", workPersonNum=" + workPersonNum +
+                ", teaType=" + teaType +
+                ", region='" + region + '\'' +
+                ", isCountyEmp=" + isCountyEmp +
+                ", isTownEmp=" + isTownEmp +
+                ", deptId=" + deptId +
+                '}';
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEnterpriseName() {
+        return enterpriseName;
+    }
+
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNature() {
+        return nature;
+    }
+
+    public void setNature(String nature) {
+        this.nature = nature;
+    }
+
+    public Date getSetUpDate() {
+        return setUpDate;
+    }
+
+    public void setSetUpDate(Date setUpDate) {
+        this.setUpDate = setUpDate;
+    }
+
+    public String getLegalPerson() {
+        return legalPerson;
+    }
+
+    public void setLegalPerson(String legalPerson) {
+        this.legalPerson = legalPerson;
+    }
+
+    public String getLegalPersonIdCard() {
+        return legalPersonIdCard;
+    }
+
+    public void setLegalPersonIdCard(String legalPersonIdCard) {
+        this.legalPersonIdCard = legalPersonIdCard;
+    }
+
+    public Long getOperationStatus() {
+        return operationStatus;
+    }
+
+    public void setOperationStatus(Long operationStatus) {
+        this.operationStatus = operationStatus;
+    }
+
+    public String getRegCapital() {
+        return regCapital;
+    }
+
+    public void setRegCapital(String regCapital) {
+        this.regCapital = regCapital;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public BigDecimal getCultivatedArea() {
+        return cultivatedArea;
+    }
+
+    public void setCultivatedArea(BigDecimal cultivatedArea) {
+        this.cultivatedArea = cultivatedArea;
+    }
+
+    public Long getWorkPersonNum() {
+        return workPersonNum;
+    }
+
+    public void setWorkPersonNum(Long workPersonNum) {
+        this.workPersonNum = workPersonNum;
+    }
+
+    public List<Integer> getTeaType() {
+        return teaType;
+    }
+
+    public void setTeaType(List<Integer> teaType) {
+        this.teaType = teaType;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public Boolean getCountyEmp() {
+        return isCountyEmp;
+    }
+
+    public void setCountyEmp(Boolean countyEmp) {
+        isCountyEmp = countyEmp;
+    }
+
+    public Boolean getTownEmp() {
+        return isTownEmp;
+    }
+
+    public void setTownEmp(Boolean townEmp) {
+        isTownEmp = townEmp;
+    }
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
 }
+

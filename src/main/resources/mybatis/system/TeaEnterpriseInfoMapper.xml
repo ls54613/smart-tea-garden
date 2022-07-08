@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTeaEnterpriseInfoList" parameterType="TeaEnterpriseInfo" resultMap="TeaEnterpriseInfoResult1">
         select t1.id, t1.enterprise_name, t1.`type`, t1.nature, t1.set_up_date, t1.legal_person, t1.legal_person_id_card, t1.operation_status,
-        t1.reg_capital, t1.address, t1.cultivated_area, t1.work_person_num,t1.region,t1.dept_id
+        t1.reg_capital, t1.address, t1.cultivated_area, t1.work_person_num,t1.region,t1.dept_id,is_county_emp,is_town_emp
         from tea_enterprise_info t1 LEFT JOIN sys_dept t2 ON t2.dept_id = t1.dept_id
         <where>
             <if test="deptId != null">and (t2.dept_id = #{deptId} OR FIND_IN_SET(#{deptId},t2.ancestors))</if>
